@@ -75,6 +75,6 @@ public class SpringMVCTest {
 //    public void returnDefaultMessage() throws Exception {
 //        assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/", String.class)).contains("Kim");
 //    }
-    
+
 
 }
