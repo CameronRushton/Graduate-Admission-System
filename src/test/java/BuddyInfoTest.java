@@ -3,7 +3,9 @@
 import com.myApp.model.BuddyInfo;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.event.annotation.BeforeTestClass;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
@@ -13,7 +15,7 @@ public class BuddyInfoTest {
 	private BuddyInfo aBudInfo;
 	private int age;
 	
-	@BeforeAll
+	@BeforeEach
 	public void setUp() {
 		age = 20;
 		aBudInfo = new BuddyInfo("Name", "Location", "Number", age);
@@ -27,7 +29,7 @@ public class BuddyInfoTest {
 	@Test
 	public void testBuddyInfoGreeting() {
 		String actualGreeting = aBudInfo.getGreeting();
-		assertEquals("", "Hello", actualGreeting);
+		assertEquals("Hello", actualGreeting);
 	}
 	
 	@Test

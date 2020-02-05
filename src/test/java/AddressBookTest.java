@@ -13,7 +13,7 @@ import org.springframework.test.context.event.annotation.BeforeTestClass;
 public class AddressBookTest {
     private AddressBook book;
 
-    @BeforeAll
+    @BeforeEach
     public void setUp() {
         book = new AddressBook();
     }
