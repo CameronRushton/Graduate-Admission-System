@@ -1,14 +1,19 @@
-import static org.junit.Assert.*;
+
 
 import com.myApp.model.BuddyInfo;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.util.AssertionErrors.assertTrue;
+
 
 public class BuddyInfoTest {
 	private BuddyInfo aBudInfo;
 	private int age;
 	
-	@Before
+	@BeforeAll
 	public void setUp() {
 		age = 20;
 		aBudInfo = new BuddyInfo("Name", "Location", "Number", age);
@@ -27,7 +32,7 @@ public class BuddyInfoTest {
 	
 	@Test
 	public void testBuddyInfoAge() {
-		assertEquals("", age, aBudInfo.getAge());
+		assertEquals(age, aBudInfo.getAge());
 	}
 	@Test
 	public void testBuddyInfoIsOver18() {

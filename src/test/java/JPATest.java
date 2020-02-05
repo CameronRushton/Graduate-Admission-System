@@ -1,5 +1,6 @@
 import com.myApp.model.BuddyInfo;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;

@@ -1,14 +1,19 @@
-import static org.junit.Assert.*;
+
+import static org.springframework.test.util.AssertionErrors.assertEquals;
+import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 import com.myApp.model.AddressBook;
 import com.myApp.model.BuddyInfo;
-import org.junit.Before;
-import org.junit.Test;
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.test.context.event.annotation.BeforeTestClass;
 
 public class AddressBookTest {
     private AddressBook book;
 
-    @Before
+    @BeforeAll
     public void setUp() {
         book = new AddressBook();
     }
