@@ -21,40 +21,22 @@ public class BuddyController {
         Iterable<BuddyInfo> buddies = repo.findAll();
         AddressBook book = new AddressBook();
         for (BuddyInfo bud : buddies) {
-//            model.addAttribute(bud);
             book.addBuddy(bud);
         }
         return book;
     }
 
-//    @GetMapping("/create")
-//    public String greetingForm(Model model) {
-//        model.addAttribute("buddy", new BuddyInfo());
-//        return "create";
-//    }
-
     @PostMapping("/create")
-    public String greetingSubmit(@ModelAttribute BuddyInfo buddy, Model model) {
-        String name = buddy.getName();
-        String address = buddy.getAddress();
-        String number=buddy.getPhoneNumber();
-        int age=buddy.getAge();
-        model.addAttribute("name", name);
-        repo.save(buddy);
-        return "result";
+    @ResponseBody
+    public BuddyInfo createBuddy(@RequestBody BuddyInfo buddy) {
+        return repo.save(buddy);
     }
 
     @DeleteMapping("/delete")
-    public String deleteBuddy(@RequestParam("id") Long id, Model model) {
-
-        String buddyName = "Unknown";
-        BuddyInfo bInfo = repo.findById(id).orElse(null);
-        if (bInfo != null) {
-            buddyName = bInfo.getName();
-        }
-        model.addAttribute("name", buddyName);
+    @ResponseBody
+    public String deleteBuddy(@RequestParam("id") Long id) {
         repo.deleteById(id);
-        return "deleteResult";
+        return "success";
     }
 
 }
