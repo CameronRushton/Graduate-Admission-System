@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -33,11 +33,6 @@ public class SpringMVCTest {
         this.mockMvc.perform(get("/buddies")).andDo(print()).andExpect(status().isOk());
     }
 
-    @Test
-    public void testCreateEndpoint() throws Exception {
-        this.mockMvc.perform(get("/create")).andDo(print()).andExpect(status().isOk());
-    }
-
     // How do I add a payload?
     @Test
     public void testCreatePostEndpoint() throws Exception {
@@ -46,6 +41,6 @@ public class SpringMVCTest {
 
     @Test
     public void testDeleteEndpoint() throws Exception {
-        this.mockMvc.perform(get("/delete?id=1")).andDo(print()).andExpect(status().isOk());
+        this.mockMvc.perform(delete("/delete?id=1")).andDo(print()).andExpect(status().isOk());
     }
 }

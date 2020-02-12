@@ -27,11 +27,11 @@ public class BuddyController {
         return book;
     }
 
-    @GetMapping("/create")
-    public String greetingForm(Model model) {
-        model.addAttribute("buddy", new BuddyInfo());
-        return "create";
-    }
+//    @GetMapping("/create")
+//    public String greetingForm(Model model) {
+//        model.addAttribute("buddy", new BuddyInfo());
+//        return "create";
+//    }
 
     @PostMapping("/create")
     public String greetingSubmit(@ModelAttribute BuddyInfo buddy, Model model) {
@@ -44,7 +44,7 @@ public class BuddyController {
         return "result";
     }
 
-    @GetMapping("/delete")
+    @DeleteMapping("/delete")
     public String deleteBuddy(@RequestParam("id") Long id, Model model) {
 
         String buddyName = "Unknown";
