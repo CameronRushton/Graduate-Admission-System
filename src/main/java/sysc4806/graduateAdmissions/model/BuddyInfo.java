@@ -1,7 +1,6 @@
-package com.myApp.model;
+package sysc4806.graduateAdmissions.model;
 
 import javax.persistence.*;
-import java.util.Scanner;
 
 @Entity
 public class BuddyInfo {

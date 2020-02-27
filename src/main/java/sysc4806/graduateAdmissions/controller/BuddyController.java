@@ -1,12 +1,12 @@
-package com.myApp.controller;
+package sysc4806.graduateAdmissions.controller;
 
-import com.myApp.model.AddressBook;
-import com.myApp.model.BuddyInfo;
-import com.myApp.model.BuddyInfoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import sysc4806.graduateAdmissions.model.AddressBook;
+import sysc4806.graduateAdmissions.model.BuddyInfo;
+import sysc4806.graduateAdmissions.model.BuddyInfoRepository;
 
 @CrossOrigin(maxAge = 3600)
 @Controller

@@ -2,13 +2,11 @@
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 
-import com.myApp.model.AddressBook;
-import com.myApp.model.BuddyInfo;
-import org.aspectj.lang.annotation.Before;
-import org.junit.jupiter.api.BeforeAll;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
+import sysc4806.graduateAdmissions.model.AddressBook;
+import sysc4806.graduateAdmissions.model.BuddyInfo;
 
 public class AddressBookTest {
     private AddressBook book;
