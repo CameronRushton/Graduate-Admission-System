@@ -25,10 +25,10 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Privilege {
+    //the primary key for a privilege
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @EqualsAndHashCode.Exclude
-    //the primary key for a privilege
     private long id;
     //the type of CRUD operation the privilege specified
     private Operation operation;
