@@ -1,16 +1,16 @@
-package com.myApp;
+package sysc4806.graduateAdmissions;
 
-import com.myApp.model.BuddyInfo;
-import com.myApp.model.BuddyInfoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
+import sysc4806.graduateAdmissions.model.BuddyInfo;
+import sysc4806.graduateAdmissions.model.BuddyInfoRepository;
 
 @SpringBootApplication
-public class Application {
+public class GraduateAdmissions {
 
 //    @Autowired
 //    public void Application(ApplicationContext ctx) {
@@ -18,10 +18,10 @@ public class Application {
 //        System.out.println(Arrays.toString(definitions));
 //    }
 
-    private static final Logger log = LoggerFactory.getLogger(Application.class);
+    private static final Logger log = LoggerFactory.getLogger(GraduateAdmissions.class);
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(Application.class)
+        new SpringApplicationBuilder(GraduateAdmissions.class)
                 .headless(false)
                 .run(args);
     }

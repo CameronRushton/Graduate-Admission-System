@@ -1,12 +1,12 @@
-package com.myApp.controller;
+package sysc4806.graduateAdmissions.controller;
 
-import com.myApp.model.AddressBook;
-import com.myApp.model.BuddyInfoRepository;
-import com.myApp.model.BuddyInfo;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
+import sysc4806.graduateAdmissions.model.AddressBook;
+import sysc4806.graduateAdmissions.model.BuddyInfo;
+import sysc4806.graduateAdmissions.model.BuddyInfoRepository;
 
 @Component
 @Configuration
