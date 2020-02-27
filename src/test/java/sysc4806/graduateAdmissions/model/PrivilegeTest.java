@@ -5,6 +5,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tests for the Privilege class. Since we are using lombok to generate the
+ * constructors, getters, setters, etc. they are all explicitly tested here.
+ *
+ * @author luke
+ */
 class PrivilegeTest {
     private Privilege privilege;
     private long ID = 5;

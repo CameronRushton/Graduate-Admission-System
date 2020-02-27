@@ -2,6 +2,7 @@ package sysc4806.graduateAdmissions.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.GeneratedValue;
@@ -26,8 +27,9 @@ import javax.persistence.Id;
 public class Privilege {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @EqualsAndHashCode.Exclude
     //the primary key for a privilege
-    private transient long id;
+    private long id;
     //the type of CRUD operation the privilege specified
     private Operation operation;
     //the type of object that an operation is performed on
