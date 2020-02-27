@@ -13,7 +13,8 @@ public enum Target {
     APPLICATION("application"),
     INTEREST("interest"),
     TERM("term"),
-    USER("user");
+    USER("user"),
+    ROLE("role");
 
     @Getter
     private final String description;

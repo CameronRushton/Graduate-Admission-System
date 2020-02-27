@@ -24,5 +24,6 @@ class TargetTest {
         assertEquals(Target.INTEREST.getDescription(), "interest");
         assertEquals(Target.TERM.getDescription(), "term");
         assertEquals(Target.USER.getDescription(), "user");
+        assertEquals(Target.ROLE.getDescription(), "role");
     }
 }
