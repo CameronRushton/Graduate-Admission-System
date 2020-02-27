@@ -1,3 +1,2 @@
-# AddressBook
-SYSC Lab Sessions
-[![Build Status](https://travis-ci.org/CameronRushton/AddressBook.svg?branch=master)](https://travis-ci.org/CameronRushton/AddressBook)
+# Graduate Admission System
+This is a project to recreate a simple version of the Carletion graduate studies admission system, https://350.carleton.ca, for the course SYSC 4806.
