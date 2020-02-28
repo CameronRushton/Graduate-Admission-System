@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author luke
  */
 class OwnerTest {
+    /**Test that enum assignment works as expected*/
     @Test
     public void createEnumSuccessfully(){
         Owner owner = Owner.SELF;
@@ -18,6 +19,7 @@ class OwnerTest {
         assertSame(owner, Owner.SELF);
     }
 
+    /**Test that the descriptions on each enum value are as expected*/
     @Test
     public void checkDescriptions(){
         assertEquals(Owner.SELF.getDescription(), "self");

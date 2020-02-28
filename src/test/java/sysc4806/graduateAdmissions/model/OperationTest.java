@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author luke
  */
 class OperationTest {
+    /**Test that enum assignment works as expected*/
     @Test
     public void createEnumSuccessfully(){
         Operation operation = Operation.CREATE;
@@ -18,6 +19,7 @@ class OperationTest {
         assertSame(operation, Operation.CREATE);
     }
 
+    /**Test that the descriptions on each enum value are as expected*/
     @Test
     public void checkDescriptions(){
         assertEquals(Operation.CREATE.getDescription(), "create");
