@@ -1,0 +1,26 @@
+<template>
+    <nav>
+        <div class="${scroll_position > 90 && screenWidth > 500? 'header2':'header1'}">
+            <div class="${scroll_position > 90 && screenWidth > 500? 'remove no-display':'title opacity1'}">
+                <!-- <img src="/assets/images/logo.png" alt="" class="logo"> -->
+                Cameron Rushton
+            </div>
+            <div if.bind="screenWidth > 600" class="navigation ${scroll_position > 90 && screenWidth > 500? 'remove':'opacity1'}">
+                <a repeat.for="route of router.routes" class="item ${route.navModel.isActive? 'active':''} " href.bind="route.route">${route.title}</a>
+            </div>
+            <div else class="navigation ${scroll_position > 90 && screenWidth > 500? 'remove':'opacity1'}">
+                <img click.trigger="showNavOptions = !showNavOptions" src="/assets/images/mobile-hamburger.png"/>
+            </div>
+            
+            <div class="navigation2 ${scroll_position > 90 && screenWidth > 500? 'opacity1':'remove no-display'}">
+                <!-- <a class="item" click.delegate="scroll_fn()" style="font-family: monospace; font-size: 30px; cursor: pointer;">^</a> -->
+                <a repeat.for="route of router.routes" class="item ${route.navModel.isActive? 'active':''} " href.bind="route.route">${route.char}</a>
+            </div>
+        </div>
+        <div show.bind="showNavOptions && screenWidth < 600" class="mobile-nav-options">
+            <div repeat.for="route of router.routes" class="mobile-nav-item">
+                <a class="item ${route.navModel.isActive? 'active':''} " href.bind="route.route">${route.title}</a>
+            </div>
+        </div>
+    </nav>
+</template>

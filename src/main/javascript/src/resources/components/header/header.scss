@@ -1,0 +1,184 @@
+$green: #06b124;
+$title-color: #FFF;
+$subtitle-color: honeydew;
+$text-color: #DDD;
+$background-color: #1f2122;//#252525;
+$background-border: #2f3234;//#303030;
+$shoyu: #08D8B9;
+$blue: #005DAA;
+$violet: blueviolet;
+
+.header1 {
+    // background: $background-border;
+    background-image: linear-gradient(to right, #333, #222);
+    position: fixed;
+    width: 100%;
+    height: 80px;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
+    display: flex;
+    overflow: hidden;
+    justify-content: space-around;
+    padding-top: 5px;
+    transition: height 0.5s ease-out 0ms,
+      width 0.5s ease-out 0.5s,
+      top 0.5s ease-out 0ms,
+      left 0.5s ease-out 0ms;
+    .title {
+      font-family: inherit;
+      font-size: x-large;
+      font-weight: 600;
+      color: $title-color;
+      transition: opacity 0.3s ease-out 1.0s;
+      display: flex;
+      align-items: center;
+      .logo {
+        width: 70px;
+        height: 70px;
+      }
+    }
+    .navigation {
+      display: flex;
+      align-items: center;
+      transition: opacity 0.3s ease-out 1.0s;
+      .item {
+        display: flex;
+        height: fit-content;
+        cursor: pointer;
+        margin-right: 20px;
+        font-size: 20px;
+        color: $subtitle-color;
+        &.active {
+          border-bottom: 2px solid $green;
+        }
+      }
+      .item:hover {
+        color: $text-color;
+      }
+    }
+    &.fixed {
+      position: fixed;
+      z-index: 5;
+    }
+  }
+  
+  // header for mobile devices
+  @media screen and (max-width: 600px) {
+    .header1 {
+      background: $background-border;
+      position: fixed;
+      z-index: 1;
+      width: 100%;
+      height: 80px;
+      top: 0px;
+      left: 0px;
+      display: flex;
+      overflow: hidden;
+      justify-content: space-around;
+      padding-top: 5px;
+      transition: height 0.5s ease-out 0ms,
+        width 0.5s ease-out 0.5s,
+        top 0.5s ease-out 0ms,
+        left 0.5s ease-out 0ms;
+      .title {
+        font-family: inherit;
+        font-size: x-large;
+        font-weight: 600;
+        color: $title-color;
+        transition: opacity 0.3s ease-out 1.0s;
+        display: flex;
+        align-items: center;
+        .logo {
+          width: 70px;
+          height: 70px;
+        }
+      }
+      .navigation {
+        display: flex;
+        align-items: center;
+        transition: opacity 0.3s ease-out 1.0s;
+        img {
+          width: 50px;
+          height: 50px;
+          margin: 0px 20px;
+        }
+        .item {
+          display: flex;
+          height: fit-content;
+          cursor: pointer;
+          margin-right: 20px;
+          font-size: 20px;
+          color: $subtitle-color;
+          &.active {
+            border-bottom: 2px solid $green;
+          }
+        }
+        .item:hover {
+          color: $text-color;
+        }
+      }
+      &.fixed {
+        position: fixed;
+        z-index: 5;
+      }
+    }
+  }
+  .mobile-nav-options {
+    top: 80px;
+    position: fixed;
+    z-index: 1;
+    background-color: $background-border;
+    width: 100%;
+    text-align: center;
+    .mobile-nav-item {
+      cursor: pointer;
+      border-bottom: 1px solid black;
+      a {
+        color: $subtitle-color;
+        
+      }
+    }
+  }
+  
+  // Header on side of screen
+  
+  .header2 {
+    // background: $background-border;
+    background-image: linear-gradient(to bottom, #333, #222);
+    position: fixed;
+    overflow: hidden;
+    font-size: 25px;
+    left: 20px;
+    top: 25vh;
+    width: 40px;
+    height: 300px;
+    transition: width 0.5s ease-out 0ms,
+      height 0.5s ease-out 0.5s,
+      top 0.5s ease-out 0ms,
+      left 0.5s ease-out 0ms;
+    z-index: 5;
+    border-radius: 20px;
+    .navigation2 {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      text-align: center;
+      height: 100%;
+      transition: opacity 0.5s ease-out 1.0s;
+      .angle-arrow {
+        font-family: monospace;
+        font-size: 30px;
+        cursor: pointer;
+      }
+      .item {
+        color: $subtitle-color;
+        &.active {
+          border-right: 1px solid $green;
+        }
+      }
+      .item:hover {
+        color: $text-color;
+      }
+    }
+  }

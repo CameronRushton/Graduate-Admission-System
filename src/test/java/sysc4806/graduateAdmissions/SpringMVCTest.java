@@ -33,7 +33,7 @@ public class SpringMVCTest {
 //        when(repo.findAll()).thenReturn(myBuddies);
 //        this.mockMvc.perform(get("/buddies")).andDo(print()).andExpect(status().isOk())
 //                .andExpect(content().string(containsString("Kim")));
-        this.mockMvc.perform(get("/buddies")).andDo(print()).andExpect(status().isOk());
+        this.mockMvc.perform(get("/api/v0/buddies")).andDo(print()).andExpect(status().isOk());
     }
 
     @Test
@@ -53,7 +53,7 @@ public class SpringMVCTest {
         ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
         String requestJson=ow.writeValueAsString(buddyInfo);
 
-        mockMvc.perform(post("/create").contentType(APPLICATION_JSON_UTF8)
+        mockMvc.perform(post("/api/v0/create").contentType(APPLICATION_JSON_UTF8)
                 .content(requestJson))
                 .andDo(print())
                 .andExpect(status().isOk());
@@ -61,6 +61,6 @@ public class SpringMVCTest {
 
     @Test
     public void testDeleteEndpoint() throws Exception {
-        this.mockMvc.perform(delete("/delete?id=1")).andDo(print()).andExpect(status().isOk());
+        this.mockMvc.perform(delete("/api/v0/delete?id=1")).andDo(print()).andExpect(status().isOk());
     }
 }

@@ -1,0 +1,25 @@
+<template>
+	<table style="width: 100%;">
+		<thead>
+			<tr>
+				<th if.bind="selectionMode !== 'none' && !checkHidden" class="w2">
+					<input type="checkbox" checked.bind="selectAll" if.bind="selectionMode === 'multi'" change.delegate="selectAllChecked()">
+				</th>
+				<th repeat.for="column of columns" click.delegate="handleSorting(column)">
+					<span replaceable part="header">${column}</span>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr repeat.for="item of items" click.delegate="selectRow(item, $event, $index)"
+					class="${item.deleted ? 'deleted' : ''} ${item.customTableSelected ? 'bg-lightest-blue' : ''} ${selectionMode !== 'none' ? 'highlight' : ''} ${rowClass}">
+				<td if.bind="selectionMode !== 'none'" class="${checkHidden ? 'hidden' : ''}">
+					<input type="checkbox" checked.two-way="item.customTableSelected" change.delegate="selectCheckboxRow(item, $event, $index)">
+				</td>
+				<template replaceable part="row">
+					<td>${item}</td>
+				</template>
+			</tr>
+		</tbody>
+	</table>
+</template>
