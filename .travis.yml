@@ -15,4 +15,4 @@ deploy:
     app: "graduate-admission-system"
     env: "prod"
     on:
-      branch: master
+      branch: crushton/single-app-deployment
