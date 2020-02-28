@@ -6,3 +6,8 @@ deploy:
   api-key:
     secure: $HEROKU_API_KEY
   app: Graduate-Admission-System
+  on:
+    repo: CameronRushton/Graduate-Admission-System
+    branches:
+      only:
+        - crushton/single-app-deployment
