@@ -20,7 +20,7 @@ class PrivilegeTest {
 
     @BeforeEach
     public void setUp(){
-        privilege = new Privilege();
+        privilege = Privilege.builder().build();
     }
 
     @Test
@@ -35,6 +35,16 @@ class PrivilegeTest {
     @Test
     public void testArgsConstructor(){
         privilege = new Privilege(ID, operation, target, owner);
+        assertEquals(ID, privilege.getId());
+        assertEquals(operation, privilege.getOperation());
+        assertEquals(target, privilege.getTarget());
+        assertEquals(owner, privilege.getOwner());
+    }
+
+    @Test
+    public void testBuilder(){
+        privilege = Privilege.builder().id(ID).operation(operation)
+                .owner(owner).target(target).build();
         assertEquals(ID, privilege.getId());
         assertEquals(operation, privilege.getOperation());
         assertEquals(target, privilege.getTarget());
