@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author luke
  */
 class TargetTest {
+    /**Test that enum assignment works as expected*/
     @Test
     public void createEnumSuccessfully(){
         Target target = Target.APPLICATION;
@@ -18,6 +19,7 @@ class TargetTest {
         assertSame(target, Target.APPLICATION);
     }
 
+    /**Test that the descriptions on each enum value are as expected*/
     @Test
     public void checkDescriptions(){
         assertEquals(Target.APPLICATION.getDescription(), "application");
