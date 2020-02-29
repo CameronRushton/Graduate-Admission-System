@@ -12,7 +12,7 @@ Kevin Sun
 The project is broken up into weekly sprints, each with their own Kanban board. These can be viewed on the repository's "Projects" tab, here: https://github.com/CameronRushton/Graduate-Admission-System/projects
 
 ## Project Status
-The project is in its [first sprint](https://github.com/CameronRushton/Graduate-Admission-System/projects/1). The focus of this sprint is to set up the system model, along with a basic interface for each object that can perform CRUD operations. This will result in an application that performs like the AddressBook created in labs 1-5, but with out own model. This will serve as the base for the remainder of the project.
+The project is in its [first sprint](https://github.com/CameronRushton/Graduate-Admission-System/projects/1). The focus of this sprint is to set up the system model, along with a basic interface for each object that can perform CRUD operations. This will result in an application that performs like the AddressBook created in labs 1-5, but with our own model. This will serve as the base for the remainder of the project.
 
 ## Model Class Diagram
 ![UML Class Diagram](/diagrams/ClassDiagram.PNG)
