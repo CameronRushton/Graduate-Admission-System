@@ -1,5 +1,5 @@
 {
-  "name": "anime-anthology",
+  "name": "aurelia-initializr",
   "type": "project:application",
   "bundler": {
     "id": "webpack",

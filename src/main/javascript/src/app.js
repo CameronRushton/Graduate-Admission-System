@@ -23,6 +23,12 @@ export class App {
 				name: 'home',
 				moduleId: PLATFORM.moduleName('pages/home/home'),
 				title: "Home",
+			},
+			{
+				route: '/login',
+				name: 'login',
+				moduleId: PLATFORM.moduleName('pages/login/login'),
+				title: "Login",
 			}
 		]);
 	}

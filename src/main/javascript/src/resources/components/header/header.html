@@ -3,7 +3,7 @@
         <div class="${scroll_position > 90 && screenWidth > 500? 'header2':'header1'}">
             <div class="${scroll_position > 90 && screenWidth > 500? 'remove no-display':'title opacity1'}">
                 <!-- <img src="/assets/images/logo.png" alt="" class="logo"> -->
-                Cameron Rushton
+                Graduate Admissions
             </div>
             <div if.bind="screenWidth > 600" class="navigation ${scroll_position > 90 && screenWidth > 500? 'remove':'opacity1'}">
                 <a repeat.for="route of router.routes" class="item ${route.navModel.isActive? 'active':''} " href.bind="route.route">${route.title}</a>
