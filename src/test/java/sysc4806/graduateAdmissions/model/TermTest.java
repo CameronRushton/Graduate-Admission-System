@@ -5,12 +5,17 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tests the functionality of the Term class
+ *
+ * @author Eric
+ */
 public class TermTest {
 
     private Term term;
     private Long id = 1L;
     private String deadline = "deadline";
-    private String semester = "semester";
+    private Season season = Season.WINTER;
     private String year = "year";
 
 
@@ -20,87 +25,94 @@ public class TermTest {
     }
 
     @Test
-    public void testNoArgsConstructor(){
+    /* Create a Term without arguments and verify correct defaults are set */
+    public void testNoArgsConstructor() {
         assertNotNull(term);
         assertNotNull(term.getId());
-        assertEquals(id, term.getId());
         assertFalse(term.isActive());
         assertNull(term.getDeadline());
-        assertNull(term.getSemester());
+        assertNull(term.getSeason());
         assertNull(term.getYear());
     }
 
     @Test
-    public void testAllArgsConstructor(){
-        term = new Term(deadline, semester, year, true);
+    /* Create a Term with all arguments and verify correct defaults are set */
+    public void testAllArgsConstructor() {
+        term = new Term(deadline, season, year, true);
 
         assertNotNull(term);
         assertNotNull(term.getId());
         assertTrue(term.isActive());
         assertEquals(deadline, term.getDeadline());
-        assertEquals(semester, term.getSemester());
+        assertEquals(season, term.getSeason());
         assertEquals(year, term.getYear());
     }
 
     @Test
-    public void testSetActive(){
+    /* Test that setActive sets it active */
+    public void testSetActive() {
         term.setActive(true);
 
         assertNotNull(term.getId());
         assertTrue(term.isActive());
         assertNull(term.getDeadline());
-        assertNull(term.getSemester());
+        assertNull(term.getSeason());
         assertNull(term.getYear());
     }
 
     @Test
-    public void testSetDeadline(){
+    /* Test that setDeadline sets a deadline */
+    public void testSetDeadline() {
         term.setDeadline(deadline);
 
         assertNotNull(term.getId());
         assertFalse(term.isActive());
         assertEquals(deadline, term.getDeadline());
-        assertNull(term.getSemester());
+        assertNull(term.getSeason());
         assertNull(term.getYear());
     }
 
     @Test
-    public void testSetSemester(){
-        term.setSemester(semester);
+    /* Test that setSeason sets the season */
+    public void testSetSemester() {
+        term.setSeason(season);
 
         assertNotNull(term.getId());
         assertFalse(term.isActive());
         assertNull(term.getDeadline());
-        assertEquals(semester, term.getSemester());
+        assertEquals(season, term.getSeason());
         assertNull(term.getYear());
     }
 
     @Test
-    public void testSetYear(){
+    /* Test that setYear sets the year */
+    public void testSetYear() {
         term.setYear(year);
 
         assertNotNull(term.getId());
         assertFalse(term.isActive());
         assertNull(term.getDeadline());
-        assertNull(term.getSemester());
+        assertNull(term.getSeason());
         assertEquals(year, term.getYear());
     }
 
     @Test
-    public void testEquals(){
-        term = new Term(deadline, semester, year, true);
+    /* Test equals is true given two identical Terms */
+    public void testEquals() {
+        term = new Term(deadline, season, year, true);
         term.setId(id);
-        Term identicalTerm = new Term(deadline, semester, year, true);
+        Term identicalTerm = new Term(deadline, season, year, true);
         identicalTerm.setId(id);
 
         assertTrue(term.equals(identicalTerm));
     }
 
     @Test
-    public void testNotEquals(){
-        term = new Term(deadline, semester, year, true);
+    /* Test equals is false when comparing against a Term with different Season, deadline, year and id */
+    public void testNotEquals() {
+        term = new Term(deadline, season, year, true);
         term.setId(id);
-        Term differentTerm = new Term("different-deadline", "different-semester", "different-year", false);
+        Term differentTerm = new Term("different-deadline", Season.SUMMER, "different-year", false);
         term.setId(2L);
 
         assertFalse(term.equals(differentTerm));
