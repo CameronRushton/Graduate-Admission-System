@@ -38,9 +38,20 @@ public class TermTest {
     @Test
     /* Create a Term with all arguments and verify correct defaults are set */
     public void testAllArgsConstructor() {
+        term = new Term(1L, true, deadline, season, year);
+
+        assertEquals(id, term.getId());
+        assertTrue(term.isActive());
+        assertEquals(deadline, term.getDeadline());
+        assertEquals(season, term.getSeason());
+        assertEquals(year, term.getYear());
+    }
+
+    @Test
+    /* Create a Term with all arguments except the id and verify correct defaults are set */
+    public void testNoIDConstructor() {
         term = new Term(deadline, season, year, true);
 
-        assertNotNull(term);
         assertNotNull(term.getId());
         assertTrue(term.isActive());
         assertEquals(deadline, term.getDeadline());
@@ -99,10 +110,8 @@ public class TermTest {
     @Test
     /* Test equals is true given two identical Terms */
     public void testEquals() {
-        term = new Term(deadline, season, year, true);
-        term.setId(id);
-        Term identicalTerm = new Term(deadline, season, year, true);
-        identicalTerm.setId(id);
+        term = new Term(id, true, deadline, season, year);
+        Term identicalTerm = new Term(id, true, deadline, season, year);
 
         assertTrue(term.equals(identicalTerm));
     }
@@ -110,10 +119,8 @@ public class TermTest {
     @Test
     /* Test equals is false when comparing against a Term with different Season, deadline, year and id */
     public void testNotEquals() {
-        term = new Term(deadline, season, year, true);
-        term.setId(id);
-        Term differentTerm = new Term("different-deadline", Season.SUMMER, "different-year", false);
-        term.setId(2L);
+        term = new Term(id, true, deadline, season, year);
+        Term differentTerm = new Term(2L, false, "different-deadline", Season.SUMMER, "different-year");
 
         assertFalse(term.equals(differentTerm));
     }

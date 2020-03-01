@@ -12,11 +12,9 @@ import javax.persistence.Id;
  *
  * @author Eric
  */
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
-@ToString
-@EqualsAndHashCode
+@AllArgsConstructor
 @Entity
 public class Term {
 
