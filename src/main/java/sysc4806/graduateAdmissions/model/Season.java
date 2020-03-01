@@ -1,7 +1,7 @@
 package sysc4806.graduateAdmissions.model;
 
 /**
- * Possible semesters for a Term
+ * Possible seasons for a Term
  *
  * @author Eric
  */

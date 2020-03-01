@@ -74,7 +74,7 @@ public class TermTest {
 
     @Test
     /* Test that setSeason sets the season */
-    public void testSetSemester() {
+    public void testSetSeason() {
         term.setSeason(season);
 
         assertNotNull(term.getId());
