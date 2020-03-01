@@ -30,11 +30,11 @@ public class GraduateAdmissions {
     public CommandLineRunner demo(BuddyInfoRepository repository) {
         return (args) -> {
             // save a few customers
-            repository.save(new BuddyInfo("Jack", "address", "number", 1));
-            repository.save(new BuddyInfo("Chloe", "O'Brian", "number", 1));
-            repository.save(new BuddyInfo("Kim", "Bauer", "number", 1));
-            repository.save(new BuddyInfo("David", "Palmer", "number", 1));
-            repository.save(new BuddyInfo("Michelle", "Dessler", "number", 1));
+            repository.save(new BuddyInfo("Jack", "address1", "number", 1));
+            repository.save(new BuddyInfo("Chloe", "123 eagfege", "number", 1));
+            repository.save(new BuddyInfo("Kim", "245 aefeg", "number", 1));
+            repository.save(new BuddyInfo("David", "23 grhgrhr", "number", 1));
+            repository.save(new BuddyInfo("Michelle", "980 sdfgeg", "number", 1));
 
             // fetch all customers
             log.info("BuddyInfos found with findAll():");
