@@ -6,6 +6,12 @@ import sysc4806.graduateAdmissions.model.Interest;
 
 import java.util.List;
 
+/**
+ * This repository enables retrieval of Interest objects from persistent storage.
+ * Interests can be fetched by id, or by department.
+ *
+ * @author luke
+ */
 public interface InterestRepository extends CrudRepository<Interest, Long> {
     List<Interest> findByDepartment(Department department);
     Interest findById(long id);
