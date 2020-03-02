@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sysc4806.graduateAdmissions.model.AddressBook;
 import sysc4806.graduateAdmissions.model.BuddyInfo;
-import sysc4806.graduateAdmissions.model.BuddyInfoRepository;
+import sysc4806.graduateAdmissions.repositories.BuddyInfoRepository;
 
 
 @Controller
