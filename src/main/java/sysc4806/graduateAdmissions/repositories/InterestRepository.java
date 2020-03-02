@@ -14,5 +14,4 @@ import java.util.List;
  */
 public interface InterestRepository extends CrudRepository<Interest, Long> {
     List<Interest> findByDepartment(Department department);
-    Interest findById(long id);
 }

@@ -1,8 +1,6 @@
 package sysc4806.graduateAdmissions.model;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -17,6 +15,8 @@ import javax.persistence.*;
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Interest {
     //the primary key

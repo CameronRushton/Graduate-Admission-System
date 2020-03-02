@@ -1,10 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Create Interest</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-$END$
+<h1 th:text="${operation} + ' Interest'"/>
+<form action="#" th:action="@{${postLocation}}" th:object="${interest}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <p>Department: <input type="text" th:field="*{department}" /></p>
+    <p>Keyword: <input type="text" th:field="*{keyword}" /></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
 </body>
 </html>
