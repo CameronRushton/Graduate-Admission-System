@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Create Interest</title>
+    <title th:text="${operation} + ' Interest'"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<h1 th:text="${operation} + ' Interest'"/>
+<h1 th:text="${operation} + ' Interest'"></h1>
 <form action="#" th:action="@{${postLocation}}" th:object="${interest}" method="post">
     <input type="hidden" th:field="*{id}"/>
     <p>Department: <input type="text" th:field="*{department}" /></p>

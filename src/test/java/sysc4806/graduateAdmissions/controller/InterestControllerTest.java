@@ -57,16 +57,14 @@ class InterestControllerTest {
                 Interest.builder().id(3).department(Department.MAAE).keyword("gears").build(),
                 Interest.builder().id(4).department(Department.SREE).keyword("grilled_cheese").build());
 
-        //mocks for GET requests
         when(repo.findAll()).thenReturn(interests);
         when(repo.findByDepartment(Department.SYSC)).thenReturn(interests.subList(0, 3));
         when(repo.findByDepartment(Department.MAAE)).thenReturn(Collections.singletonList(interests.get(3)));
         when(repo.findByDepartment(Department.SREE)).thenReturn(Collections.singletonList(interests.get(4)));
-        for(int i = 0; i <= 4; i++)
+        for(int i = 0; i <= 4; i++) {
             when(repo.findById((long) i)).thenReturn(Optional.of(interests.get(i)));
-
-        //mocks for DELETE requests
-        doNothing().when(repo).deleteById((long) 3);
+            doNothing().when(repo).deleteById((long) i);
+        }
     }
 
     /**
@@ -135,5 +133,41 @@ class InterestControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
         assertTrue(result.getResponse().getContentAsString().contains("interest gears in MAAE successfully deleted"));
+    }
+
+    /**Test Interest deletion failing due to the Interest not existing*/
+    @Test
+    public void testDeleteInterestDoesNotExist() throws Exception {
+        MvcResult result = mockMvc.perform(delete("/interest/delete/{id}", "42"))
+                .andExpect(status().isOk())
+                .andReturn();
+        assertTrue(result.getResponse().getContentAsString().contains("specified interest not found"));
+    }
+
+    /**Test the retrieval of the update interest page*/
+    @Test
+    public void testGetUpdateInterestForm() throws Exception {
+        MvcResult result = this.mockMvc.perform(get("/interest/update?id=3"))
+                .andExpect(status().isOk()).andReturn();
+        assertTrue(result.getResponse().getContentAsString().contains("<title>Update Interest</title>"));
+    }
+
+    /**Test Interest update*/
+    @Test
+    public void testUpdateInterest() throws Exception {
+        MvcResult result = mockMvc.perform(post("/interest/update").contentType(APPLICATION_JSON_UTF8)
+                .content(toJson(
+                        Interest.builder().department(Department.MAAE).keyword("wheels").build())))
+                .andExpect(status().isOk())
+                .andReturn();
+        assertTrue(result.getResponse().getContentAsString().contains("interest successfully updated"));
+    }
+
+    /**Test Interest updating failing due to the Interest not existing*/
+    @Test
+    public void testUpdateInterestDoesNotExist() throws Exception {
+        MvcResult result = this.mockMvc.perform(get("/interest/update?id=42"))
+                .andExpect(status().isOk()).andReturn();
+        assertTrue(result.getResponse().getContentAsString().contains("specified interest not found"));
     }
 }

@@ -69,13 +69,16 @@ public class InterestController {
     @GetMapping("/update")
     public String updateInterestForm(@RequestParam long id, Model model){
         Optional<Interest> interest = repo.findById(id);
-        if(!interest.isPresent())
-            return null;
-        model.addAttribute("interest", interest.get());
-        model.addAttribute("id", interest.get().getId());
-        model.addAttribute("postLocation", "/interest/update");
-        model.addAttribute("operation", "Update");
-        return "interest/create";
+        if(interest.isPresent()) {
+            model.addAttribute("interest", interest.get());
+            model.addAttribute("id", interest.get().getId());
+            model.addAttribute("postLocation", "/interest/update");
+            model.addAttribute("operation", "Update");
+            return "interest/create";
+        } else{
+            model.addAttribute("message", "specified interest not found");
+            return "interest/result";
+        }
     }
 
     @PostMapping("/update")
