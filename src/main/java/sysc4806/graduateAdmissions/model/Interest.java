@@ -4,10 +4,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 
 /**
  * This class represents an interest area for a user. This is used to match
@@ -27,6 +25,7 @@ public class Interest {
     @EqualsAndHashCode.Exclude
     private long id;
     //the department for interest context
+    @Enumerated(EnumType.STRING)
     private Department department;
     //the keyword which defines the interest
     private String keyword;
