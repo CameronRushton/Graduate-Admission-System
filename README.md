@@ -1,6 +1,8 @@
 # Graduate Admission System
 This is a project to recreate a simple version of the Carleton graduate studies admission system, https://360.carleton.ca, for the course SYSC 4806.
 
+[![Build Status](https://travis-ci.org/CameronRushton/Graduate-Admission-System.svg?branch=master)](https://travis-ci.org/CameronRushton/Graduate-Admission-System)
+
 ## Authors
 Eric Bedard <br>
 Madelyn Krasnay <br>
