@@ -15,7 +15,7 @@ public class userTest {
 	private long id = 1234;
     private User user;
     private String firstName = "John";
-    private Season lastName = "Smith";
+    private LastName lastName = "Smith";
     private String email "JohnSmith@gmail.com";
     private String password = "password"; 
 	private String role = "Student";
@@ -52,7 +52,7 @@ public class userTest {
         user = new user(id, firstName, lastName, email, password, role, interests, applications);
         assertEquals(id, user.getId());
         assertEquals(firstName, user.getFirstName());
-        assertEquals(lastName, user.getSeason());
+        assertEquals(lastName, user.getLastName());
         assertEquals(email, user.getEmail());
         assertEquals(password, user.getPassword());
 		assertEquals(role, user.getRole());
@@ -67,7 +67,7 @@ public class userTest {
 		
 		assertNotNull(user.getId());
         assertEquals(firstName, user.getFirstName());
-        assertEquals(lastName, user.getSeason());
+        assertEquals(lastName, user.getLastName());
         assertEquals(email, user.getEmail());
         assertEquals(password, user.getPassword());
 		assertEquals(role, user.getRole());
@@ -82,7 +82,7 @@ public class userTest {
 
         assertNotNull(user.getId());
         assertEquals("Bob", user.getFirstName());
-        assertEquals(lastName, user.getSeason());
+        assertEquals(lastName, user.getLastName());
         assertEquals(email, user.getEmail());
         assertEquals(password, user.getPassword());
 		assertEquals(role, user.getRole());
@@ -97,7 +97,7 @@ public class userTest {
 
 		assertNotNull(user.getId());
         assertEquals(firstName, user.getFirstName());
-        assertEquals("Brown", user.getSeason());
+        assertEquals("Brown", user.getLastName());
         assertEquals(email, user.getEmail());
         assertEquals(password, user.getPassword());
 		assertEquals(role, user.getRole());
@@ -112,7 +112,7 @@ public class userTest {
 
 		assertNotNull(user.getId());
         assertEquals(firstName, user.getFirstName());
-        assertEquals(lastName, user.getSeason());
+        assertEquals(lastName, user.getLastName());
         assertEquals("newEmail@gmail.com", user.getEmail());
         assertEquals(password, user.getPassword());
 		assertEquals(role, user.getRole());
@@ -127,7 +127,7 @@ public class userTest {
 
 		assertNotNull(user.getId());
         assertEquals(firstName, user.getFirstName());
-        assertEquals(lastName, user.getSeason());
+        assertEquals(lastName, user.getLastName());
         assertEquals(email, user.getEmail());
         assertEquals(password, user.getPassword());
 		assertEquals("Professor", user.getRole());
@@ -142,7 +142,7 @@ public class userTest {
 
 		assertNotNull(user.getId());
         assertEquals(firstName, user.getFirstName());
-        assertEquals(lastName, user.getSeason());
+        assertEquals(lastName, user.getLastName());
         assertEquals(email, user.getEmail());
         assertEquals("newPassword", user.getPassword());
 		assertEquals(role, user.getRole());
@@ -160,7 +160,7 @@ public class userTest {
 
 		assertNotNull(user.getId());
         assertEquals(firstName, user.getFirstName());
-        assertEquals(lastName, user.getSeason());
+        assertEquals(lastName, user.getLastName());
         assertEquals(email, user.getEmail());
         assertEquals(password, user.getPassword());
 		assertEquals(role, user.getRole());
@@ -178,7 +178,7 @@ public class userTest {
 
 		assertNotNull(user.getId());
         assertEquals(firstName, user.getFirstName());
-        assertEquals(lastName, user.getSeason());
+        assertEquals(lastName, user.getLastName());
         assertEquals(email, user.getEmail());
         assertEquals(password, user.getPassword());
 		assertEquals(role, user.getRole());
@@ -196,7 +196,7 @@ public class userTest {
     }
 
     @Test
-    /* Test equals is false when comparing against a user with different Season, deadline, year and id */
+    /* Test equals is false when comparing against a user with different LastName, deadline, year and id */
     public void testNotEquals() {
         user = new user(firstName, lastName, email, password, role, interests, applications);
         User identicalUser = new user("Jane", "Doe", "JaneDoe@gmail.com", password, role, interests, applications);
