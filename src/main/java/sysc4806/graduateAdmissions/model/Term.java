@@ -2,9 +2,7 @@ package sysc4806.graduateAdmissions.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Represents a Term (4 month period)
@@ -23,6 +21,7 @@ public class Term {
     private long id;
     private boolean active;
     private String deadline;
+    @Enumerated(EnumType.STRING)
     private Season season;
     private String year;
 
