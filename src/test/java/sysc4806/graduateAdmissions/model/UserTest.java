@@ -174,7 +174,7 @@ public class userTest {
 		applications = new ArrayList<String>();
 		applications.add("Arts");
 		applications.add("Business");
-        user.setApplication(applications);
+        user.setApplications(applications);
 
 		assertNotNull(user.getId());
         assertEquals(firstName, user.getFirstName());
@@ -199,7 +199,7 @@ public class userTest {
     /* Test equals is false when comparing against a user with different LastName, deadline, year and id */
     public void testNotEquals() {
         user = new User(firstName, lastName, email, password, role, interests, applications);
-        User differentuserUser = new User("Jane", "Doe", "JaneDoe@gmail.com", password, role, interests, applications);
+        User differentUser = new User("Jane", "Doe", "JaneDoe@gmail.com", password, role, interests, applications);
 
         assertFalse(user.equals(differentUser));
     }
