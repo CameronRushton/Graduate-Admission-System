@@ -1,10 +1,18 @@
 language: java
 jdk: openjdk8
-os: linux
+on: linux
 deploy:
   - provider: heroku
     api_key:
       secure: $HEROKU_API_KEY
     app: "graduate-admission-system"
+    env: "dev"
+    on:
+      branch: crushton/single-app-deployment
+  - provider: heroku
+    api_key:
+      secure: $HEROKU_API_KEY
+    app: "graduate-admission-system"
+    env: "prod"
     on:
       branch: crushton/single-app-deployment
