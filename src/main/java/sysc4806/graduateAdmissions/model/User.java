@@ -39,7 +39,7 @@ public class User {
      * @param ArrayList interest contains the chosen interests of the user
      * @param ArrayList application contains all applications of the user
      */
-    public Term(String firstname, String lastname, String mail, String pass, String r, ArrayList<String> interest, ArrayList<String> application){
+    public User(String firstname, String lastname, String mail, String pass, String r, ArrayList<String> interest, ArrayList<String> application){
         this.firstName = firstname;
         this.lastName = lastname;
         this.email = mail;
