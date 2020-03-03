@@ -133,4 +133,14 @@ public class InterestController {
         model.addAttribute("message", "interest successfully updated");
         return "interest/result";
     }
+
+    /**
+     * provides a page to view all interests
+     *
+     * @return the name of the page which shows all interests
+     */
+    @GetMapping("/view")
+    public String getInterestPage(){
+        return "interest/view";
+    }
 }
