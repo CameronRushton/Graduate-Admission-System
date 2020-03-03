@@ -16,7 +16,7 @@ public class userTest {
     private User user;
     private String firstName = "John";
     private LastName lastName = "Smith";
-    private String email "JohnSmith@gmail.com";
+    private String email = "JohnSmith@gmail.com";
     private String password = "password"; 
 	private String role = "Student";
 	private ArrayList<Interest> interests;
