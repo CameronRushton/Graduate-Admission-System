@@ -22,7 +22,7 @@ public class User {
     @GeneratedValue
 	private long id;
     private String firstName;
-    private Season lastName;
+    private String lastName;
     private String email;
     private String password; 
 	private String role;
