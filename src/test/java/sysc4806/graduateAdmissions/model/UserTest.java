@@ -49,7 +49,7 @@ public class userTest {
     @Test
     /* Create a user with all arguments and verify correct defaults are set */
     public void testAllArgsConstructor() {
-        user = new user(id, firstName, lastName, email, password, role, interests, applications);
+        user = new User(id, firstName, lastName, email, password, role, interests, applications);
         assertEquals(id, user.getId());
         assertEquals(firstName, user.getFirstName());
         assertEquals(lastName, user.getLastName());
@@ -63,7 +63,7 @@ public class userTest {
     @Test
     /* Create a user with all arguments except the id and verify correct defaults are set */
     public void testNoIDConstructor() {
-        user = new user(firstName, lastName, email, password, role, interests, applications);
+        user = new User(firstName, lastName, email, password, role, interests, applications);
 		
 		assertNotNull(user.getId());
         assertEquals(firstName, user.getFirstName());
@@ -189,8 +189,8 @@ public class userTest {
     @Test
     /* Test equals is true given two identical users */
     public void testEquals() {
-        user = new user(firstName, lastName, email, password, role, interests, applications);
-        User identicalUser = new user(firstName, lastName, email, password, role, interests, applications);
+        user = new User(firstName, lastName, email, password, role, interests, applications);
+        User identicalUser = new User(firstName, lastName, email, password, role, interests, applications);
 
         assertTrue(user.equals(identicalUser));
     }
@@ -198,8 +198,8 @@ public class userTest {
     @Test
     /* Test equals is false when comparing against a user with different LastName, deadline, year and id */
     public void testNotEquals() {
-        user = new user(firstName, lastName, email, password, role, interests, applications);
-        User differentuserUser = new user("Jane", "Doe", "JaneDoe@gmail.com", password, role, interests, applications);
+        user = new User(firstName, lastName, email, password, role, interests, applications);
+        User differentuserUser = new User("Jane", "Doe", "JaneDoe@gmail.com", password, role, interests, applications);
 
         assertFalse(user.equals(differentUser));
     }
