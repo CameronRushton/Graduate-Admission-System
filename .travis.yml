@@ -5,12 +5,6 @@ deploy:
   - provider: heroku
     api_key: $HEROKU_API_KEY
     app: "graduate-admission-system"
-    env: "dev"
-    on:
-      branch: crushton/single-app-deployment
-  - provider: heroku
-    api_key: $HEROKU_API_KEY
-    app: "graduate-admission-system"
     env: "prod"
     on:
       branch: crushton/single-app-deployment
