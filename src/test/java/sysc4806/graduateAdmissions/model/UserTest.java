@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author Kevin Sun
  */
-public class userTest {
+public class UserTest {
 
 	private long id = 1234;
     private User user;
