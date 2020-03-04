@@ -25,7 +25,7 @@ public class userTest {
 
     @BeforeEach
     void setUp() {
-		interests = new ArrayList<String>();
+		interests = new ArrayList<Interest>();
 		Interest i = new Interest(5, Department.SYSC, "Web Dev");
 		interests.add(i);
 		
@@ -153,7 +153,7 @@ public class userTest {
     @Test
     /* Test that setInterests sets the interests */
     public void testSetInterests() {
-		interests = new ArrayList<String>();
+		interests = new ArrayList<Interest>();
 		Interest i = new Interest(5, Department.SYSC, "Web Dev");
 		interests.add(i);
         user.setInterests(interests);
