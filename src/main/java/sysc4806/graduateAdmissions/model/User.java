@@ -26,7 +26,7 @@ public class User {
     private String email;
     private String password; 
 	private String role;
-	private ArrayList<String> interests;
+	private ArrayList<Interest> interests;
 	private ArrayList<String> applications; 
 
     /**
@@ -39,13 +39,13 @@ public class User {
      * @param ArrayList interest contains the chosen interests of the user
      * @param ArrayList application contains all applications of the user
      */
-    public User(String firstname, String lastname, String mail, String pass, String r, ArrayList<String> interest, ArrayList<String> application){
+    public User(String firstname, String lastname, String mail, String pass, String r, ArrayList<Interest> interest, ArrayList<String> application){
         this.firstName = firstname;
         this.lastName = lastname;
         this.email = mail;
         this.password = pass;
-		this.role = r;
-		this.interests = interest;
-		this.applications = application;
+	this.role = r;
+	this.interests = interest;
+	this.applications = application;
     }
 }
