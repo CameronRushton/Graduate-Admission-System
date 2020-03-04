@@ -119,21 +119,6 @@ public class userTest {
 		assertEquals(interests, user.getInterests());
 		assertEquals(applications, user.getApplications());	
     }
-
-	@Test
-    /* Test that setRole sets the role */
-    public void testSetEmail() {
-        user.setRole("Professor");
-
-		assertNotNull(user.getId());
-        assertEquals(firstName, user.getFirstName());
-        assertEquals(lastName, user.getLastName());
-        assertEquals(email, user.getEmail());
-        assertEquals(password, user.getPassword());
-		assertEquals("Professor", user.getRole());
-		assertEquals(interests, user.getInterests());
-		assertEquals(applications, user.getApplications());	
-    }
 	
     @Test
     /* Test that setPassword sets the password */
@@ -146,6 +131,21 @@ public class userTest {
         assertEquals(email, user.getEmail());
         assertEquals("newPassword", user.getPassword());
 		assertEquals(role, user.getRole());
+		assertEquals(interests, user.getInterests());
+		assertEquals(applications, user.getApplications());	
+    }
+
+		@Test
+    /* Test that setRole sets the role */
+    public void testSetRole() {
+        user.setRole("Professor");
+
+		assertNotNull(user.getId());
+        assertEquals(firstName, user.getFirstName());
+        assertEquals(lastName, user.getLastName());
+        assertEquals(email, user.getEmail());
+        assertEquals(password, user.getPassword());
+		assertEquals("Professor", user.getRole());
 		assertEquals(interests, user.getInterests());
 		assertEquals(applications, user.getApplications());	
     }
