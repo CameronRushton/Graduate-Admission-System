@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title th:text="${operation} + ' Interest'"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script th:src="|https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js|"></script>
+    <script th:src="@{/js/interest/populateSetInterestFieldsForm.js}"></script>
+</head>
+<body>
+<h1 th:text="${operation} + ' Interest'"></h1>
+<label for="departments">Department:</label>
+<select id="departments"  form="interestForm">
+</select>
+<form action="#" th:action="@{${postLocation}}" th:object="${interest}" method="post" id="interestForm">
+    <input type="hidden" th:field="*{id}"/>
+    <input id="department" type="hidden" th:field="*{department}"/>
+    <p>Keyword: <input type="text" th:field="*{keyword}" /></p>
+    <p><input id="submit" type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+</body>
+</html>
