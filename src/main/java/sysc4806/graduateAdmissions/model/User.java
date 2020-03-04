@@ -1,6 +1,8 @@
 package sysc4806.graduateAdmissions.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,9 +14,9 @@ import java.util.ArrayList;
  *
  * @author Kevin Sun
  */
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 @Entity
 public class User {
 
@@ -36,16 +38,16 @@ public class User {
      * @param lastname String represents the last name of the user
      * @param mail String represents the email of the user
      * @param r String represents the role of the user
-     * @param ArrayList interest contains the chosen interests of the user
-     * @param ArrayList application contains all applications of the user
+     * @param interest Array List interest contains the chosen interests of the user
+     * @param application ArrayList application contains all applications of the user
      */
     public User(String firstname, String lastname, String mail, String pass, String r, ArrayList<Interest> interest, ArrayList<String> application){
         this.firstName = firstname;
         this.lastName = lastname;
         this.email = mail;
         this.password = pass;
-	this.role = r;
-	this.interests = interest;
-	this.applications = application;
+        this.role = r;
+        this.interests = interest;
+        this.applications = application;
     }
 }

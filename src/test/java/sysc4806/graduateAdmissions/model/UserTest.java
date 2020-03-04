@@ -25,19 +25,17 @@ public class UserTest {
 
     @BeforeEach
     void setUp() {
-		interests = new ArrayList<Interest>();
-		Interest i = new Interest(5, Department.SYSC, "Web Dev");
-		interests.add(i);
-		
-		applications = new ArrayList<String>();
+
         user = new User();
     }
 
+
+    /** Create a User without arguments and verify correct defaults are set */
     @Test
-    /* Create a User without arguments and verify correct defaults are set */
     public void testNoArgsConstructor() {
         assertNotNull(user);
-        assertNotNull(user.getFirstName());
+        assertNotNull(user.getId());
+        assertNull(user.getFirstName());
         assertNull(user.getLastName());
         assertNull(user.getEmail());
         assertNull(user.getPassword());
@@ -49,6 +47,11 @@ public class UserTest {
     @Test
     /* Create a user with all arguments and verify correct defaults are set */
     public void testAllArgsConstructor() {
+        interests = new ArrayList<Interest>();
+        Interest i = new Interest(5, Department.SYSC, "Web Dev");
+        interests.add(i);
+        applications = new ArrayList<String>();
+
         user = new User(id, firstName, lastName, email, password, role, interests, applications);
         assertEquals(id, user.getId());
         assertEquals(firstName, user.getFirstName());
@@ -82,12 +85,12 @@ public class UserTest {
 
         assertNotNull(user.getId());
         assertEquals("Bob", user.getFirstName());
-        assertEquals(lastName, user.getLastName());
-        assertEquals(email, user.getEmail());
-        assertEquals(password, user.getPassword());
-		assertEquals(role, user.getRole());
-		assertEquals(interests, user.getInterests());
-		assertEquals(applications, user.getApplications());	
+        assertNull(user.getLastName());
+        assertNull(user.getEmail());
+        assertNull(user.getPassword());
+        assertNull(user.getRole());
+        assertNull(user.getInterests());
+        assertNull(user.getApplications());
     }
 
     @Test
@@ -96,13 +99,13 @@ public class UserTest {
         user.setLastName("Brown");
 
 		assertNotNull(user.getId());
-        assertEquals(firstName, user.getFirstName());
+        assertNull(user.getFirstName());
         assertEquals("Brown", user.getLastName());
-        assertEquals(email, user.getEmail());
-        assertEquals(password, user.getPassword());
-		assertEquals(role, user.getRole());
-		assertEquals(interests, user.getInterests());
-		assertEquals(applications, user.getApplications());	
+        assertNull(user.getEmail());
+        assertNull(user.getPassword());
+        assertNull(user.getRole());
+        assertNull(user.getInterests());
+        assertNull(user.getApplications());
     }
 
     @Test
@@ -111,13 +114,13 @@ public class UserTest {
         user.setEmail("newEmail@gmail.com");
 
 		assertNotNull(user.getId());
-        assertEquals(firstName, user.getFirstName());
-        assertEquals(lastName, user.getLastName());
+        assertNull(user.getFirstName());
+        assertNull(user.getLastName());
         assertEquals("newEmail@gmail.com", user.getEmail());
-        assertEquals(password, user.getPassword());
-		assertEquals(role, user.getRole());
-		assertEquals(interests, user.getInterests());
-		assertEquals(applications, user.getApplications());	
+        assertNull(user.getPassword());
+        assertNull(user.getRole());
+        assertNull(user.getInterests());
+        assertNull(user.getApplications());
     }
 	
     @Test
@@ -126,13 +129,13 @@ public class UserTest {
         user.setPassword("newPassword");
 
 		assertNotNull(user.getId());
-        assertEquals(firstName, user.getFirstName());
-        assertEquals(lastName, user.getLastName());
-        assertEquals(email, user.getEmail());
+        assertNull(user.getFirstName());
+        assertNull(user.getLastName());
+        assertNull(user.getEmail());
         assertEquals("newPassword", user.getPassword());
-		assertEquals(role, user.getRole());
-		assertEquals(interests, user.getInterests());
-		assertEquals(applications, user.getApplications());	
+        assertNull(user.getRole());
+        assertNull(user.getInterests());
+        assertNull(user.getApplications());
     }
 
 		@Test
@@ -141,10 +144,10 @@ public class UserTest {
         user.setRole("Professor");
 
 		assertNotNull(user.getId());
-        assertEquals(firstName, user.getFirstName());
-        assertEquals(lastName, user.getLastName());
-        assertEquals(email, user.getEmail());
-        assertEquals(password, user.getPassword());
+		assertNull(user.getFirstName());
+		assertNull(user.getLastName());
+		assertNull(user.getEmail());
+        assertNull(user.getPassword());
 		assertEquals("Professor", user.getRole());
 		assertEquals(interests, user.getInterests());
 		assertEquals(applications, user.getApplications());	
@@ -159,13 +162,13 @@ public class UserTest {
         user.setInterests(interests);
 
 		assertNotNull(user.getId());
-        assertEquals(firstName, user.getFirstName());
-        assertEquals(lastName, user.getLastName());
-        assertEquals(email, user.getEmail());
-        assertEquals(password, user.getPassword());
-		assertEquals(role, user.getRole());
+        assertNull(user.getFirstName());
+        assertNull(user.getLastName());
+        assertNull(user.getEmail());
+        assertNull(user.getPassword());
+		assertNull( user.getRole());
 		assertEquals(interests, user.getInterests());
-		assertEquals(applications, user.getApplications());	
+		assertNull(user.getApplications());
     }
 	
 	@Test
@@ -177,12 +180,12 @@ public class UserTest {
         user.setApplications(applications);
 
 		assertNotNull(user.getId());
-        assertEquals(firstName, user.getFirstName());
-        assertEquals(lastName, user.getLastName());
-        assertEquals(email, user.getEmail());
-        assertEquals(password, user.getPassword());
-		assertEquals(role, user.getRole());
-		assertEquals(interests, user.getInterests());
+        assertNull(user.getFirstName());
+        assertNull(user.getLastName());
+        assertNull(user.getEmail());
+        assertNull(user.getPassword());
+        assertNull( user.getRole());
+		assertNull(user.getInterests());
 		assertEquals(applications, user.getApplications());	
     }
 	
