@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Tests for the Operation enumeration. These tests check that an enum instance can
+ * Tests for the Status enumeration. These tests check that an enum instance can
  * be successfully created, and that the descriptions for each enum are correct.
  *
  * @author Madelyn

@@ -2,10 +2,20 @@ package sysc4806.graduateAdmissions.model;
 
 import lombok.*;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+/**
+ * An object that describes an application to a degree in our system. An application has
+ * an applicant, a department, degree, and professors that they are applying to study under,
+ * a status that describes what stage the application is in, and any information inputted by the
+ * applicant in the application forms.
+ *
+ * @author madelynkrasnay
+ */
+@Entity
 @Data
 @Builder
 @AllArgsConstructor
@@ -25,7 +35,7 @@ public class Application {
     //term that the application is for
     private Term term;
 
-    //department and degree type. We may wat to make
+    //department and degree type. We may want to make
     // these objects at some point in the future.
     private Department department;
     private String degree;

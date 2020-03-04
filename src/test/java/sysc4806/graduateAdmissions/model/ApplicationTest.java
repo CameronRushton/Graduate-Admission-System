@@ -5,6 +5,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+/**
+ * Tests for the Application object. These tests check that an Application Object can be created correctly.
+ * Since we are using lombok to generate the constructors, getters, setters, etc. they are all explicitly tested here.
+ *
+ * @author Madelyn
+ */
+
 class ApplicationTest {
 
     private Application application;
