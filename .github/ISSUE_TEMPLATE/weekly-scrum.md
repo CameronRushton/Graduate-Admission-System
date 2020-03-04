@@ -2,7 +2,7 @@
 name: Weekly Scrum
 about: For weekly scrum
 title: "[SCRUM] Week <number>"
-labels: ''
+labels: scrum
 assignees: ''
 
 ---
