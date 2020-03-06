@@ -1,9 +1,5 @@
 package sysc4806.graduateAdmissions.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +25,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static sysc4806.graduateAdmissions.utilities.Utility.toJson;
 
 /**
  * Tests for the InterestController using MockMVC and a mocked InterestRepository
@@ -65,20 +62,6 @@ class InterestControllerTest {
             when(repo.findById((long) i)).thenReturn(Optional.of(interests.get(i)));
             doNothing().when(repo).deleteById((long) i);
         }
-    }
-
-    /**
-     * helper method to convert objects into JSON format
-     *
-     * @param o the object to convert to JSON format
-     * @return a string contain the JSON for Object o
-     * @throws JsonProcessingException when JSON writing fails
-     */
-    private String toJson(Object o) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
-        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
-        return ow.writeValueAsString(o);
     }
 
     /**Test the retrieval of all interests*/
