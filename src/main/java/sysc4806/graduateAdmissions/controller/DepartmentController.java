@@ -2,10 +2,8 @@ package sysc4806.graduateAdmissions.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import sysc4806.graduateAdmissions.model.Department;
 
 /**
@@ -14,8 +12,7 @@ import sysc4806.graduateAdmissions.model.Department;
  * @author luke
  *
  */
-@Controller
-@RequestMapping("/department")
+@RestController
 public class DepartmentController {
 
     /**
@@ -23,8 +20,7 @@ public class DepartmentController {
      *
      * @return JSON containing every department name
      */
-    @ResponseBody
-    @GetMapping("/")
+    @GetMapping("/departments")
     public ResponseEntity getDepartments() {
         return ResponseEntity.status(HttpStatus.OK).body(Department.values());
     }

@@ -5,7 +5,7 @@
 				<th if.bind="selectionMode !== 'none' && !checkHidden" class="w2">
 					<input type="checkbox" checked.bind="selectAll" if.bind="selectionMode === 'multi'" change.delegate="selectAllChecked()">
 				</th>
-				<th repeat.for="column of columns" click.delegate="handleSorting(column)">
+				<th repeat.for="column of columns">
 					<span replaceable part="header">${column}</span>
 				</th>
 			</tr>

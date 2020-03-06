@@ -1,71 +1,35 @@
 import { inject } from 'aurelia-framework';
 import { Router } from "aurelia-router"
-import { BuddyManager } from 'managers/buddy-manager';
+import { DepartmentManager } from 'managers/department-manager';
 
-@inject(Router, BuddyManager)
+@inject(Router, DepartmentManager)
 export class Home {
     
-    constructor(router, buddyManager) {
+    constructor(router, departmentManager) {
         this.router = router;
-        this.buddyManager = buddyManager;
+        this.departmentManager = departmentManager;
         this.scrollTop = 0;
-        this.showSeeMore = false;
-        setTimeout(() => { this.showSeeMore = true; }, 5000);
 
-        this.buddies = [];
-        this.name = "Name";
-        this.address = "Address";
-        this.number = "Number";
-        this.age = "Age";
+        this.departments = [];
 
     }
 
     attached() {
-        this.getBuddies();
+        this.getDepartments();
     }
 
-    getBuddies() {
-        this.buddyManager.getBuddies().then(result => {
-            this.buddies = result.buddies;
+    getDepartments() {
+        this.departmentManager.getDepartments().then(result => {
+            this.departments = result;
         }).catch(error => {
-            console.log('Error getting buddies');
+            // TODO: Display a meaningful error message to the user to indicate something went wrong.
+            console.log('Error getting departments');
             console.log(error);
         });
-    }
-
-    addBuddy() {
-        let buddy = {
-            name: this.name,
-            address: this.address,
-            phoneNumber: this.number,
-            age: this.age
-        }
-        this.buddyManager.addBuddy(buddy).then(result => {
-            this.getBuddies();
-        }).catch(error => {
-            console.log('Error adding buddies');
-            console.log(error);
-        });
-    }
-
-    deleteBuddy(id) {
-        this.buddyManager.deleteBuddy(id).then(result => {
-            this.deletedBuddy = true;
-            
-            this.getBuddies();
-        }).catch(error => {
-            console.log('Error deleting buddy');
-            console.log(error);
-        });
-    }
-
-    selectTech(target) {
-        this.technologies.forEach(tech => {tech.isActive = false});
-        this.techDesc = target.desc;
-        target.isActive = !target.isActive;
     }
 
     handleScroll(event) {
+        // We should be able to see the scroll position in the console when we uncomment the following line
         // console.log(this.scrollTop)
     }
 
@@ -75,7 +39,7 @@ export class Home {
         });
     }
 
-    scrollFn() {
+    scrollToTopFn() {
         window.scrollTo({top: 0, behavior: 'smooth'});
         document.getElementById("top").scrollIntoView({ 
             behavior: 'smooth'

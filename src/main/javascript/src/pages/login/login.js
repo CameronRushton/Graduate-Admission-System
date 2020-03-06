@@ -1,11 +1,6 @@
-import { inject } from 'aurelia-framework';
-import { Router } from "aurelia-router"
-
-@inject(Router)
 export class Login {
     
-    constructor(router) {
-        this.router = router;
+    constructor() {
         this.scrollTop = 0;
     }
 
@@ -18,5 +13,4 @@ export class Login {
             behavior: 'smooth'
         });
     }
-
 }

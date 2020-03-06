@@ -1,4 +1,4 @@
-import { inject, observable, bindable } from 'aurelia-framework';
+import { inject, bindable } from 'aurelia-framework';
 import { Router } from "aurelia-router"
 
 @inject(Router)
@@ -16,7 +16,6 @@ export class Header {
                 route.char = route.title.charAt(0);
             }
         })
-        this.screenWidth = screen.width;
         this.showNavOptions = false;
     }
 
@@ -24,13 +23,5 @@ export class Header {
         if (newValue > 90) {
             this.showNavOptions = false;
         }
-    }
-
-    scrollToTop() {
-        // document.getElementById("top").scrollIntoView({ 
-        //     behavior: 'smooth'
-        // });
-        // window.scrollTo({top: 0, behavior: 'smooth'});
-        
     }
 }

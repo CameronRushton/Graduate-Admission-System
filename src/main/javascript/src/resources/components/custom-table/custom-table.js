@@ -5,7 +5,7 @@ export class CustomTable {
 
 	@bindable items;
 	@bindable columns;
-	@bindable selectionMode = "none";  // "multi", "single"
+	@bindable selectionMode = "none";  // "multi" or "single"
 	@bindable updateSelection;
 	@bindable sortingCustomTable;
 	@bindable rowClass = "";
@@ -67,18 +67,6 @@ export class CustomTable {
 				this.updateSelection.apply(this.parent, [ this.items.filter(i => i.customTableSelected) ]);
 			} else if (this.selectionMode === "single") {
 				this.updateSelection.apply(this.parent, [ this.items.find(i => i.customTableSelected) ]);
-			}
-		}
-	}
-
-	handleSorting(column) {
-		if (!column) {
-		  return null;
-		}
-		if (this.sortingCustomTable) {
-			if (column.sortName !== undefined){
-				column.sortOption = column.sortOption === 'Asc' ? 'Desc' : 'Asc';
-				this.sortingCustomTable.apply(this.parent, [column]);
 			}
 		}
 	}
