@@ -3,9 +3,7 @@ jdk:
   openjdk8
 deploy:
   - provider: heroku
-    api-key:
-      secure: $HEROKU_API_KEY
-    app: "graduate-admission-system"
-    env: "prod"
+    api_key: $HEROKU_API_KEY
+    app: "graduate-admission-staging"
     on:
-      branch: master
+      branch: crushton/postgresql
