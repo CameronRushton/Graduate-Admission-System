@@ -1,0 +1,18 @@
+<template>
+  <header scroll_position.bind="scrollTop" scroll_fn.bind="scrollFn"></header>
+  <div class="scroll-cover" scrolltop.bind="scrollTop" scroll.trigger="handleScroll($event) & throttle">
+    <section>
+      <div class="container">
+        <h1>Departments Example</h1>
+          <custom-table columns.to-view="['Name']" items.bind="departments">
+              <template replace-part="row">
+                <td>
+                  ${item}
+                </td>
+              </template>
+          </custom-table>
+        </div>
+      </div>
+    </section>
+  </div>
+</template>

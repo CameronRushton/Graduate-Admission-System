@@ -1,0 +1,60 @@
+$green: #06b124;
+$title-color: #FFF;
+$subtitle-color: honeydew;
+$text-color: #DDD;
+$background: #1f2122;
+$background-border: #2f3234;
+
+.header {
+  background-image: linear-gradient(to right, #333, #222);
+  position: fixed;
+  width: 100%;
+  height: 80px;
+  top: 0px;
+  left: 0px;
+  z-index: 10;
+  display: flex;
+  overflow: hidden;
+  justify-content: space-around;
+  padding-top: 5px;
+  transition: height 0.5s ease-out 0ms,
+    width 0.5s ease-out 0.5s,
+    top 0.5s ease-out 0ms,
+    left 0.5s ease-out 0ms;
+  .title {
+    font-family: inherit;
+    font-size: x-large;
+    font-weight: 600;
+    color: $title-color;
+    transition: opacity 0.3s ease-out 1.0s;
+    display: flex;
+    align-items: center;
+    .logo {
+      width: 70px;
+      height: 70px;
+    }
+  }
+  .navigation {
+    display: flex;
+    align-items: center;
+    transition: opacity 0.3s ease-out 1.0s;
+    .item {
+      display: flex;
+      height: fit-content;
+      cursor: pointer;
+      margin-right: 20px;
+      font-size: 20px;
+      color: $subtitle-color;
+      &.active {
+        border-bottom: 2px solid $green;
+      }
+    }
+    .item:hover {
+      color: $text-color;
+    }
+  }
+  &.fixed {
+    position: fixed;
+    z-index: 5;
+  }
+}
