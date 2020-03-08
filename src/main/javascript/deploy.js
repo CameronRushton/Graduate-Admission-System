@@ -1,12 +1,27 @@
-//copyFileSync("./aurelia_project/environments/prod.js", "./src")
-console.log("Compiling javascript...")
 const execSync = require('child_process').execSync;
 // import { execSync } from 'child_process';  // replace ^ if using ES modules
-const output = execSync('au build --env prod', { encoding: 'utf-8' });  // the default is 'buffer'
+
+var environment = "dev"; // 'stage', 'prod'
+if (process.argv[2] && process.argv[2] === '-env') {
+  if (process.argv[3]) {
+  	environment = process.argv[3];
+  	console.log("Deploying in " + environment + " environment.")
+  } else {
+    	console.log("WARN: No value for -env specified, assuming dev.")
+    }
+} else {
+	console.log("WARN: No -env specified, assuming dev.")
+}
+
+console.log("Compiling javascript...")
+
+const output = execSync('au build --env ' + environment, { encoding: 'utf-8' });  // the default is 'buffer'
 console.log('\n', output);
 
 var fs = require('fs');
 var path = require('path');
+
+copyFolderRecursiveSync("./dist", "../resources/static")
 
 function copyFileSync( source, target ) {
 
@@ -56,5 +71,5 @@ function copyFolderRecursiveSync( source, target ) {
 //  }
 //});
 
-copyFolderRecursiveSync("./dist", "../resources/static")
+// copyFolderRecursiveSync("./dist", "../resources/static")
 
