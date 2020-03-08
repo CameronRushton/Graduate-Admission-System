@@ -29,18 +29,12 @@ export class App {
 				name: 'login',
 				moduleId: PLATFORM.moduleName('pages/login/login'),
 				title: "Login",
-			}
+			},
 			{
             	route: '/interest/create',
             	name: 'add interest',
-            	moduleId: PLATFORM.moduleName('pages/interest/edit'),
+            	moduleId: PLATFORM.moduleName('pages/interest/edit/setInterestFields'),
             	title: "Add Interest",
-            }
-            {
-            route: '/interest/update',
-            name: 'update interest',
-            moduleId: PLATFORM.moduleName('pages/interest/edit'),
-            title: "Update Interest",
             }
 		]);
 	}

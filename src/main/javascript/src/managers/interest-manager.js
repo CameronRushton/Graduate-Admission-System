@@ -16,7 +16,7 @@ export class InterestManager extends AbstractManager{
      		},
      	};
 
-     	return this.httpClient.fetch(``, options)
+     	return this.httpClient.fetch(`/interest/`, options)
      		.then(this.handleError)
      		.then(this.json);
     }
@@ -29,7 +29,7 @@ export class InterestManager extends AbstractManager{
           	},
         };
 
-        return this.httpClient.fetch(`?id=${id}`, options)
+        return this.httpClient.fetch(`/interest/?id=${id}`, options)
           	.then(this.handleError)
           	.then(this.json);
     }
@@ -42,7 +42,7 @@ export class InterestManager extends AbstractManager{
             },
         };
 
-        return this.httpClient.fetch(`department?department=${department}`, options)
+        return this.httpClient.fetch(`/interest/department?department=${department}`, options)
             .then(this.handleError)
             .then(this.json);
     }
@@ -54,7 +54,7 @@ export class InterestManager extends AbstractManager{
           		"Content-Type": "application/json"
           	},
         };
-        return this.httpClient.fetch(`create`, options)
+        return this.httpClient.fetch(`/interest/create`, options)
         	.then(this.handleError);
     }
 
@@ -66,7 +66,7 @@ export class InterestManager extends AbstractManager{
     		},
     		body: JSON.stringify(interest)
     	};
-    	return this.httpClient.fetch(`create`, options)
+    	return this.httpClient.fetch(`/interest/create`, options)
     		.then(this.handleError);
    	}
 
@@ -74,18 +74,18 @@ export class InterestManager extends AbstractManager{
     	var options = {
     		method: "DELETE"
     	};
-    	return this.httpClient.fetch(`delete/id=${id}`, options)
+    	return this.httpClient.fetch(`/interest/delete/id=${id}`, options)
     		.then(this.handleError);
    	}
 
-   	getNewInterestFormInfo(id) {
+   	getUpdateInterestFormInfo(id) {
 		var options = {
         method: "GET",
         headers: {
         	"Content-Type": "application/json"
         	},
        	};
-  		return this.httpClient.fetch(`update?id=${id}`, options)
+  		return this.httpClient.fetch(`/interest/update?id=${id}`, options)
      		.then(this.handleError);
     }
 
@@ -97,7 +97,7 @@ export class InterestManager extends AbstractManager{
         	},
         	body: JSON.stringify(interest)
         };
-        return this.httpClient.fetch(`update`, options)
+        return this.httpClient.fetch(`/interest/update`, options)
         	.then(this.handleError);
        	}
 }
