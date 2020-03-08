@@ -1,4 +1,3 @@
 .idea/
 target/
 data/demo
-src/main/resources/application.properties
