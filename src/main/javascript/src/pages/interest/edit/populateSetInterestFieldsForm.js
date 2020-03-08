@@ -2,6 +2,9 @@ $(setUpForm);
 
 //populate the dropdown menu and set default choice
 function setUpForm() {
+	$("title")
+
+
     $.get("/department/", function(data, status){
         data.forEach(addOption);
         $("#departments").val($("#department").val());
