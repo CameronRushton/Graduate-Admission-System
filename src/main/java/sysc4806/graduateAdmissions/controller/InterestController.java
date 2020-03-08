@@ -1,6 +1,7 @@
 package sysc4806.graduateAdmissions.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +18,7 @@ import java.util.Optional;
  *
  * @author luke
  */
-@RestController //@ResponseBody is applied to all endpoints
+@RestController
 @RequestMapping("/interest")
 public class InterestController {
     @Autowired
@@ -49,96 +50,76 @@ public class InterestController {
     }
 
     /**
-     * serves a form to create a new Interest
+     * provides JSON info to populate a form for creating new interests
      *
-     * @param model the Model to pass values to the thymeleaf template
-     * @return the name of the form to create a new Interest
+     * @return JSON info to populate a form for creating new interests
      */
-//    @GetMapping("/create")
-//    public String createInterestForm(Model model) {
-//        model.addAttribute("interest", Interest.builder().build());
-//        model.addAttribute("postLocation", "/interest/create");
-//        model.addAttribute("operation", "Create");
-//        return "interest/setInterestFields";
-//    }
+    @GetMapping("/create")
+    public ResponseEntity createInterestForm() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("postLocation", "/interest/update");
+        headers.add("operation", "Update");
+        return new ResponseEntity(Interest.builder().build(), headers, HttpStatus.OK);
+    }
 
     /**
      * adds a new Interest to the data base
      *
      * @param interest the Interest to store
-     * @param model the Model to pass values to the thymeleaf template
-     * @return the name of the result page for adding the template
+     * @return a response indicating the success of the operation
      */
-//    @PostMapping("/create")
-//    public String createInterest(@ModelAttribute Interest interest, Model model) {
-//        repo.save(interest);
-//        model.addAttribute("message", "interest successfully added");
-//        return "interest/result";
-//    }
+    @PostMapping("/create")
+    public ResponseEntity createInterest(@ModelAttribute Interest interest) {
+        repo.save(interest);
+        return ResponseEntity.ok("interest successfully added");
+    }
 
     /**
      * deletes an Interest from the database specified by name
      *
      * @param id the id of the Interest to delete
-     * @param model the Model to pass values to the thymeleaf template
-     * @return the name of the page that displays the result of the deletion
+     * @return  a response indicating the success of the operation
      */
-//    @DeleteMapping("/delete/{id}")
-//    public String deleteInterest(@PathVariable("id") Long id, Model model) {
-//        Optional<Interest> interest = repo.findById(id);
-//        if(interest.isPresent()){
-//            model.addAttribute("message", "interest " + interest.get().getKeyword() +
-//                    " in " + interest.get().getDepartment() + " successfully deleted");
-//            repo.delete(interest.get());
-//        } else{
-//            model.addAttribute("message", "specified interest not found");
-//        }
-//        return "interest/result";
-//    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity deleteInterest(@PathVariable("id") Long id) {
+        Optional<Interest> interest = repo.findById(id);
+        if(interest.isPresent()){
+            repo.delete(interest.get());
+            return ResponseEntity.ok("interest " + interest.get().getKeyword() +
+                    " in " + interest.get().getDepartment() + " successfully deleted");
+        } else{
+            return ResponseEntity.ok("specified interest not found");
+        }
+    }
 
     /**
-     * provides a form to update an Interest at a specified location
+     * provides JSON info to populate a form for updating an interest
      *
      * @param id the id of the buddy to update
-     * @param model the Model to pass values to the thymeleaf template
-     * @return the name of the form to use to update the Interest
+     * @return JSON info to populate a form for updating an interest
      */
-//    @GetMapping("/update")
-//    public String updateInterestForm(@RequestParam long id, Model model){
-//        Optional<Interest> interest = repo.findById(id);
-//        if(interest.isPresent()) {
-//            model.addAttribute("interest", interest.get());
-//            model.addAttribute("id", interest.get().getId());
-//            model.addAttribute("postLocation", "/interest/update");
-//            model.addAttribute("operation", "Update");
-//            return "interest/setInterestFields";
-//        } else{
-//            model.addAttribute("message", "specified interest not found");
-//            return "interest/result";
-//        }
-//    }
+    @GetMapping("/update")
+    public ResponseEntity updateInterestForm(@RequestParam long id){
+        Optional<Interest> interest = repo.findById(id);
+        if(interest.isPresent()) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("postLocation", "/interest/update");
+            headers.add("operation", "Update");
+            return new ResponseEntity(interest.get(), headers, HttpStatus.OK);
+        } else{
+           return ResponseEntity.ok("specified interest not found");
+        }
+    }
 
     /**
      * updates an Interest in the database
      *
      * @param interest the interest to update
-     * @param model the Model to pass values to the thymeleaf template
-     * @return the name of the page to display the result of the update
+     * @return a message signifying the operation's success
      */
-//    @PostMapping("/update")
-//    public String updateInterest(@ModelAttribute Interest interest, Model model) {
-//        repo.save(interest);
-//        model.addAttribute("message", "interest successfully updated");
-//        return "interest/result";
-//    }
-
-    /**
-     * provides a page to view all interests
-     *
-     * @return the name of the page which shows all interests
-     */
-//    @GetMapping("/view")
-//    public String getInterestPage(){
-//        return "interest/view";
-//    }
+    @PostMapping("/update")
+    public ResponseEntity updateInterest(@ModelAttribute Interest interest) {
+        repo.save(interest);
+        return ResponseEntity.ok("interest successfully updated");
+     }
 }

@@ -22,7 +22,7 @@ public class Utility {
     public static String toJson(Object o) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
-        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+        ObjectWriter ow = mapper.writer();
         return ow.writeValueAsString(o);
     }
 }
