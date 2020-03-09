@@ -14,10 +14,10 @@ before_deploy:
     else
       au build --env stage
     fi
-    cp -RT dist ../resources
-  - cd ../resources
+    cp -RT dist ../resources/static
+  - cd ../resources/static
   - ls -lart
-  - cd ../../..
+  - cd ../../../..
   - mvn clean install
 deploy:
   - provider: heroku
