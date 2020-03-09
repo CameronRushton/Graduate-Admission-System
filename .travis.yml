@@ -10,10 +10,11 @@ before_deploy:
   - npm install
   - |
     if [[ $TRAVIS_BRANCH != $TRAVIS_PULL_REQUEST_BRANCH && $TRAVIS_BRANCH = 'master' ]]; then
-      node deploy -env prod
+      au build --env prod
     else
-      node deploy -env stage
+      au build --env stage
     fi
+    cp -RT dist ../resources/static
   - cd ../resources/static
   - ls -lart
   - cd ../../../..
