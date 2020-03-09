@@ -15,6 +15,7 @@ before_deploy:
       au build --env stage
     fi
     cp -RT dist ../resources/static
+    sudo chmod -R 755 ../resources/static
   - cd ../resources/static
   - ls -lart
   - cd ../../../..
