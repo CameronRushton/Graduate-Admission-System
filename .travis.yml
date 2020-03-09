@@ -18,7 +18,7 @@ before_deploy:
   - cd ../resources
   - ls -lart
   - cd ../../..
-  - mvn package
+  - mvn clean install
 deploy:
   - provider: heroku
     api_key: $HEROKU_API_KEY
