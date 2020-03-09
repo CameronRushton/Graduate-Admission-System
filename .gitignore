@@ -6,3 +6,4 @@ src/main/javascript/Thumbs.db
 src/main/javascript/.vscode/*
 src/main/javascript/node_modules/
 src/main/resources/static/*
+data/demo
