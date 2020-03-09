@@ -140,7 +140,7 @@ public class UserTest {
 		@Test
     /* Test that setRole sets the role */
     public void testSetRole() {
-        user.role.setRoleName("Professor");
+        user.getRole().setRoleName("Professor");
 
 		assertNotNull(user.getId());
 		assertNull(user.getFirstName());
