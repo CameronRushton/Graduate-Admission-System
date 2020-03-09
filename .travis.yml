@@ -8,7 +8,9 @@ install:
   - npm install aurelia-cli -g
   - cd ./src/main/javascript
   - npm install
+  - cwd
   - node deploy -env prod
+  - cwd
   - cd ../../..
 deploy:
   - provider: heroku
