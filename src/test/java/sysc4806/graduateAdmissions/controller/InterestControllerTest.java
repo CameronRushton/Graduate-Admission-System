@@ -104,7 +104,7 @@ class InterestControllerTest {
     /**Test the deletion of an Interest object via delete*/
     @Test
     public void testDeleteInterest() throws Exception {
-        MvcResult result = mockMvc.perform(delete("/interest/delete/{id}", "3"))
+        MvcResult result = mockMvc.perform(delete("/interest/{id}", "3"))
                 .andExpect(status().isOk())
                 .andReturn();
         assertTrue(result.getResponse().getContentAsString().contains("interest gears in MAAE successfully deleted"));
@@ -113,7 +113,7 @@ class InterestControllerTest {
     /**Test Interest deletion failing due to the Interest not existing*/
     @Test
     public void testDeleteInterestDoesNotExist() throws Exception {
-        MvcResult result = mockMvc.perform(delete("/interest/delete/{id}", "42"))
+        MvcResult result = mockMvc.perform(delete("/interest/{id}", "42"))
                 .andExpect(status().isOk())
                 .andReturn();
         assertTrue(result.getResponse().getContentAsString().contains("specified interest not found"));
@@ -128,13 +128,5 @@ class InterestControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
         assertTrue(result.getResponse().getContentAsString().contains("interest successfully updated"));
-    }
-
-    /**Test Interest updating failing due to the Interest not existing*/
-    @Test
-    public void testUpdateInterestDoesNotExist() throws Exception {
-        MvcResult result = this.mockMvc.perform(get("/interest/update?id=42"))
-                .andExpect(status().isOk()).andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains("specified interest not found"));
     }
 }
