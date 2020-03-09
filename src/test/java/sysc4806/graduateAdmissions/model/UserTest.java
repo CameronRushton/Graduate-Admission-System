@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.Set;
+import com.google.common.collect.Sets;
 
 /**
  * Tests the functionality of the User class
