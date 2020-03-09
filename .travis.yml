@@ -14,7 +14,10 @@ before_deploy:
     else
       node deploy -env stage
     fi
-  - cd ../../..
+  - cd ../resources/static
+  - ls -lart
+  - cd ../../../..
+  - mvn package
 deploy:
   - provider: heroku
     api_key: $HEROKU_API_KEY
