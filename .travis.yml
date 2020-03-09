@@ -6,7 +6,7 @@ install:
   - node --version
   - npm --version
   - npm install aurelia-cli -g
-  - cd ./Graduate-Admission-System/src/main/javascript
+  - cd ./src/main/javascript
   - node deploy -env prod
 deploy:
   - provider: heroku
