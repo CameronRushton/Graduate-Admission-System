@@ -18,13 +18,23 @@ public class UserTest {
     private String lastName = "Smith";
     private String email = "JohnSmith@gmail.com";
     private String password = "password"; 
-	private Role role = Role.builder().build();
-	private ArrayList<Interest> interests;
-	private ArrayList<String> applications; //need to be changed to actual applications object
+    private Role role;
+    private Privilege createSelfApplication, updateAllStudentsApplications;
+    private Set<Privilege> privileges;
+    private ArrayList<Interest> interests;
+    private ArrayList<String> applications; //need to be changed to actual applications object
 
 
     @BeforeEach
     void setUp() {
+	createSelfApplication = Privilege.builder().id(42)
+                .operation(Operation.CREATE).owner(Owner.SELF)
+                .target(Target.APPLICATION).build();
+	updateSelfApplication = Privilege.builder().id(9)
+                .operation(Operation.UPDATE).owner(Owner.SELF)
+                .target(Target.APPLICATION).build();
+	privileges = Sets.newHashSet(createSelfApplication, updateSelfApplication);
+	role = new Role("Student", privileges);
         user = new User();
     }
 
@@ -38,7 +48,7 @@ public class UserTest {
         assertNull(user.getLastName());
         assertNull(user.getEmail());
         assertNull(user.getPassword());
-        assertNull(user.getRole().getRoleName());
+        assertNull(user.getRole());
         assertNull(user.getInterests());
         assertNull(user.getApplications());
     }
@@ -57,7 +67,7 @@ public class UserTest {
         assertEquals(lastName, user.getLastName());
         assertEquals(email, user.getEmail());
         assertEquals(password, user.getPassword());
-		assertNull(user.getRole().getRoleName());
+		assertEquals(role, user.getRole());
 		assertEquals(interests, user.getInterests());
 		assertEquals(applications, user.getApplications());		
     }
@@ -72,7 +82,7 @@ public class UserTest {
         assertEquals(lastName, user.getLastName());
         assertEquals(email, user.getEmail());
         assertEquals(password, user.getPassword());
-		assertNull(user.getRole().getRoleName());
+		assertEquals(role, user.getRole());
 		assertEquals(interests, user.getInterests());
 		assertEquals(applications, user.getApplications());	
     }
@@ -87,7 +97,7 @@ public class UserTest {
         assertNull(user.getLastName());
         assertNull(user.getEmail());
         assertNull(user.getPassword());
-        assertNull(user.getRole().getRoleName());
+        assertNull(user.getRole());
         assertNull(user.getInterests());
         assertNull(user.getApplications());
     }
@@ -102,7 +112,7 @@ public class UserTest {
         assertEquals("Brown", user.getLastName());
         assertNull(user.getEmail());
         assertNull(user.getPassword());
-        assertNull(user.getRole().getRoleName());
+        assertNull(user.getRole());
         assertNull(user.getInterests());
         assertNull(user.getApplications());
     }
@@ -117,7 +127,7 @@ public class UserTest {
         assertNull(user.getLastName());
         assertEquals("newEmail@gmail.com", user.getEmail());
         assertNull(user.getPassword());
-        assertNull(user.getRole().getRoleName());
+        assertNull(user.getRole());
         assertNull(user.getInterests());
         assertNull(user.getApplications());
     }
@@ -132,7 +142,7 @@ public class UserTest {
         assertNull(user.getLastName());
         assertNull(user.getEmail());
         assertEquals("newPassword", user.getPassword());
-        assertNull(user.getRole().getRoleName());
+        assertNull(user.getRole());
         assertNull(user.getInterests());
         assertNull(user.getApplications());
     }
@@ -147,7 +157,7 @@ public class UserTest {
 		assertNull(user.getLastName());
 		assertNull(user.getEmail());
         assertNull(user.getPassword());
-		assertEquals("Professor", user.getRole().getRoleName());
+		assertEquals(role, user.getRole());
 		assertEquals(interests, user.getInterests());
 		assertEquals(applications, user.getApplications());	
     }
@@ -165,7 +175,7 @@ public class UserTest {
         assertNull(user.getLastName());
         assertNull(user.getEmail());
         assertNull(user.getPassword());
-		assertNull( user.getRole().getRoleName());
+		assertNull( user.getRole());
 		assertEquals(interests, user.getInterests());
 		assertNull(user.getApplications());
     }
@@ -183,7 +193,7 @@ public class UserTest {
         assertNull(user.getLastName());
         assertNull(user.getEmail());
         assertNull(user.getPassword());
-        assertNull( user.getRole().getRoleName());
+        assertNull( user.getRole());
 		assertNull(user.getInterests());
 		assertEquals(applications, user.getApplications());	
     }
