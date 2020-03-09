@@ -13,21 +13,17 @@ export class setInterestFormFields {
 		departmentManager.getDepartments().then(response => {
 			this.departments = response;
 		});
-
-
-
-		//this.interestID
     }
 
-    attached() {
-    	var route_name = this.router.currentInstruction.config.name;
+    attached() {}
 
-    	if(route_name == "add interest"){
-    		console.log(this.interestManager.getNewInterestFormInfo());
-    	}else if(route_name == "update interest"){
-    		//console.log(this.interestManager.getUpdateInterestFormInfo());
-    	}
-    }
+	submitHandler(interestId, departmentChoice, interestKeyword){
+		this.myInterest = {
+			department: departmentChoice,
+			keyword: interestKeyword
+		}
+		this.interestManager.addInterest(this.myInterest).then(()=>{this.router.navigateToRoute("view interests")});
+	}
 
     handleScroll(event) {
         // We should be able to see the scroll position in the console when we uncomment the following line
@@ -48,29 +44,3 @@ export class setInterestFormFields {
     }
 
 }
-
-
-//$(setUpForm);
-//
-////populate the dropdown menu and set default choice
-//function setUpForm() {
-//	$("title")
-//
-//
-//    $.get("/department/", function(data, status){
-//        data.forEach(addOption);
-//        $("#departments").val($("#department").val());
-//    });
-//
-//    $("#submit").click(addDepartmentToForm);
-//}
-//
-////add an option to the default menu
-//function addOption(item, index) {
-//    $("#departments").append("<option value='" + item + "'>" + item + "</option>");
-//}
-//
-////when submit is clicked, include the selected option in the form
-//function addDepartmentToForm(){
-//    $("#department").val($("#departments option:selected").val());
-//}

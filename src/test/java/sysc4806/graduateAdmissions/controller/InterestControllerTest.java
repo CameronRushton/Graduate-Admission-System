@@ -90,14 +90,6 @@ class InterestControllerTest {
                 .andExpect(content().json(toJson(interests.subList(0, 3))));
     }
 
-    /**Test the retrieval of the create interest page*/
-    @Test
-    public void testGetCreateInterestForm() throws Exception {
-       MvcResult result = this.mockMvc.perform(get("/interest/create"))
-               .andExpect(status().isOk()).andReturn();
-        assertEquals(result.getResponse().getContentAsString(), toJson(Interest.builder().build()));
-    }
-
     /**Test the creation of a new Interest object via post*/
     @Test
     public void testPostNewInterest() throws Exception {
@@ -125,14 +117,6 @@ class InterestControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
         assertTrue(result.getResponse().getContentAsString().contains("specified interest not found"));
-    }
-
-    /**Test the retrieval of the update interest page*/
-    @Test
-    public void testGetUpdateInterestForm() throws Exception {
-        MvcResult result = this.mockMvc.perform(get("/interest/update?id=3"))
-                .andExpect(status().isOk()).andReturn();
-        assertEquals(result.getResponse().getContentAsString(), toJson(interests.get(3)));
     }
 
     /**Test Interest update*/

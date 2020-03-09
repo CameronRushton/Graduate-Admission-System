@@ -1,9 +1,29 @@
 <template>
-<body>
-<div id="interests"></div>
-<br/>
-<a href="/interest/create">Add new Interest</a>
-<br/>
-<a href="/">Home</a>
-</body>
+	<header scroll_position.bind="scrollTop" scroll_fn.bind="scrollFn"></header>
+	<div class="scroll-cover" scrolltop.bind="scrollTop" scroll.trigger="handleScroll($event) & throttle">
+		<section>
+			<div class="container">
+				<h1>Interests</h1>
+				<p>Filter by:
+					<select value.bind="departmentFilter" change.trigger="getInterestsByDepartment()">
+						<option value="all">all departments</option>
+						<option repeat.for="department of departments" value="${department}">${department}</option>
+					</select>
+				</p>
+				<div repeat.for="interest of interests">
+					<label>Department:</label>
+					<select value.two-way="interest.department">
+						<option repeat.for="department of $parent.departments" value="${department}">${department}</option>
+					</select>
+					<p>Keyword: <input type="text" value.two-way="interest.keyword"/></p>
+					<p>
+						<button class="deleteButton" click.delegate="deleteInterest(interest.id)">Delete</button>
+						<button class="updateButton" click.delegate="updateInterest(interest.id, interest.keyword, interest.department)">Update</button>
+					</p>
+				</div>
+				<br/>
+				<a route-href="route: add interest">Add new Interest</a>
+			</div>
+		</section>
+	</div>
 </template>

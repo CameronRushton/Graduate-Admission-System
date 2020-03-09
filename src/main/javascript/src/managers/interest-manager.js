@@ -35,28 +35,17 @@ export class InterestManager extends AbstractManager{
     }
 
 	getDepartmentInterests(department) {
-        var options = {
-        	method: "GET",
-            headers: {
-              	"Content-Type": "application/json"
-            },
-        };
+             var options = {
+             	method: "GET",
+                 headers: {
+                   	"Content-Type": "application/json"
+                 },
+             };
 
-        return this.httpClient.fetch(`/interest/department?department=${department}`, options)
-            .then(this.handleError)
-            .then(this.json);
-    }
-
-    getNewInterestFormInfo() {
-        var options = {
-        	method: "GET",
-       		headers: {
-          		"Content-Type": "application/json"
-          	},
-        };
-        return this.httpClient.fetch(`/interest/create`, options)
-        	.then(this.handleError);
-    }
+             return this.httpClient.fetch(`/interest/department?department=${department}`, options)
+                 .then(this.handleError)
+                 .then(this.json);
+         }
 
     addInterest(interest) {
     	var options = {
@@ -74,7 +63,7 @@ export class InterestManager extends AbstractManager{
     	var options = {
     		method: "DELETE"
     	};
-    	return this.httpClient.fetch(`/interest/delete/id=${id}`, options)
+    	return this.httpClient.fetch(`/interest/${id}`, options)
     		.then(this.handleError);
    	}
 

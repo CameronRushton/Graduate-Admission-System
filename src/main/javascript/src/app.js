@@ -19,23 +19,40 @@ export class App {
 		config.options.root = "/";
 		config.map([
 			{
+				show: true,
+            	route: '/interest/view',
+                name: 'view interests',
+                moduleId: PLATFORM.moduleName('pages/interest/view/view'),
+                title: "Interests",
+            },
+            {
+           		show: false,
+                route: '/interest/create',
+                name: 'add interest',
+                moduleId: PLATFORM.moduleName('pages/interest/create/create'),
+                title: "Add Interest",
+            },
+            {
+				show: false,
+				route: '/interest/update',
+				name: 'update interest',
+				moduleId: PLATFORM.moduleName('pages/interest/create/create'),
+				title: "Update Interest",
+			},
+			{
+				show: true,
 				route: '/',
 				name: 'home',
 				moduleId: PLATFORM.moduleName('pages/home/home'),
 				title: "Home",
 			},
 			{
+				show: true,
 				route: '/login',
 				name: 'login',
 				moduleId: PLATFORM.moduleName('pages/login/login'),
 				title: "Login",
 			},
-			{
-            	route: '/interest/create',
-            	name: 'add interest',
-            	moduleId: PLATFORM.moduleName('pages/interest/edit/setInterestFields'),
-            	title: "Add Interest",
-            }
 		]);
 	}
 

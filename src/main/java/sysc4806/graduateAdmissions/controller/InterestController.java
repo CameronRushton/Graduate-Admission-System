@@ -49,26 +49,13 @@ public class InterestController {
     }
 
     /**
-     * provides JSON info to populate a form for creating new interests
-     *
-     * @return JSON info to populate a form for creating new interests
-     */
-    @GetMapping("/create")
-    public ResponseEntity createInterestForm() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("postLocation", "/interest/update");
-        headers.add("operation", "Update");
-        return new ResponseEntity(Interest.builder().build(), headers, HttpStatus.OK);
-    }
-
-    /**
      * adds a new Interest to the data base
      *
      * @param interest the Interest to store
      * @return a response indicating the success of the operation
      */
     @PostMapping("/create")
-    public ResponseEntity createInterest(@ModelAttribute Interest interest) {
+    public ResponseEntity createInterest(@RequestBody Interest interest) {
         repo.save(interest);
         return ResponseEntity.ok("interest successfully added");
     }
@@ -79,7 +66,7 @@ public class InterestController {
      * @param id the id of the Interest to delete
      * @return  a response indicating the success of the operation
      */
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity deleteInterest(@PathVariable("id") Long id) {
         Optional<Interest> interest = repo.findById(id);
         if(interest.isPresent()){
@@ -92,32 +79,13 @@ public class InterestController {
     }
 
     /**
-     * provides JSON info to populate a form for updating an interest
-     *
-     * @param id the id of the buddy to update
-     * @return JSON info to populate a form for updating an interest
-     */
-    @GetMapping("/update")
-    public ResponseEntity updateInterestForm(@RequestParam long id){
-        Optional<Interest> interest = repo.findById(id);
-        if(interest.isPresent()) {
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("postLocation", "/interest/update");
-            headers.add("operation", "Update");
-            return new ResponseEntity(interest.get(), headers, HttpStatus.OK);
-        } else{
-           return ResponseEntity.ok("specified interest not found");
-        }
-    }
-
-    /**
      * updates an Interest in the database
      *
      * @param interest the interest to update
      * @return a message signifying the operation's success
      */
     @PostMapping("/update")
-    public ResponseEntity updateInterest(@ModelAttribute Interest interest) {
+    public ResponseEntity updateInterest(@RequestBody Interest interest) {
         repo.save(interest);
         return ResponseEntity.ok("interest successfully updated");
      }
