@@ -20,7 +20,7 @@ public class UserTest {
     private String email = "JohnSmith@gmail.com";
     private String password = "password"; 
     private Role role;
-    private Privilege createSelfApplication, updateAllStudentsApplications;
+    private Privilege createSelfApplication, updateSelfApplication;;
     private Set<Privilege> privileges;
     private ArrayList<Interest> interests;
     private ArrayList<String> applications; //need to be changed to actual applications object
