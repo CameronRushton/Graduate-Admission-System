@@ -1,5 +1,5 @@
 export default {
-  debug: false,
+  debug: true,
   testing: false,
-  host: "https://graduate-admission-system.herokuapp.com/"
+  host: "https://graduate-admission-staging.herokuapp.com/"
 };

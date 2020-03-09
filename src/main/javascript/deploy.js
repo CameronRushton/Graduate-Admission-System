@@ -20,6 +20,9 @@ console.log('\n', output);
 
 var fs = require('fs');
 var path = require('path');
+var directory = "../resources/static";
+var rimraf = require("rimraf");
+rimraf.sync(directory);
 
 copyFolderRecursiveSync("./dist", "../resources/static")
 

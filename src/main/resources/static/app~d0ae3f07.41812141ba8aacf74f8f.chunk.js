@@ -22,7 +22,7 @@ module.exports = __webpack_require__(/*! aurelia-bootstrapper */"b9nV");
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  debug: true,\n  testing: true,\n  host: \"http://localhost:8080/\"\n});//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiT0ZQdS5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3NyYy9lbnZpcm9ubWVudC5qcz8zODUzIl0sInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBkZWZhdWx0IHtcclxuICBkZWJ1ZzogdHJ1ZSxcclxuICB0ZXN0aW5nOiB0cnVlLFxyXG4gIGhvc3Q6IFwiaHR0cDovL2xvY2FsaG9zdDo4MDgwL1wiXHJcbn07XHJcbiJdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUhBIiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///OFPu\n");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n  debug: true,\n  testing: false,\n  host: \"https://graduate-admission-staging.herokuapp.com/\"\n});//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiT0ZQdS5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL3NyYy9lbnZpcm9ubWVudC5qcz8zODUzIl0sInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBkZWZhdWx0IHtcclxuICBkZWJ1ZzogdHJ1ZSxcclxuICB0ZXN0aW5nOiBmYWxzZSxcclxuICBob3N0OiBcImh0dHBzOi8vZ3JhZHVhdGUtYWRtaXNzaW9uLXN0YWdpbmcuaGVyb2t1YXBwLmNvbS9cIlxyXG59O1xyXG4iXSwibWFwcGluZ3MiOiJBQUFBO0FBQUE7QUFDQTtBQUNBO0FBQ0E7QUFIQSIsInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///OFPu\n");
 
 /***/ }),
 
