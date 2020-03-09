@@ -57,7 +57,7 @@ public class UserTest {
         assertEquals(lastName, user.getLastName());
         assertEquals(email, user.getEmail());
         assertEquals(password, user.getPassword());
-		assertEquals(role, user.getRole().getRoleName());
+		assertNull(user.getRole().getRoleName());
 		assertEquals(interests, user.getInterests());
 		assertEquals(applications, user.getApplications());		
     }
@@ -72,7 +72,7 @@ public class UserTest {
         assertEquals(lastName, user.getLastName());
         assertEquals(email, user.getEmail());
         assertEquals(password, user.getPassword());
-		assertEquals(role, user.getRole().getRoleName());
+		assertNull(user.getRole().getRoleName());
 		assertEquals(interests, user.getInterests());
 		assertEquals(applications, user.getApplications());	
     }
