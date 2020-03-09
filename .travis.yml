@@ -19,7 +19,6 @@ deploy:
   - provider: heroku
     api_key: $HEROKU_API_KEY
     app: "graduate-admission-system"
-    script:
     on:
       branch: master
   - provider: heroku
