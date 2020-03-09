@@ -1,21 +1,25 @@
 language: java
 jdk: openjdk8
 os: linux
-install:
+before_deploy:
   - nvm install node
   - node --version
   - npm --version
   - npm install aurelia-cli -g
   - cd ./src/main/javascript
   - npm install
-  - pwd
-  - node deploy -env prod
-  - pwd
+  - |
+    if [[ $TRAVIS_BRANCH != $TRAVIS_PULL_REQUEST_BRANCH && $TRAVIS_BRANCH = 'master' ]]; then
+      node deploy -env prod
+    else
+      node deploy -env stage
+    fi
   - cd ../../..
 deploy:
   - provider: heroku
     api_key: $HEROKU_API_KEY
     app: "graduate-admission-system"
+    script:
     on:
       branch: master
   - provider: heroku
