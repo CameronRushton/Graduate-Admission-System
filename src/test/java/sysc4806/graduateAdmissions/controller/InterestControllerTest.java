@@ -113,10 +113,8 @@ class InterestControllerTest {
     /**Test Interest deletion failing due to the Interest not existing*/
     @Test
     public void testDeleteInterestDoesNotExist() throws Exception {
-        MvcResult result = mockMvc.perform(delete("/interest/{id}", "42"))
-                .andExpect(status().isOk())
-                .andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains("specified interest not found"));
+        mockMvc.perform(delete("/interest/{id}", "42"))
+                .andExpect(status().isNotFound());
     }
 
     /**Test Interest update*/

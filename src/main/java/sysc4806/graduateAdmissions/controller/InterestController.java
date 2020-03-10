@@ -74,7 +74,7 @@ public class InterestController {
             return ResponseEntity.ok("interest " + interest.get().getKeyword() +
                     " in " + interest.get().getDepartment() + " successfully deleted");
         } else{
-            return ResponseEntity.ok("specified interest not found");
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
 
