@@ -15,8 +15,6 @@ before_deploy:
       au build --env stage
     fi
     cp -RT dist ../resources/static
-  - cd ../resources/static
-  - ls -lart
   - cd ../../../..
 deploy:
   - provider: heroku
@@ -30,4 +28,4 @@ deploy:
     app: "graduate-admission-staging"
     skip_cleanup: true
     on:
-      branch: crushton/frontend-prod-install
+      branch: develop
