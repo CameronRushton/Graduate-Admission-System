@@ -1,8 +1,12 @@
 package sysc4806.graduateAdmissions.model;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 /**
  * Represents a Term (4 month period)
@@ -21,9 +25,15 @@ public class Term {
     @GeneratedValue
     private long id;
     private boolean active;
-    private String deadline;
+    @NotNull
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy.MM.dd")
+    private Date deadline;
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Season season;
+    @NotNull
+    @NotBlank
     private String year;
 
     /**
@@ -34,7 +44,7 @@ public class Term {
      * @param year String representing the year of the term
      * @param active boolean showing if the term is active or not
      */
-    public Term(String deadline, Season season, String year, boolean active){
+    public Term(Date deadline, Season season, String year, boolean active){
         this.deadline = deadline;
         this.season = season;
         this.year = year;

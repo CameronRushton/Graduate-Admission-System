@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import sysc4806.graduateAdmissions.model.Term;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -22,9 +21,7 @@ public class TermRepository {
     }
 
     public List<Term> findAllTerms() {
-        List<Term> terms = new ArrayList<>();
-        termRepositoryDAO.findAll().forEach(terms::add);
-        return terms;
+        return termRepositoryDAO.findAll();
     }
 
     public Term findTermById(Long id) {

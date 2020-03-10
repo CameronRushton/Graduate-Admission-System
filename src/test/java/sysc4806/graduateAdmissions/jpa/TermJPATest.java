@@ -7,6 +7,9 @@ import sysc4806.graduateAdmissions.model.Season;
 import sysc4806.graduateAdmissions.model.Term;
 import sysc4806.graduateAdmissions.repositories.TermRepository;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -20,8 +23,8 @@ public class TermJPATest {
     private TermRepository termRepository;
 
     @Test
-    public void persistNewTerm() {
-        Term term = Term.builder().deadline("someDate").active(false).season(Season.SUMMER).year("2020").build();
+    public void persistNewTerm() throws ParseException {
+        Term term = Term.builder().deadline(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01")).active(false).season(Season.SUMMER).year("2020").build();
         termRepository.save(term);
         List<Term> terms = termRepository.findAllTerms();
         assertFalse(terms.isEmpty());
