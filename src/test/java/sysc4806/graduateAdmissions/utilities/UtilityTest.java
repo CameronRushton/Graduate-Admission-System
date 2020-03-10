@@ -21,10 +21,10 @@ class UtilityTest {
                 .department(Department.SYSC).keyword("spring").build();
 
         assertEquals(Utility.toJson(interest),
-                "{" + System.lineSeparator() +
-                "  \"id\" : 42," + System.lineSeparator() +
-                "  \"department\" : \"SYSC\"," + System.lineSeparator() +
-                "  \"keyword\" : \"spring\"" + System.lineSeparator() +
+                "{"+
+                "\"id\":42," +
+                "\"department\":\"SYSC\"," +
+                "\"keyword\":\"spring\"" +
                 "}");
     }
 }

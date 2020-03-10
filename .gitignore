@@ -7,3 +7,4 @@ src/main/javascript/.vscode/*
 src/main/javascript/node_modules/
 src/main/resources/static/*
 data/demo
+src/main/javascript/src/environment.js
