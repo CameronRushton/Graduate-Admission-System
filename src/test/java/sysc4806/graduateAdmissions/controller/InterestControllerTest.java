@@ -120,11 +120,9 @@ class InterestControllerTest {
     /**Test Interest update*/
     @Test
     public void testUpdateInterest() throws Exception {
-        MvcResult result = mockMvc.perform(post("/interest/update").contentType(APPLICATION_JSON_UTF8)
+        mockMvc.perform(post("/interest/update").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
                         Interest.builder().department(Department.MAAE).keyword("wheels").build())))
-                .andExpect(status().isOk())
-                .andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains("interest successfully updated"));
+                .andExpect(status().isOk());
     }
 }

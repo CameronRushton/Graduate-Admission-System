@@ -18,7 +18,7 @@ import java.util.Optional;
  * @author luke
  */
 @RestController
-@RequestMapping("/interest")
+@RequestMapping("/interest/")
 public class InterestController {
     @Autowired
     InterestRepository repo;
@@ -29,7 +29,7 @@ public class InterestController {
      * @param id can be optionally specified to get a specific Interest, otherwise all are retrieved
      * @return JSON containing the Interest(s)
      */
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity getInterest(@RequestParam(required=false) Long id) {
         if(id == null)
             return ResponseEntity.status(HttpStatus.OK).body(repo.findAll());
@@ -43,7 +43,7 @@ public class InterestController {
      * @param department the department to get Interests for
      * @return JSON containing the interests
      */
-    @GetMapping("/department")
+    @GetMapping("department")
     public ResponseEntity getInterestsOfDepartment(@RequestParam() Department department) {
         return ResponseEntity.status(HttpStatus.OK).body(repo.findByDepartment(department));
     }
@@ -54,7 +54,7 @@ public class InterestController {
      * @param interest the Interest to store
      * @return a response indicating the success of the operation
      */
-    @PostMapping("/create")
+    @PostMapping("create")
     public ResponseEntity createInterest(@RequestBody Interest interest) {
         repo.save(interest);
         return ResponseEntity.ok("interest successfully added");
@@ -66,7 +66,7 @@ public class InterestController {
      * @param id the id of the Interest to delete
      * @return  a response indicating the success of the operation
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     @CrossOrigin
     public ResponseEntity deleteInterest(@PathVariable("id") Long id) {
         Optional<Interest> interest = repo.findById(id);
@@ -85,7 +85,7 @@ public class InterestController {
      * @param interest the interest to update
      * @return a message signifying the operation's success
      */
-    @PostMapping("/update")
+    @PostMapping("update")
     public ResponseEntity updateInterest(@RequestBody Interest interest) {
         repo.save(interest);
         return ResponseEntity.ok("interest successfully updated");
