@@ -15,7 +15,7 @@ before_deploy:
       au build --env stage
     fi
     cp -RT dist ../resources/static
-  - cd ../../../..
+  - cd ../../..
 deploy:
   - provider: heroku
     api_key: $HEROKU_API_KEY
