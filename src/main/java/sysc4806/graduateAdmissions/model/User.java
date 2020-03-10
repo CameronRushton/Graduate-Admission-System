@@ -27,7 +27,9 @@ public class User {
     private String lastName;
     private String email;
     private String password; 
+    @OneToOne
     private Role role;
+    @OneToMany
     private ArrayList<Interest> interests;
     private ArrayList<String> applications; 
 
