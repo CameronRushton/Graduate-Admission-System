@@ -16,7 +16,7 @@ export class DepartmentManager extends AbstractManager{
 			},
 		};
 
-		return this.httpClient.fetch(`departments`, options)
+		return this.httpClient.fetch(`/departments`, options)
 			.then(this.handleError)
 			.then(this.json);
 	}

@@ -1,5 +1,5 @@
 export default {
-  debug: false,
-  testing: false,
+  debug: true,
+  testing: true,
   host: "http://localhost:8080/"
 };
