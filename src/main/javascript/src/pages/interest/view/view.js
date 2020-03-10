@@ -11,11 +11,7 @@ export class InterestView {
         this.interestManager = interestManager;
         this.scrollTop = 0;
 		this.departmentFilter = "all";
-        this.getInterestsByDepartment();
-
-        departmentManager.getDepartments().then(response => {
-			this.departments = response;
-		});
+        this.departmentManager = departmentManager;
     }
 
 	getInterestsByDepartment(){
@@ -32,10 +28,16 @@ export class InterestView {
 		}
 	}
 
-    attached() {}
+    attached() {
+    	this.getInterestsByDepartment();
+
+        this.departmentManager.getDepartments().then(response => {
+			this.departments = response;
+		});
+    }
 
 	deleteInterest(interestId){
-		this.interestManager.deleteInterest(interestId).then(()=>{;
+		this.interestManager.deleteInterest(interestId).then(()=>{
 			this.getInterestsByDepartment();
 		});
 	}
@@ -48,22 +50,4 @@ export class InterestView {
         }
 		this.interestManager.updateInterest(this.myInterest);
 	}
-
-    handleScroll(event) {
-        // We should be able to see the scroll position in the console when we uncomment the following line
-        // console.log(this.scrollTop)
-    }
-
-    scrollToId(id) {
-        document.getElementById(id).scrollIntoView({
-            behavior: 'smooth'
-        });
-    }
-
-    scrollToTopFn() {
-        window.scrollTo({top: 0, behavior: 'smooth'});
-        document.getElementById("top").scrollIntoView({
-            behavior: 'smooth'
-        });
-    }
 }

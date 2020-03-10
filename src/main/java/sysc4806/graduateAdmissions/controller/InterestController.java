@@ -67,6 +67,7 @@ public class InterestController {
      * @return  a response indicating the success of the operation
      */
     @DeleteMapping("/{id}")
+    @CrossOrigin
     public ResponseEntity deleteInterest(@PathVariable("id") Long id) {
         Optional<Interest> interest = repo.findById(id);
         if(interest.isPresent()){

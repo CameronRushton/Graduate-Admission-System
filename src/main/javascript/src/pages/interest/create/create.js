@@ -10,12 +10,15 @@ export class setInterestFormFields {
         this.router = router;
         this.interestManager = interestManager;
         this.scrollTop = 0;
-		departmentManager.getDepartments().then(response => {
-			this.departments = response;
-		});
+        this.departmentManager = departmentManager
+
     }
 
-    attached() {}
+    attached() {
+    	this.departmentManager.getDepartments().then(response => {
+    			this.departments = response;
+    		});
+    }
 
 	submitHandler(interestId, departmentChoice, interestKeyword){
 		this.myInterest = {
@@ -24,22 +27,4 @@ export class setInterestFormFields {
 		}
 		this.interestManager.addInterest(this.myInterest).then(()=>{this.router.navigateToRoute("view interests")});
 	}
-
-    handleScroll(event) {
-        // We should be able to see the scroll position in the console when we uncomment the following line
-        // console.log(this.scrollTop)
-    }
-
-    scrollToId(id) {
-        document.getElementById(id).scrollIntoView({
-            behavior: 'smooth'
-        });
-    }
-
-    scrollToTopFn() {
-        window.scrollTo({top: 0, behavior: 'smooth'});
-        document.getElementById("top").scrollIntoView({
-            behavior: 'smooth'
-        });
-    }
 }
