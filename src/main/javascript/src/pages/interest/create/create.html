@@ -1,0 +1,17 @@
+<template>
+	<header scroll_position.bind="scrollTop" scroll_fn.bind="scrollFn"></header>
+	<section>
+		<div class="container">
+			<h1>Create Interest</h1>
+			<label>Department:</label>
+			<select value.bind="$departmentChoice">
+				<option repeat.for="department of departments" value="${department}">${department}</option>
+			</select>
+			<p>Keyword: <input type="text" value.bind="$interestKeyword"/></p>
+			<p>
+				<button click.delegate="submitHandler($interestID, $departmentChoice, $interestKeyword)">Submit</button>
+			</p>
+		</div>
+	</section>
+</template>
+
