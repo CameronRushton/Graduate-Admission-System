@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.util.ArrayList;
+import javax.persistence.*;
+import java.util.*;
 /**
  * Represents one of three possible users in the system (Student, Professor, or Admin)
  * Used to user details, credentials, and information.
@@ -27,9 +25,7 @@ public class User {
     private String lastName;
     private String email;
     private String password; 
-    @OneToOne
     private Role role;
-    @OneToMany
     private ArrayList<Interest> interests;
     private ArrayList<String> applications; 
 
