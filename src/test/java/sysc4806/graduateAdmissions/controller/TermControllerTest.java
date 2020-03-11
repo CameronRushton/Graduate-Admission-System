@@ -63,7 +63,6 @@ public class TermControllerTest {
         when(repository.findById(any(Long.class))).thenReturn(java.util.Optional.empty());
         mockMvc.perform(get("/terms/{id}", term.getId())
                 .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().is(404));
     }
 
@@ -92,7 +91,6 @@ public class TermControllerTest {
         mockMvc.perform(post("/terms")
                 .content(toJson(term))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().is(400));
     }
 
@@ -107,7 +105,6 @@ public class TermControllerTest {
         mockMvc.perform(post("/terms")
                 .content(toJson(term))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().is(400));
     }
 
@@ -122,7 +119,6 @@ public class TermControllerTest {
         mockMvc.perform(post("/terms")
                 .content(toJson(term))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().is(200));
     }
 
@@ -137,7 +133,6 @@ public class TermControllerTest {
         mockMvc.perform(post("/terms")
                 .content(toJson(term))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().is(400));
     }
 
@@ -153,7 +148,6 @@ public class TermControllerTest {
         mockMvc.perform(put("/terms")
                 .content(toJson(term))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().is(200));
     }
 
@@ -161,7 +155,6 @@ public class TermControllerTest {
     public void testDeleteTermNotExist() throws Exception {
         mockMvc.perform(delete("/terms/{id}", 1L)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().is(404));
     }
 
@@ -171,7 +164,6 @@ public class TermControllerTest {
         when(repository.existsById(any(Long.class))).thenReturn(true);
         mockMvc.perform(delete("/terms/{id}", 0L)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().is(200));
     }
 }
