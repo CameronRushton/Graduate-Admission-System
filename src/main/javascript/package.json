@@ -67,8 +67,7 @@
   },
   "scripts": {
     "start": "nps",
-    "test": "nps test",
-    "deploy": "npm run deploy"
+    "test": "nps test"
   },
   "main": "dist/app.bundle.js"
 }
