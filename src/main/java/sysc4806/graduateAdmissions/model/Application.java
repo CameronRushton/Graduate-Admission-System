@@ -2,10 +2,7 @@ package sysc4806.graduateAdmissions.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * An object that describes an application to a degree in our system. An application has
@@ -33,6 +30,7 @@ public class Application {
     private String applicant;
 
     //term that the application is for
+    @OneToOne
     private Term term;
 
     //department and degree type. We may want to make
