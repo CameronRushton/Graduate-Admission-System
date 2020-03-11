@@ -1,5 +1,6 @@
 package sysc4806.graduateAdmissions.controller;
 
+import lombok.val;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,7 +94,7 @@ class InterestControllerTest {
     /**Test the creation of a new Interest object via post*/
     @Test
     public void testPostNewInterest() throws Exception {
-        MvcResult result = mockMvc.perform(post("/interest/create").contentType(APPLICATION_JSON_UTF8)
+        val result = mockMvc.perform(post("/interest/create").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
                         Interest.builder().department(Department.MAAE).keyword("wheels").build())))
                 .andExpect(status().isOk())
@@ -104,7 +105,7 @@ class InterestControllerTest {
     /**Test the deletion of an Interest object via delete*/
     @Test
     public void testDeleteInterest() throws Exception {
-        MvcResult result = mockMvc.perform(delete("/interest/{id}", "3"))
+        val result = mockMvc.perform(delete("/interest/{id}", "3"))
                 .andExpect(status().isOk())
                 .andReturn();
         assertTrue(result.getResponse().getContentAsString().contains("interest gears in MAAE successfully deleted"));
