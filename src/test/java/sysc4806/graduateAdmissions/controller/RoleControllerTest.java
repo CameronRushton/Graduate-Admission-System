@@ -57,18 +57,8 @@ public class RoleControllerTest {
                 Role.builder().roleName("Professor").privileges(professorPrivileges).build());
 
         when(repository.findAll()).thenReturn(roles);
-        when(repository.findById(0L)).thenReturn(Optional.of(roles.get(0)));
-        when(repository.findByRoleName("Admin")).thenReturn(roles.get(1));
-        when(repository.findById(1L)).thenReturn(Optional.of(roles.get(1)));
-        doNothing().when(repository).deleteById(1L);
-    }
-
-    /* Test get role with id */
-    @Test
-    public void testGetRoleById() throws Exception {
-        this.mockMvc.perform(get("/role/?id=0"))
-                .andExpect(status().isOk())
-                .andExpect(content().json(toJson(roles.get(0))));
+        when(repository.findByRoleName("Admin")).thenReturn(Optional.of(roles.get(1)));
+        when(repository.findByRoleName("Student")).thenReturn(Optional.of(roles.get(0)));
     }
 
     /* Test get roles without id */
@@ -82,7 +72,7 @@ public class RoleControllerTest {
     /* Test getting role by name */
     @Test
     public void testGetRoleByName() throws Exception {
-        this.mockMvc.perform(get("/role/name?name=Admin"))
+        this.mockMvc.perform(get("/role/?name=Admin"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(toJson(roles.get(1))));
     }
@@ -103,16 +93,16 @@ public class RoleControllerTest {
     /* Test delete existing Role */
     @Test
     public void testDeleteRole() throws Exception {
-        MvcResult result = mockMvc.perform(delete("/role/{id}", "1"))
+        MvcResult result = mockMvc.perform(delete("/role/{name}", "Student"))
                 .andExpect(status().isOk())
                 .andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains("Admin Role deleted"));
+        assertTrue(result.getResponse().getContentAsString().contains("Student Role deleted"));
     }
 
     /* Test delete Role that does not exist */
     @Test
     public void testDeleteRoleDoesNotExist() throws Exception {
-        mockMvc.perform(delete("/role/{id}", "999"))
+        mockMvc.perform(delete("/role/{name}", "banana"))
                 .andExpect(status().isNotFound());
     }
 
@@ -128,7 +118,7 @@ public class RoleControllerTest {
     /* Test add privilege too Role */
     @Test
     public void testAddPrivilegeTooRole() throws Exception {
-        MvcResult result = mockMvc.perform(post("/role/add?id=1").contentType(APPLICATION_JSON_UTF8)
+        MvcResult result = mockMvc.perform(post("/role/add?name=Admin").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
                         Privilege.builder().owner(Owner.ALL_STUDENTS).target(Target.APPLICATION).operation(Operation.UPDATE).id(1L).build())))
                 .andExpect(status().isOk())
@@ -139,7 +129,7 @@ public class RoleControllerTest {
     /* Test remove privilege from Role */
     @Test
     public void testRemovePrivilegeFromRole() throws Exception {
-        MvcResult result = mockMvc.perform(post("/role/remove?id=1").contentType(APPLICATION_JSON_UTF8)
+        MvcResult result = mockMvc.perform(post("/role/remove?name=Admin").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
                         Privilege.builder().owner(Owner.ALL_STUDENTS).target(Target.APPLICATION).operation(Operation.UPDATE).id(1L).build())))
                 .andExpect(status().isOk())

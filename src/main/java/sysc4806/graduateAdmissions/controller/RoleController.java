@@ -22,30 +22,18 @@ public class RoleController {
     RoleRepository repository;
 
     /**
-     * Get Role by id or return all roles
+     * Get Role by name or return all roles
      *
-     * @param id optional to find specific role
+     * @param name optional to find specific role
      * @return JSON containing Roles
      */
     @ResponseBody
     @GetMapping("")
-    public ResponseEntity getRole(@RequestParam(required=false) Long id) {
-        if(id == null)
+    public ResponseEntity getRole(@RequestParam(required=false) String name) {
+        if(name == null)
             return ResponseEntity.status(HttpStatus.OK).body(repository.findAll());
         else
-            return ResponseEntity.status(HttpStatus.OK).body(repository.findById(id));
-    }
-
-    /**
-     * get Role by name
-     *
-     * @param name the name of the Role to be retrieved
-     * @return JSON containing the Role
-     */
-    @ResponseBody
-    @GetMapping("name")
-    public ResponseEntity getRoleByName(@RequestParam String name){
-        return ResponseEntity.status(HttpStatus.OK).body(repository.findByRoleName(name));
+            return ResponseEntity.status(HttpStatus.OK).body(repository.findByRoleName(name));
     }
 
     /**
@@ -56,20 +44,20 @@ public class RoleController {
      */
     @ResponseBody
     @PostMapping("create")
-    public ResponseEntity createRoleForm(@RequestBody() Role role) {
+    public ResponseEntity createRole(@RequestBody() Role role) {
         repository.save(role);
         return ResponseEntity.ok("Role added");
     }
 
     /**
      *
-     * @param id the id of the Role to delete
+     * @param name the roleName of the Role to delete
      * @return ResponseEntity describing the outcome of the operation
      */
-    @DeleteMapping("{id}")
+    @DeleteMapping("{name}")
     @CrossOrigin
-    public ResponseEntity deleteRole(@PathVariable("id") Long id) {
-        Optional<Role> role = repository.findById(id);
+    public ResponseEntity deleteRole(@PathVariable("name") String name) {
+        Optional<Role> role = repository.findByRoleName(name);
         if(role.isPresent()){
             repository.delete(role.get());
             return ResponseEntity.ok(role.get().getRoleName() + " Role deleted");
@@ -93,13 +81,13 @@ public class RoleController {
     /**
      * add Privilege from Role
      *
-     * @param id id of the Role to be updated
+     * @param name roleName of the Role to be updated
      * @param privilege the privilege to be added
      * @return ResponseEntity describing the outcome of the operation
      */
     @PostMapping("add")
-    public ResponseEntity addRolePrivilege(@RequestParam Long id, @RequestBody Privilege privilege){
-        Optional<Role> role = repository.findById(id);
+    public ResponseEntity addRolePrivilege(@RequestParam String name, @RequestBody Privilege privilege){
+        Optional<Role> role = repository.findByRoleName(name);
         if(role.isPresent()){
             Role r = role.get();
             r.addPrivilege(privilege);
@@ -113,13 +101,13 @@ public class RoleController {
     /**
      * remove Privilege from Role
      *
-     * @param id id of the Role to be updated
+     * @param name roleName of the Role to be updated
      * @param privilege the privilege to be removed
      * @return ResponseEntity describing the outcome of the operation
      */
     @PostMapping("remove")
-    public ResponseEntity removeRolePrivilege(@RequestParam Long id, @RequestBody Privilege privilege){
-        Optional<Role> role = repository.findById(id);
+    public ResponseEntity removeRolePrivilege(@RequestParam String name, @RequestBody Privilege privilege){
+        Optional<Role> role = repository.findByRoleName(name);
         if(role.isPresent()){
             Role r = role.get();
             r.removePrivilege(privilege);

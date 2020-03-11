@@ -57,7 +57,8 @@ public class PrivilegeControllerTest {
         when(repository.findById(0L)).thenReturn(Optional.of(privileges.get(0)));
         when(repository.findByOwner(Owner.ALL_PROFS)).thenReturn(privileges.subList(0, 2));
         when(repository.findById(4L)).thenReturn(Optional.of(privileges.get(4)));
-        doNothing().when(repository).deleteById(4L);
+        when(repository.findByTarget(Target.TERM)).thenReturn(Arrays.asList(privileges.get(2)));
+        when(repository.findByOperation(Operation.UPDATE)).thenReturn(Arrays.asList(privileges.get(4)));
     }
 
     /* Test get privilege with id */
@@ -82,6 +83,22 @@ public class PrivilegeControllerTest {
         this.mockMvc.perform(get("/privilege/owner?owner=ALL_PROFS"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(toJson(privileges.subList(0, 2))));
+    }
+
+    /* Test getPrivilegeOfTarget */
+    @Test
+    public void testGetPrivilegeByTarget() throws Exception {
+        this.mockMvc.perform(get("/privilege/target?target=TERM"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(toJson(Arrays.asList(privileges.get(2)))));
+    }
+
+    /* Test getPrivilegeOfOperation */
+    @Test
+    public void testGetPrivilegeByOperation() throws Exception {
+        this.mockMvc.perform(get("/privilege/operation?operation=UPDATE"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(toJson(Arrays.asList(privileges.get(4)))));
     }
 
     /* Test createPrivilege */

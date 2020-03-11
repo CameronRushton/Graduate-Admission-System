@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sysc4806.graduateAdmissions.model.Operation;
 import sysc4806.graduateAdmissions.model.Owner;
 import sysc4806.graduateAdmissions.model.Privilege;
+import sysc4806.graduateAdmissions.model.Target;
 import sysc4806.graduateAdmissions.repositories.PrivilegeRepository;
 
 import java.util.Optional;
@@ -36,7 +38,7 @@ public class PrivilegeController {
     }
 
     /**
-     * get all Privilege of a specified Owner
+     * get all Privilege(s) with a specified Owner
      *
      * @param owner the owner of the returned Privilege
      * @return JSON containing the Privilege(s)
@@ -44,6 +46,28 @@ public class PrivilegeController {
     @GetMapping("owner")
     public ResponseEntity getPrivilegeOfOwner(@RequestParam() Owner owner){
         return ResponseEntity.status(HttpStatus.OK).body(repository.findByOwner(owner));
+    }
+
+    /**
+     * get all Privilege(s) with a specified Target
+     *
+     * @param target the Target of privileges to be returned
+     * @return JSON containing the Privilege(s)
+     */
+    @GetMapping("target")
+    public ResponseEntity getPrivilegeOfTarget(@RequestParam() Target target){
+        return ResponseEntity.status(HttpStatus.OK).body(repository.findByTarget(target));
+    }
+
+    /**
+     * get all Privilege(s) with a specified Operation
+     *
+     * @param operation the Operation of the returned Privilege(s)
+     * @return JSON containing the Privilege(s)
+     */
+    @GetMapping("operation")
+    public ResponseEntity getPrivilegeOfOperation(@RequestParam()Operation operation){
+        return ResponseEntity.status(HttpStatus.OK).body(repository.findByOperation(operation));
     }
 
     /**
