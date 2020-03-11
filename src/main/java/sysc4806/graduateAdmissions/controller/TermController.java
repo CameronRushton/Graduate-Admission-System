@@ -1,54 +1,81 @@
 package sysc4806.graduateAdmissions.controller;
 
-import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import sysc4806.graduateAdmissions.model.Term;
-import sysc4806.graduateAdmissions.repositories.TermRepository;
+import sysc4806.graduateAdmissions.repositories.TermRepositoryDAO;
 
 import javax.validation.Valid;
-import javax.validation.ValidationException;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
+/**
+ * @author crushton
+ */
 @RestController
+@RequestMapping("/terms")
 public class TermController {
 
-    private final TermRepository termRepository;
+    private final TermRepositoryDAO termRepositoryDAO;
 
     @Autowired
-    public TermController(TermRepository termRepository) {
-        this.termRepository = termRepository;
+    public TermController(TermRepositoryDAO termRepositoryDAO) {
+        this.termRepositoryDAO = termRepositoryDAO;
     }
 
     /**
      * GET /terms
      */
-    @GetMapping(path="/terms")
+    @GetMapping
     public ResponseEntity queryAllTerms() {
-        List<Term> terms = termRepository.findAllTerms();
+        List<Term> terms = termRepositoryDAO.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(terms);
     }
 
     /**
      * GET /terms/{id}
      */
-    @GetMapping(path="/terms/{id}")
+    @GetMapping(path="/{id}")
     public ResponseEntity queryTerm(@PathVariable("id") Long termId) {
-        Term term = termRepository.findTermById(termId);
-        return ResponseEntity.status(Objects.isNull(term) ? HttpStatus.NOT_FOUND : HttpStatus.OK).body(term);
+        Optional<Term> term = termRepositoryDAO.findById(termId);
+        return ResponseEntity.status(term.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND)
+                .body(term.orElse(null));
     }
 
     /**
      * POST /terms
      */
-    @PostMapping(path="/terms")
+    @PostMapping
     public ResponseEntity createTerm(@Valid @RequestBody Term term) {
-        termRepository.save(term);
+        termRepositoryDAO.save(term);
         return ResponseEntity.status(HttpStatus.OK).body(term);
     }
 
+    /**
+     * DELETE /terms/{id}
+     */
+    @DeleteMapping(path="/{id}")
+    public ResponseEntity createTerm(@PathVariable("id") Long termId) {
+        if (!termRepositoryDAO.existsById(termId)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        termRepositoryDAO.deleteById(termId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    /**
+     * PUT /terms
+     */
+    @PutMapping
+    public ResponseEntity updateTerm(@Valid @RequestBody Term newTerm) {
+        return ResponseEntity.status(HttpStatus.OK).body(termRepositoryDAO.findById(newTerm.getId()).map(term -> {
+            term.setSeason(newTerm.getSeason());
+            term.setYear(newTerm.getYear());
+            term.setDeadline(newTerm.getDeadline());
+            term.setActive(newTerm.isActive());
+            return termRepositoryDAO.save(term);
+        }).orElseGet(() -> termRepositoryDAO.save(newTerm)));
+    }
 }

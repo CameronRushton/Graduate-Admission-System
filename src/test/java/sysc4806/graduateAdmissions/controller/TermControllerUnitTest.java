@@ -11,7 +11,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import sysc4806.graduateAdmissions.model.Season;
 import sysc4806.graduateAdmissions.model.Term;
-import sysc4806.graduateAdmissions.repositories.TermRepository;
+import sysc4806.graduateAdmissions.repositories.TermRepositoryDAO;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,14 +27,14 @@ public class TermControllerUnitTest {
     TermController termController;
 
     @Mock
-    TermRepository repository;
+    TermRepositoryDAO repository;
 
     @Test
     public void testGetTermWithIdStatusOK() throws ParseException {
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
         Term term = Term.builder().id(1L).active(true).deadline(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01")).season(Season.SUMMER).year("1234").build();
-        when(repository.findTermById(any(Long.class))).thenReturn(term);
+        when(repository.findById(any(Long.class))).thenReturn(java.util.Optional.ofNullable(term));
         ResponseEntity responseEntity = termController.queryTerm(term.getId());
         assertEquals(200, responseEntity.getStatusCodeValue());
     }
@@ -43,34 +43,34 @@ public class TermControllerUnitTest {
     public void testGetTermWithIdStatusNotFound() {
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
-        when(repository.findTermById(any(Long.class))).thenReturn(null);
+        when(repository.findById(any(Long.class))).thenReturn(java.util.Optional.empty());
         ResponseEntity responseEntity = termController.queryTerm(1L);
         assertEquals(404, responseEntity.getStatusCodeValue());
     }
 
-    /**
-     * TODO
-     */
-    @Test
-    public void testGetAllTerms() {
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
-        when(repository.findTermById(any(Long.class))).thenReturn(null);
-        ResponseEntity responseEntity = termController.queryTerm(1L);
-        assertEquals(404, responseEntity.getStatusCodeValue());
-    }
+//    /**
+//     * TODO
+//     */
+//    @Test
+//    public void testGetAllTerms() {
+//        MockHttpServletRequest request = new MockHttpServletRequest();
+//        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+//        when(repository.findById(any(Long.class))).thenReturn(null);
+//        ResponseEntity responseEntity = termController.queryTerm(1L);
+//        assertEquals(404, responseEntity.getStatusCodeValue());
+//    }
 
-    /**
-     * TODO
-     */
-    @Test
-    public void testGetAllTermsEmptyList() {
-        MockHttpServletRequest request = new MockHttpServletRequest();
-        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
-        when(repository.findTermById(any(Long.class))).thenReturn(null);
-        ResponseEntity responseEntity = termController.queryTerm(1L);
-        assertEquals(404, responseEntity.getStatusCodeValue());
-    }
+//    /**
+//     * TODO
+//     */
+//    @Test
+//    public void testGetAllTermsEmptyList() {
+//        MockHttpServletRequest request = new MockHttpServletRequest();
+//        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+//        when(repository.findById(any(Long.class))).thenReturn(null);
+//        ResponseEntity responseEntity = termController.queryTerm(1L);
+//        assertEquals(404, responseEntity.getStatusCodeValue());
+//    }
 
     /**
      *
