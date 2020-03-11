@@ -9,5 +9,5 @@ import sysc4806.graduateAdmissions.model.Role;
  * @author Eric
  */
 public interface RoleRepository extends CrudRepository<Role, Long> {
-    Role findByName(String name);
+    Role findByRoleName(String roleName);
 }

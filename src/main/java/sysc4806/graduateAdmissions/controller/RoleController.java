@@ -3,75 +3,130 @@ package sysc4806.graduateAdmissions.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import sysc4806.graduateAdmissions.model.Privilege;
 import sysc4806.graduateAdmissions.model.Role;
 import sysc4806.graduateAdmissions.repositories.RoleRepository;
 
 import java.util.Optional;
 
-@Controller
-@RequestMapping("/role")
+/**
+ * Controller for CRUD operations on Role
+ *
+ * @author Eric
+ */
+@RestController
+@RequestMapping("/role/")
 public class RoleController {
     @Autowired
-    RoleRepository repo;
+    RoleRepository repository;
 
     /**
      * Get Role by id or return all roles
      *
      * @param id optional to find specific role
-     * @return Json containing Roles
+     * @return JSON containing Roles
      */
     @ResponseBody
-    @GetMapping("/")
-    public ResponseEntity getRole(@RequestParam(required=false) Long id, @RequestParam(required = false) String name) {
-        if(id == null && name == null)
-            return ResponseEntity.status(HttpStatus.OK).body(repo.findAll());
-        else if(id != null)
-            return ResponseEntity.status(HttpStatus.OK).body(repo.findById(id));
+    @GetMapping("")
+    public ResponseEntity getRole(@RequestParam(required=false) Long id) {
+        if(id == null)
+            return ResponseEntity.status(HttpStatus.OK).body(repository.findAll());
         else
-            return ResponseEntity.status(HttpStatus.OK).body(repo.findByName(name));
+            return ResponseEntity.status(HttpStatus.OK).body(repository.findById(id));
     }
 
     /**
-     * serves a form to create a new Interest
+     * get Role by name
      *
-     * @param model the Model to pass values to the thymeleaf template
-     * @return the name of the form to create a new Interest
+     * @param name the name of the Role to be retrieved
+     * @return JSON containing the Role
      */
-    @GetMapping("/create")
-    public String createRoleForm(Model model) {
-        model.addAttribute("role", Role.builder().build());
-        model.addAttribute("postLocation", "/role/create");
-        model.addAttribute("operation", "Create");
-        return "role/create";
+    @ResponseBody
+    @GetMapping("name")
+    public ResponseEntity getRoleByName(@RequestParam String name){
+        return ResponseEntity.status(HttpStatus.OK).body(repository.findByRoleName(name));
     }
 
     /**
-     * Add role to database
+     * create a new Role
      *
-     * @param role Role to save
-     * @param model the Model to pass values to the thymeleaf template
-     * @return result page
+     * @param role the Role to be added to the system
+     * @return ResponseEntity describing the outcome of the operation
      */
-    @PostMapping("/create")
-    public String createRole(@ModelAttribute Role role, Model model) {
-        repo.save(role);
-        model.addAttribute("message", "interest successfully added");
-        return "role/result";
+    @ResponseBody
+    @PostMapping("create")
+    public ResponseEntity createRoleForm(@RequestBody() Role role) {
+        repository.save(role);
+        return ResponseEntity.ok("Role added");
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String deleteRole(@PathVariable("id") Long id, Model model) {
-        Optional<Role> role = repo.findById(id);
+    /**
+     *
+     * @param id the id of the Role to delete
+     * @return ResponseEntity describing the outcome of the operation
+     */
+    @DeleteMapping("{id}")
+    @CrossOrigin
+    public ResponseEntity deleteRole(@PathVariable("id") Long id) {
+        Optional<Role> role = repository.findById(id);
         if(role.isPresent()){
-            repo.delete(role.get());
-            model.addAttribute("message", "role " + role.get().getRoleName() +
-                    " successfully deleted");
+            repository.delete(role.get());
+            return ResponseEntity.ok(role.get().getRoleName() + " Role deleted");
         } else{
-            model.addAttribute("message", "role not found");
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        return "role/result";
+    }
+
+    /**
+     * update a specified Role
+     *
+     * @param role the Role to be updated
+     * @return ResponseEntity describing the outcome of the operation
+     */
+    @PostMapping("update")
+    public ResponseEntity updateRole(@RequestBody Role role){
+        repository.save(role);
+        return ResponseEntity.ok(role.getRoleName() + " Role updated");
+    }
+
+    /**
+     * add Privilege from Role
+     *
+     * @param id id of the Role to be updated
+     * @param privilege the privilege to be added
+     * @return ResponseEntity describing the outcome of the operation
+     */
+    @PostMapping("add")
+    public ResponseEntity addRolePrivilege(@RequestParam Long id, @RequestBody Privilege privilege){
+        Optional<Role> role = repository.findById(id);
+        if(role.isPresent()){
+            Role r = role.get();
+            r.addPrivilege(privilege);
+            repository.save(r);
+            return ResponseEntity.ok("added privilege " + privilege.getId() + " too Role");
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     * remove Privilege from Role
+     *
+     * @param id id of the Role to be updated
+     * @param privilege the privilege to be removed
+     * @return ResponseEntity describing the outcome of the operation
+     */
+    @PostMapping("remove")
+    public ResponseEntity removeRolePrivilege(@RequestParam Long id, @RequestBody Privilege privilege){
+        Optional<Role> role = repository.findById(id);
+        if(role.isPresent()){
+            Role r = role.get();
+            r.removePrivilege(privilege);
+            repository.save(r);
+            return ResponseEntity.ok("removed privilege " + privilege.getId() + " from Role");
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 }
