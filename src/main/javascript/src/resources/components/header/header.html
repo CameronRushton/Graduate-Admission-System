@@ -7,7 +7,8 @@
             </div>
             <div class="navigation">
                 <a repeat.for="route of router.routes" if.bind="route.show" class="item ${route.navModel.isActive? 'active':''} " href.bind="route.route">${route.title}</a>
-            </div>
+            	<a href="#" if.bind="isSignedIn()" click.delegate="onSignOut()">Logout</a>
+			</div>
             
             <!-- <div class="navigation2 ${scroll_position > 90 && screenWidth > 500? 'opacity1':'remove no-display'}">
                 <a repeat.for="route of router.routes" class="item ${route.navModel.isActive? 'active':''} " href.bind="route.route">${route.char}</a>

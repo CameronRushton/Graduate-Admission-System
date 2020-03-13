@@ -64,7 +64,7 @@ export class GoogleSigninButton {
         this.success({ googleUser });
       },
       onfailure: error => {
-        this.failure({ error });
+        console.log(error);
       }
     });
   }
