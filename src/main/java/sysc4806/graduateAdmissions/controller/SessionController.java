@@ -30,7 +30,7 @@ public class SessionController {
     //this is assigned by the google sign in site
     private static final String CLIENT_ID = "787575027862-t2vb0ae8ftk68nr9br9s4untp9e6t614.apps.googleusercontent.com";
 
-    private Payload verifyToken(String idTokenString)
+    public Payload verifyToken(String idTokenString)
             throws Exception {
         final GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.
                 Builder(transport, jsonFactory)
@@ -54,11 +54,7 @@ public class SessionController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        // Get profile information from payload
-        String email = payload.getEmail();
-        String name = (String) payload.get("name");
-        System.out.println("email: " + email);
-        System.out.println("name: " + name);
+        //TODO: check if the email in the token matches a user and create a session for that user
 
         return ResponseEntity.ok("login success");
     }
