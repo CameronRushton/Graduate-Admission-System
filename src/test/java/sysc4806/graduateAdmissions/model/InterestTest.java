@@ -1,5 +1,6 @@
 package sysc4806.graduateAdmissions.model;
 
+import lombok.val;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -82,23 +83,23 @@ class InterestTest {
     /**Test that two Privilege objects with identical fields are considered equal*/
     @Test
     public void testEquals(){
-        Interest interest1 = new Interest(ID, department, keyword);
-        Interest interest2 = new Interest(ID, department, keyword);
+        val interest1 = new Interest(ID, department, keyword);
+        val interest2 = new Interest(ID, department, keyword);
         assertEquals(interest1, interest2);
     }
 
     /**Test that two Privilege objects with all fields equal except their ids are still considered equal*/
     @Test
     public void testEqualsDifferentID(){
-        Interest interest1 = new Interest(ID, department, keyword);
-        Interest interest2 = new Interest(ID + 42, department, keyword);
+        val interest1 = new Interest(ID, department, keyword);
+        val interest2 = new Interest(ID + 42, department, keyword);
         assertEquals(interest1, interest2);
     }
 
     /**Test that objects with different field values are not considered equal*/
     @Test
     public void testNotEquals(){
-        Interest interest1 = new Interest(ID, department, keyword);
+        val interest1 = new Interest(ID, department, keyword);
         assertNotEquals(interest1, interest);
     }
 }

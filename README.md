@@ -14,7 +14,7 @@ Kevin Sun
 The project is broken up into weekly sprints, each with their own Kanban board. These can be viewed on the repository's "Projects" tab, here: https://github.com/CameronRushton/Graduate-Admission-System/projects
 
 ## Project Status
-The project is in its [second sprint](https://github.com/CameronRushton/Graduate-Admission-System/projects/2). The first sprint was not completed, so this will be completed first. After this, the second sprint focuses on making all controllers return only JSON, and using Aurelia for the front end. 3rd party authentication will be added in preparation for the next sprint, but will not filter responsibilites based on the role of a user.
+The project is in its [third sprint](https://github.com/CameronRushton/Graduate-Admission-System/projects/3). This week is mainly focussed on catch up, since there are some tasks from sprints 1 and 2 that are not complete. User sessions and login will be added here, in preparation for giving students, profs, and admin different views in the next sprint once all work is caught up.
 
 ## Model Class Diagram
 ![UML Class Diagram](/diagrams/ClassDiagram.PNG)
