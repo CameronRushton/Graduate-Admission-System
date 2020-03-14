@@ -84,6 +84,7 @@
             <artifactId>google-api-client</artifactId>
             <version>1.30.8</version>
         </dependency>
+        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.2.10</version>
