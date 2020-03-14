@@ -30,32 +30,47 @@ public class SessionController {
     //this is assigned by the google sign in site
     private static final String CLIENT_ID = "787575027862-t2vb0ae8ftk68nr9br9s4untp9e6t614.apps.googleusercontent.com";
 
-    public Payload verifyToken(String idTokenString)
-            throws Exception {
+    /**
+     * performs token authenticate with google and returns user info
+     *
+     * @param idTokenString the token to authenticate
+     * @return returns user info if token is valid, otherwise null
+     */
+    private Payload verifyToken(String idTokenString) {
         final GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.
                 Builder(transport, jsonFactory)
                 .setIssuers(Arrays.asList("https://accounts.google.com", "accounts.google.com"))
                 .setAudience(Collections.singletonList(CLIENT_ID))
                 .build();
 
-        GoogleIdToken idToken = verifier.verify(idTokenString);
+        GoogleIdToken idToken;
+        try {
+            idToken = verifier.verify(idTokenString);
+        }catch(Exception e){
+            return null;
+        }
+
         if (idToken == null)
-            throw new Exception("idToken is invalid");
+            return null;
 
         return idToken.getPayload();
     }
 
+    /**
+     * authenticates login tokens to set up user session
+     *
+     * @param loginDetails the token from google sign in to authenticate
+     * @return OK if the token is valid, otherwise UNAUTHORIZED
+     */
     @PostMapping("login")
     public ResponseEntity authenticateLogin(@RequestBody String loginDetails) {
-        GoogleIdToken.Payload payload;
-        try {
-            payload = verifyToken(loginDetails);
-        }catch(Exception e){
+        GoogleIdToken.Payload payload = verifyToken(loginDetails);
+        System.err.println(loginDetails);
+        System.err.println(payload);
+        if(payload != null)
+            //TODO: check if the email in the token matches a user and create a session for that user
+            return ResponseEntity.ok("login success");
+        else
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-
-        //TODO: check if the email in the token matches a user and create a session for that user
-
-        return ResponseEntity.ok("login success");
     }
 }
