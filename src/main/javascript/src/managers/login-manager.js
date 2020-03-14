@@ -14,7 +14,7 @@ export class LoginManager extends AbstractManager{
     		headers: {
     			"Content-Type": "application/json"
     		},
-    		body: JSON.stringify(token)
+    		body: token
     	};
     	return this.httpClient.fetch(`/login`, options)
     		.then(this.handleError)

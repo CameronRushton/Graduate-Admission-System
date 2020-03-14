@@ -13,7 +13,9 @@ export class Login {
     }
 
     attached() {
+    	//this script is required to use google sign in
     	$("head").append("<script src='https://apis.google.com/js/platform.js' async defer></script>");
+    	//the client id here is assigned by the google sign in site
 		$("head").append("<meta name='google-signin-client_id' content='787575027862-t2vb0ae8ftk68nr9br9s4untp9e6t614.apps.googleusercontent.com'>");
     }
 
@@ -25,12 +27,7 @@ export class Login {
     }
 
 	onSignIn(googleUser) {
-    	let profile = googleUser.getBasicProfile();
-    	console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    	console.log('Name: ' + profile.getName());
-    	console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-
-    	//send login token to server to start session
+    	//send login token to server to authenticate
 		let id_token = googleUser.getAuthResponse().id_token;
 		let parent = this;
 		this.loginManager.login(id_token).then(response => {
