@@ -1,5 +1,6 @@
 package sysc4806.graduateAdmissions.controller;
 
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -69,7 +70,7 @@ public class InterestController {
     @DeleteMapping("{id}")
     @CrossOrigin
     public ResponseEntity deleteInterest(@PathVariable("id") Long id) {
-        Optional<Interest> interest = repo.findById(id);
+        val interest = repo.findById(id);
         if(interest.isPresent()){
             repo.delete(interest.get());
             return ResponseEntity.ok("interest " + interest.get().getKeyword() +
