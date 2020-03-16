@@ -1,6 +1,7 @@
 <template>
-  <header scroll_position.bind="scrollTop" scroll_fn.bind="scrollFn"></header>
-  <section class="container">
-    Login Page
-  </section>
+  	<header scroll_position.bind="scrollTop" scroll_fn.bind="scrollFn"></header>
+  	<section class="container">
+		<h1>Login Page</h1>
+		<google-signin-button success.call="onSignIn(googleUser)"></google-signin-button>
+  	</section>
 </template>
