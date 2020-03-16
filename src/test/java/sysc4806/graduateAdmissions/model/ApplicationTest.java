@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,11 +22,11 @@ class ApplicationTest {
 
     private Application application;
     private long ID;
-    private String applicant;
+    private User applicant;
     private Term term;
     private Department department;
     private String degree;
-    private String professors;
+    private Set<User> professors;
     private Status status;
     private double gpa;
     private String resumeFileName;
@@ -33,12 +35,12 @@ class ApplicationTest {
     public void setUp() throws ParseException {
         application = new Application();
         ID = 5;
-        applicant = "Jane Doe";
+        applicant = new User();
         term = new Term(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"), Season.FALL, "2020", true);
         department = Department.SYSC;
         degree = "test case";
         status = Status.INCOMPLETE;
-        professors = "Babak";
+        professors = new HashSet<>();
         gpa = 10.2;
         resumeFileName = "resume.pdf";
     }
@@ -59,7 +61,7 @@ class ApplicationTest {
     /**Test to ensure that the all args constructor correctly sets fields*/
     @Test
     public void testArgsConstructor(){
-        application = new Application(ID, applicant, term, department, degree, professors, status, gpa, resumeFileName);
+        application = new Application(ID, applicant, term, department, degree,  professors, status, gpa, resumeFileName);
         assertEquals(ID, application.getId());
         assertEquals(applicant, application.getApplicant());
         assertEquals(term, application.getTerm());
