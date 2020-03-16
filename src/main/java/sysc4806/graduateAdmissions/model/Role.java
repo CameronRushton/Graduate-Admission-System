@@ -1,7 +1,9 @@
 package sysc4806.graduateAdmissions.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -20,6 +22,8 @@ import java.util.*;
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Role {
     //the primary key a role

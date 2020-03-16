@@ -65,8 +65,6 @@ public class SessionController {
     @PostMapping("login")
     public ResponseEntity authenticateLogin(@RequestBody String loginDetails) {
         GoogleIdToken.Payload payload = verifyToken(loginDetails);
-        System.err.println(loginDetails);
-        System.err.println(payload);
         if(payload != null)
             //TODO: check if the email in the token matches a user and create a session for that user
             return ResponseEntity.ok("login success");
