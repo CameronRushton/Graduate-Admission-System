@@ -14,7 +14,7 @@ import java.util.List;
  * @author Kevin Sun
  */
 public interface UserRepository extends CrudRepository<User, Long> {
-    List<Privilege> findByUser(User user);
-    List<Privilege> findByRole(Role role);
-    List<Privilege> findByInterest(Interest interest);
+    List<User> findByUser(User user);
+    List<User> findByRole(Role role);
+    List<User> findByInterest(Interest interest);
 }
