@@ -9,18 +9,22 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 
 import org.springframework.test.web.servlet.MockMvc;
+import sysc4806.graduateAdmissions.dto.TermDTO;
+import sysc4806.graduateAdmissions.mapper.TermMapper;
 import sysc4806.graduateAdmissions.model.Season;
 import sysc4806.graduateAdmissions.model.Term;
-import sysc4806.graduateAdmissions.repositories.TermRepositoryDAO;
+import sysc4806.graduateAdmissions.repositories.TermRepository;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static sysc4806.graduateAdmissions.utilities.Utility.toJson;
 
 /**
@@ -32,9 +36,28 @@ public class TermControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private TermMapper termMapper;
 
     @MockBean
-    TermRepositoryDAO repository;
+    TermRepository repository;
+
+    @Test
+    public void testGetTerms() throws Exception {
+        Term term = Term.builder()
+                .id(0L)
+                .active(true)
+                .deadline(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"))
+                .season(Season.SUMMER)
+                .year("1234")
+                .build();
+        List<Term> terms = new ArrayList<Term>();
+        terms.add(term);
+        when(repository.findAll()).thenReturn(terms);
+        mockMvc.perform(get("/terms")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(200));
+    }
 
     @Test
     public void testGetTermWithId() throws Exception {
@@ -68,87 +91,51 @@ public class TermControllerTest {
 
     @Test
     public void testCreateTerm() throws Exception {
-        Term term = Term.builder()
-                .deadline(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"))
+        TermDTO termDTO = TermDTO.builder()
+                .deadline(new SimpleDateFormat("yyyy-MM-dd").parse("2020-02-01"))
                 .active(true)
                 .season(Season.SUMMER)
                 .year("1234")
                 .build();
+        when(repository.save(any(Term.class))).thenReturn(termMapper.map(termDTO));
         mockMvc.perform(post("/terms")
-                .content(toJson(term))
+                .content(toJson(termDTO))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(200));
-    }
-
-    @Test
-    public void testCreateTermNoDeadline() throws Exception {
-        Term term = Term.builder()
-                .id(1L)
-                .active(true)
-                .season(Season.SUMMER)
-                .year("1234")
-                .build();
-        mockMvc.perform(post("/terms")
-                .content(toJson(term))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(400));
-    }
-
-    @Test
-    public void testCreateTermNoSeason() throws Exception {
-        Term term = Term.builder()
-                .id(1L)
-                .active(true)
-                .deadline(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"))
-                .year("1234")
-                .build();
-        mockMvc.perform(post("/terms")
-                .content(toJson(term))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(400));
-    }
-
-    @Test
-    public void testCreateTermNoActiveStatus() throws Exception {
-        Term term = Term.builder()
-                .id(1L)
-                .deadline(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"))
-                .season(Season.SUMMER)
-                .year("1234")
-                .build();
-        mockMvc.perform(post("/terms")
-                .content(toJson(term))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(200));
-    }
-
-    @Test
-    public void testCreateTermNoYear() throws Exception {
-        Term term = Term.builder()
-                .id(1L)
-                .active(true)
-                .deadline(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"))
-                .season(Season.SUMMER)
-                .build();
-        mockMvc.perform(post("/terms")
-                .content(toJson(term))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(400));
+                .andExpect(status().is(201));
     }
 
     @Test
     public void testUpdateTerm() throws Exception {
-        Term term = Term.builder()
-                .id(1L)
+        TermDTO termDTO = TermDTO.builder()
+                .termId(0L)
+                .active(true)
+                .deadline(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"))
+                .season(Season.SUMMER)
+                .year("1234")
+                .build();
+        when(repository.findById(termDTO.getTermId())).thenReturn(Optional.of(termMapper.map(termDTO)));
+        termDTO.setYear("2021");
+        when(repository.save(any(Term.class))).thenReturn(termMapper.map(termDTO));
+        mockMvc.perform(put("/terms")
+                .content(toJson(termDTO))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(200))
+                .andExpect(jsonPath("$.year").value("2021"));
+    }
+
+    @Test
+    public void testUpdateTermDoesNotExist() throws Exception {
+        TermDTO termDTO = TermDTO.builder()
+                .termId(99L)
                 .active(true)
                 .deadline(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"))
                 .season(Season.SUMMER)
                 .year("1234")
                 .build();
         mockMvc.perform(put("/terms")
-                .content(toJson(term))
+                .content(toJson(termDTO))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is(200));
+                .andExpect(status().is(404));
     }
 
     @Test

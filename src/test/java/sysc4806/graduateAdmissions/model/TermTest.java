@@ -39,8 +39,8 @@ public class TermTest {
     @Test
     public void testNoArgsConstructor() {
         assertNotNull(term);
-        assertNotNull(term.getId());
-        assertFalse(term.isActive());
+        assertNull(term.getId());
+        assertNull(term.getActive());
         assertNull(term.getDeadline());
         assertNull(term.getSeason());
         assertNull(term.getYear());
@@ -54,7 +54,7 @@ public class TermTest {
         term = new Term(1L, true, deadline, season, year);
 
         assertEquals(id, term.getId());
-        assertTrue(term.isActive());
+        assertTrue(term.getActive());
         assertEquals(deadline, term.getDeadline());
         assertEquals(season, term.getSeason());
         assertEquals(year, term.getYear());
@@ -67,8 +67,8 @@ public class TermTest {
     public void testNoIDConstructor() {
         term = new Term(deadline, season, year, true);
 
-        assertNotNull(term.getId());
-        assertTrue(term.isActive());
+        assertNull(term.getId());
+        assertTrue(term.getActive());
         assertEquals(deadline, term.getDeadline());
         assertEquals(season, term.getSeason());
         assertEquals(year, term.getYear());
@@ -81,8 +81,8 @@ public class TermTest {
     public void testSetActive() {
         term.setActive(true);
 
-        assertNotNull(term.getId());
-        assertTrue(term.isActive());
+        assertNull(term.getId());
+        assertTrue(term.getActive());
         assertNull(term.getDeadline());
         assertNull(term.getSeason());
         assertNull(term.getYear());
@@ -95,8 +95,8 @@ public class TermTest {
     public void testSetDeadline() {
         term.setDeadline(deadline);
 
-        assertNotNull(term.getId());
-        assertFalse(term.isActive());
+        assertNull(term.getId());
+        assertNull(term.getActive());
         assertEquals(deadline, term.getDeadline());
         assertNull(term.getSeason());
         assertNull(term.getYear());
@@ -109,8 +109,8 @@ public class TermTest {
     public void testSetSeason() {
         term.setSeason(season);
 
-        assertNotNull(term.getId());
-        assertFalse(term.isActive());
+        assertNull(term.getId());
+        assertNull(term.getActive());
         assertNull(term.getDeadline());
         assertEquals(season, term.getSeason());
         assertNull(term.getYear());
@@ -123,8 +123,8 @@ public class TermTest {
     public void testSetYear() {
         term.setYear(year);
 
-        assertNotNull(term.getId());
-        assertFalse(term.isActive());
+        assertNull(term.getId());
+        assertNull(term.getActive());
         assertNull(term.getDeadline());
         assertNull(term.getSeason());
         assertEquals(year, term.getYear());

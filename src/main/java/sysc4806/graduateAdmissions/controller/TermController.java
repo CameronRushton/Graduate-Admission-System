@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sysc4806.graduateAdmissions.model.Term;
-import sysc4806.graduateAdmissions.repositories.TermRepositoryDAO;
+import sysc4806.graduateAdmissions.dto.TermDTO;
 
-import javax.validation.Valid;
+import sysc4806.graduateAdmissions.model.Term;
+import sysc4806.graduateAdmissions.repositories.TermRepository;
+import sysc4806.graduateAdmissions.service.TermManager;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -18,11 +20,14 @@ import java.util.Optional;
 @RequestMapping("/terms")
 public class TermController {
 
-    private final TermRepositoryDAO termRepositoryDAO;
+    private TermManager termManager;
+    private TermRepository termRepository;
 
     @Autowired
-    public TermController(TermRepositoryDAO termRepositoryDAO) {
-        this.termRepositoryDAO = termRepositoryDAO;
+    public TermController(TermManager termManager,
+                          TermRepository termRepository) {
+        this.termManager = termManager;
+        this.termRepository = termRepository;
     }
 
     /**
@@ -30,7 +35,7 @@ public class TermController {
      */
     @GetMapping
     public ResponseEntity queryAllTerms() {
-        List<Term> terms = termRepositoryDAO.findAll();
+        List<Term> terms = termRepository.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(terms);
     }
 
@@ -39,7 +44,7 @@ public class TermController {
      */
     @GetMapping(path="/{id}")
     public ResponseEntity queryTerm(@PathVariable("id") Long termId) {
-        Optional<Term> term = termRepositoryDAO.findById(termId);
+        Optional<Term> term = termRepository.findById(termId);
         return ResponseEntity.status(term.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND)
                 .body(term.orElse(null));
     }
@@ -48,20 +53,24 @@ public class TermController {
      * POST /terms
      */
     @PostMapping
-    public ResponseEntity createTerm(@Valid @RequestBody Term term) {
-        termRepositoryDAO.save(term);
-        return ResponseEntity.status(HttpStatus.OK).body(term);
+    public ResponseEntity createTerm(@RequestBody TermDTO term) {
+        Optional<TermDTO> response = termManager.createTerm(term);
+        if (response.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        }
+        // User can set an id, but it shouldn't be in the docs
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Term already exists; remove id field.");
     }
-
+//
     /**
      * DELETE /terms/{id}
      */
     @DeleteMapping(path="/{id}")
-    public ResponseEntity createTerm(@PathVariable("id") Long termId) {
-        if (!termRepositoryDAO.existsById(termId)) {
+    public ResponseEntity deleteTerm(@PathVariable("id") Long termId) {
+        if (!termRepository.existsById(termId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        termRepositoryDAO.deleteById(termId);
+        termRepository.deleteById(termId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -69,13 +78,11 @@ public class TermController {
      * PUT /terms
      */
     @PutMapping
-    public ResponseEntity updateTerm(@Valid @RequestBody Term newTerm) {
-        return ResponseEntity.status(HttpStatus.OK).body(termRepositoryDAO.findById(newTerm.getId()).map(term -> {
-            term.setSeason(newTerm.getSeason());
-            term.setYear(newTerm.getYear());
-            term.setDeadline(newTerm.getDeadline());
-            term.setActive(newTerm.isActive());
-            return termRepositoryDAO.save(term);
-        }).orElseGet(() -> termRepositoryDAO.save(newTerm)));
+    public ResponseEntity updateTerm(@RequestBody TermDTO termDTO) {
+        Optional<TermDTO> response = termManager.updateTerm(termDTO);
+        if (response.isPresent()) {
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }

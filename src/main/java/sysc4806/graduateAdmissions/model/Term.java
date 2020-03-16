@@ -4,9 +4,6 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -23,18 +20,14 @@ import java.util.Date;
 public class Term {
 
     @Id
-    @GeneratedValue
-    private long id;
-    private boolean active;
-    @NotNull
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
+    private Boolean active;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy.MM.dd")
     private Date deadline;
-    @NotNull
     @Enumerated(EnumType.STRING)
     private Season season;
-    @NotNull
-    @NotBlank
     private String year;
 
     /**
@@ -45,7 +38,7 @@ public class Term {
      * @param year String representing the year of the term
      * @param active boolean showing if the term is active or not
      */
-    public Term(Date deadline, Season season, String year, boolean active){
+    public Term(Date deadline, Season season, String year, Boolean active){
         this.deadline = deadline;
         this.season = season;
         this.year = year;
