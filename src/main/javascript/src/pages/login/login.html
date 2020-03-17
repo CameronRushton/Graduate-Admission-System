@@ -1,7 +1,10 @@
 <template>
-  	<header scroll_position.bind="scrollTop" scroll_fn.bind="scrollFn"></header>
-  	<section class="container">
-		<h1>Login Page</h1>
-		<google-signin-button success.call="onSignIn(googleUser)"></google-signin-button>
+  	<section class="login-background">
+		<div class="container">
+			<div class="card">
+				<h5>Carleton Graduate Admissions</h5>
+				<google-signin-button class="google-button" success.call="onSignIn(googleUser)"></google-signin-button>
+			</div>
+		</div>
   	</section>
 </template>

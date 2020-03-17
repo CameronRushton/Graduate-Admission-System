@@ -1,6 +1,8 @@
 import {Aurelia, inject} from 'aurelia-framework';
 import { Router } from "aurelia-router"
 import { LoginManager } from 'managers/login-manager';
+import {PLATFORM} from 'aurelia-pal';
+import 'pages/login/login.scss';
 
 @inject(Router, Aurelia, LoginManager)
 export class Login {
