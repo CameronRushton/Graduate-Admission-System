@@ -38,7 +38,7 @@ public class UserTest {
         lastName = "Smith";
         email = "JohnSmith@gmail.com";
         password = "password";
-        term = new Term(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"), Season.FALL, "2020", true);
+        term = new Term(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"), Season.FALL, 2020, true);
     }
 
 

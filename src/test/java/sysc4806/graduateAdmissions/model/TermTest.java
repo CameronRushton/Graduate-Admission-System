@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,7 +20,7 @@ public class TermTest {
     private Long id = 1L;
     private Date deadline;
     private Season season = Season.WINTER;
-    private String year = "year";
+    private int year = 2020;
 
     public TermTest() throws ParseException {
         deadline = new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01");
@@ -43,7 +42,7 @@ public class TermTest {
         assertNull(term.getActive());
         assertNull(term.getDeadline());
         assertNull(term.getSeason());
-        assertNull(term.getYear());
+        assertEquals(0, term.getYear());
     }
 
     /**
@@ -85,7 +84,7 @@ public class TermTest {
         assertTrue(term.getActive());
         assertNull(term.getDeadline());
         assertNull(term.getSeason());
-        assertNull(term.getYear());
+        assertEquals(0, term.getYear());
     }
 
     /**
@@ -99,7 +98,7 @@ public class TermTest {
         assertNull(term.getActive());
         assertEquals(deadline, term.getDeadline());
         assertNull(term.getSeason());
-        assertNull(term.getYear());
+        assertEquals(0, term.getYear());
     }
 
     /**
@@ -113,7 +112,7 @@ public class TermTest {
         assertNull(term.getActive());
         assertNull(term.getDeadline());
         assertEquals(season, term.getSeason());
-        assertNull(term.getYear());
+        assertEquals(0, term.getYear());
     }
 
     /**
@@ -138,7 +137,7 @@ public class TermTest {
         term = new Term(id, true, deadline, season, year);
         Term identicalTerm = new Term(id, true, deadline, season, year);
 
-        assertTrue(term.equals(identicalTerm));
+        assertEquals(term, identicalTerm);
     }
 
     /**
@@ -147,8 +146,8 @@ public class TermTest {
     @Test
     public void testNotEquals() throws ParseException {
         term = new Term(id, true, deadline, season, year);
-        Term differentTerm = new Term(2L, false, new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"), Season.SUMMER, "different-year");
+        Term differentTerm = new Term(2L, false, new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"), Season.SUMMER, 2019);
 
-        assertFalse(term.equals(differentTerm));
+        assertNotEquals(term, differentTerm);
     }
 }
