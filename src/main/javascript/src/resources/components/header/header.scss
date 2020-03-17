@@ -38,7 +38,7 @@ $background-border: #2f3234;
     display: flex;
     align-items: center;
     transition: opacity 0.3s ease-out 1.0s;
-    .item {
+    a {
       display: flex;
       height: fit-content;
       cursor: pointer;
