@@ -1,12 +1,10 @@
-$green: #06b124;
-$title-color: #FFF;
-$subtitle-color: honeydew;
-$text-color: #DDD;
-$background: #1f2122;
-$background-border: #2f3234;
+@import "resources/css-utils";
 
+nav {
+  display: block;
+}
 .header {
-  background-image: linear-gradient(to right, #333, #222);
+  background-color: $white;
   position: fixed;
   width: 100%;
   height: 80px;
@@ -17,21 +15,18 @@ $background-border: #2f3234;
   overflow: hidden;
   justify-content: space-around;
   padding-top: 5px;
-  transition: height 0.5s ease-out 0ms,
-    width 0.5s ease-out 0.5s,
-    top 0.5s ease-out 0ms,
-    left 0.5s ease-out 0ms;
+  border-bottom: 1px solid lightgrey;
   .title {
     font-family: inherit;
     font-size: x-large;
     font-weight: 600;
-    color: $title-color;
+    color: $white;
     transition: opacity 0.3s ease-out 1.0s;
     display: flex;
     align-items: center;
     .logo {
-      width: 70px;
-      height: 70px;
+      height: 40px;
+      padding-right: 10px;
     }
   }
   .navigation {
@@ -41,16 +36,24 @@ $background-border: #2f3234;
     a {
       display: flex;
       height: fit-content;
+      align-items: center;
+      text-decoration: none;
+      height: 100%;
+      font-size: 18px;
       cursor: pointer;
       margin-right: 20px;
-      font-size: 20px;
-      color: $subtitle-color;
+      color: rgba(0, 0, 0, 0.8);
       &.active {
-        border-bottom: 2px solid $green;
+        color: $red;
+        border-bottom: 2px solid $red;
+      }
+      .icon {
+        font-size: 15px;
+        padding-right: 5px;
       }
     }
     .item:hover {
-      color: $text-color;
+      color: $red;
     }
   }
   &.fixed {

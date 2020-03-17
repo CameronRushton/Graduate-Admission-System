@@ -1,7 +1,12 @@
 @import "resources/components/header/header";
+@import "resources/css-utils";
 
 .green {
   color: $green;
+}
+
+.red {
+  color: $red;
 }
 
 body {
@@ -12,7 +17,7 @@ body {
   
   font-family: 'Trebuchet MS', 'Lucida Grande', Verdana, Arial, Helvetica, sans-serif;
   color: #666;
-  background-color: #F5F5F5;
+  background-color: $off-white !important;
 }
 
 h1, h2, h3, h4, h5, h6 {

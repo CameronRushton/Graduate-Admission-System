@@ -19,11 +19,12 @@ export class App {
 		config.options.root = "/";
 		config.map([
 			{
-				show: true,
+				show: false,
             	route: '/interest/view',
                 name: 'view interests',
                 moduleId: PLATFORM.moduleName('pages/interest/view/view'),
-                title: "Interests",
+				title: "Interests",
+				icon: "glyphicon-user"
             },
             {
            		show: false,
@@ -45,6 +46,17 @@ export class App {
 				name: 'home',
 				moduleId: PLATFORM.moduleName('pages/home/home'),
 				title: "Home",
+				activationStrategy: activationStrategy.replace, //TODO remove this line once applications is implemented
+				icon: "glyphicon-home"
+			},
+			{
+				show: true,
+				route: '/',
+				name: 'applications',
+				moduleId: PLATFORM.moduleName('pages/home/home'), //TODO
+				title: "Applications",
+				activationStrategy: activationStrategy.replace, //TODO remove this line once implemented
+				icon: "glyphicon-file"
 			},
 			{
 				show: false,

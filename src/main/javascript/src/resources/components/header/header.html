@@ -2,17 +2,18 @@
     <nav>
         <div class="header">
             <div class="title">
-                <!-- <img src="/assets/images/logo.png" alt="" class="logo"> -->
-                Graduate Admissions
+                <img src="/assets/images/carleton-header-logo.svg" alt="" class="logo">
             </div>
             <div class="navigation">
-                <a repeat.for="route of router.routes" if.bind="route.show" class="item ${route.navModel.isActive? 'active':''} " href.bind="route.route">${route.title}</a>
-            	<a href="#" if.bind="isSignedIn()" click.delegate="onSignOut()">Logout</a>
+                <a repeat.for="route of router.routes" if.bind="route.show" class="item ${route.navModel.isActive? 'active':''}" href.bind="route.route">
+                    <span class="glyphicon ${route.icon} icon"></span>
+                    ${route.title}
+                </a>
+            	<a href="#" if.bind="isSignedIn()" click.delegate="onSignOut()" class="item">
+                    <span class="glyphicon glyphicon-lock icon"></span>
+                    Logout
+                </a>
 			</div>
-            
-            <!-- <div class="navigation2 ${scroll_position > 90 && screenWidth > 500? 'opacity1':'remove no-display'}">
-                <a repeat.for="route of router.routes" class="item ${route.navModel.isActive? 'active':''} " href.bind="route.route">${route.char}</a>
-            </div> -->
         </div>
     </nav>
 </template>
