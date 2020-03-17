@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import com.google.common.collect.Sets;
 import org.springframework.boot.test.context.assertj.ApplicationContextAssert;
@@ -16,19 +18,28 @@ import org.springframework.boot.test.context.assertj.ApplicationContextAssert;
  */
 public class UserTest {
 
-    private long id = 1234;
+    private long id;
     private User user, professor;
-    private String firstName = "John";
-    private String lastName = "Smith";
-    private String email = "JohnSmith@gmail.com";
-    private String password = "password";
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
     private Role role, profRole;
     private Privilege createSelfApplication, updateSelfApplication;;
     private Set<Privilege> privileges;
     private Set<Interest> interests;
     private Application application;
-    private Term term = new Term("Tommorrow!", Season.FALL, "2020", true);
-    private Set<Application> applications; //need to be changed to actual applications object
+    private Term term;
+    private Set<Application> applications;
+
+    public UserTest() throws ParseException {
+        id = 1234;
+        firstName = "John";
+        lastName = "Smith";
+        email = "JohnSmith@gmail.com";
+        password = "password";
+        term = new Term(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"), Season.FALL, "2020", true);
+    }
 
 
     @BeforeEach
