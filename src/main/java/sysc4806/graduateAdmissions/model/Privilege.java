@@ -1,8 +1,6 @@
 package sysc4806.graduateAdmissions.model;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,6 +20,8 @@ import javax.persistence.Id;
  * @author luke
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Entity
 public class Privilege {

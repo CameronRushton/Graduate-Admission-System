@@ -1,7 +1,9 @@
 package sysc4806.graduateAdmissions.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -19,6 +21,8 @@ import java.util.*;
  * @author luke
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Entity
 public class Role {
