@@ -3,6 +3,7 @@ package sysc4806.graduateAdmissions.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * An object that describes an application to a degree in our system. An application has
@@ -26,8 +27,8 @@ public class Application {
     private long id;
 
     //The owner of the application
-    //TODO: make a user when user object is created
-    private String applicant;
+    @OneToOne
+    private User applicant;
 
     //term that the application is for
     @OneToOne
@@ -35,17 +36,19 @@ public class Application {
 
     //department and degree type. We may want to make
     // these objects at some point in the future.
+    @Enumerated(EnumType.STRING)
     private Department department;
     private String degree;
 
     //Preferred professors. These will be the ones
     // to approve the application.
-    //TODO: Make a set of users. Enforce that the user's role must be prof.
-    private String professors;
+    @ManyToMany
+    private Set<User> professors;
 
 
     //The status of the application, ie, is it incomplete,
     // pending approval, approved, etc.
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     //Some examples of fields from the application forms.

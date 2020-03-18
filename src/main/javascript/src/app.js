@@ -47,7 +47,7 @@ export class App {
 				title: "Home",
 			},
 			{
-				show: true,
+				show: false,
 				route: '/login',
 				name: 'login',
 				moduleId: PLATFORM.moduleName('pages/login/login'),
