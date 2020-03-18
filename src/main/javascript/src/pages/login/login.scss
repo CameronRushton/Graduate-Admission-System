@@ -1,27 +1,45 @@
 @import "resources/css-utils";
 
-h5 {
+.title {
     border-bottom: 1px solid darkgrey;
     padding-bottom: 15px;
     width: 95%;
     text-align: center;
+    font-size: 20px;
+    font-weight: 500;
 }
 
 .google-button {
-    padding-top: 10px;
+    padding: 20px 0px 0px 0px;
 }
 
-.card {
+.flex-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.carleton-360-logo {
+    position: absolute;
+    top: 50px;
+    opacity: 0.5;
+    max-width: 500px;
+}
+
+.login-card {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: $white;
+    flex-direction: column;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,.12), 0 2px 4px 0 rgba(0,0,0,.08);
     margin-top: 30px;
     transition: 1s;
     border-top: 6px solid $red;
     border-radius: 6px;
-    max-width: 370px;
-    margin: 0 auto 50px;
+    min-width: 300px;
+    margin: auto 0px;
     padding: 20px 0px;
 }
 
@@ -31,6 +49,7 @@ h5 {
     height: 100vh;
 
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    flex-direction: column;
 }

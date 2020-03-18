@@ -46,16 +46,14 @@ export class App {
 				name: 'home',
 				moduleId: PLATFORM.moduleName('pages/home/home'),
 				title: "Home",
-				activationStrategy: activationStrategy.replace, //TODO remove this line once applications is implemented
 				icon: "glyphicon-home"
 			},
 			{
 				show: true,
-				route: '/',
+				route: '#',
 				name: 'applications',
 				moduleId: PLATFORM.moduleName('pages/home/home'), //TODO
 				title: "Applications",
-				activationStrategy: activationStrategy.replace, //TODO remove this line once implemented
 				icon: "glyphicon-file"
 			},
 			{

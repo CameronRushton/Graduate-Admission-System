@@ -1,8 +1,5 @@
 @import "resources/css-utils";
 
-nav {
-  display: block;
-}
 .header {
   background-color: $white;
   position: fixed;
@@ -16,7 +13,7 @@ nav {
   justify-content: space-around;
   padding-top: 5px;
   border-bottom: 1px solid lightgrey;
-  .title {
+  .header-title {
     font-family: inherit;
     font-size: x-large;
     font-weight: 600;

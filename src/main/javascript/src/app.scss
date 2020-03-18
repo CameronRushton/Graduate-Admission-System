@@ -1,9 +1,6 @@
 @import "resources/components/header/header";
+@import "pages/home/home";
 @import "resources/css-utils";
-
-.green {
-  color: $green;
-}
 
 .red {
   color: $red;
@@ -16,27 +13,10 @@ body {
   font-weight: normal;
   
   font-family: 'Trebuchet MS', 'Lucida Grande', Verdana, Arial, Helvetica, sans-serif;
-  color: #666;
+  color: $dark-grey;
   background-color: $off-white !important;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Lato", sans-serif;
-  font-weight: 600;
-  margin-bottom: 0px;
-  padding-bottom: 20px;
-}
-
-.thin-outline {
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-}
-.med-outline {
-  text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
-}
-.thick-outline {
-  text-shadow: -3px 0px black, 0 3px black, 3px 0 black, 0 -3px black;
-}
-
-.container {
-  padding: 10% 0%; 
+a {
+  text-decoration: none !important;
 }
