@@ -27,7 +27,6 @@ public class RoleController {
      * @param name optional to find specific role
      * @return JSON containing Roles
      */
-    @ResponseBody
     @GetMapping("")
     public ResponseEntity getRole(@RequestParam(required=false) String name) {
         if(name == null)
@@ -42,7 +41,6 @@ public class RoleController {
      * @param role the Role to be added to the system
      * @return ResponseEntity describing the outcome of the operation
      */
-    @ResponseBody
     @PostMapping("create")
     public ResponseEntity createRole(@RequestBody() Role role) {
         repository.save(role);
@@ -105,14 +103,14 @@ public class RoleController {
      * @param privilege the privilege to be removed
      * @return ResponseEntity describing the outcome of the operation
      */
-    @PostMapping("remove")
+    @DeleteMapping("remove")
     public ResponseEntity removeRolePrivilege(@RequestParam String name, @RequestBody Privilege privilege){
         Optional<Role> role = repository.findByRoleName(name);
         if(role.isPresent()){
             Role r = role.get();
             r.removePrivilege(privilege);
             repository.save(r);
-            return ResponseEntity.ok("removed privilege " + privilege.getId() + " from Role");
+            return ResponseEntity.ok("Removed privilege " + privilege.getOwner() + " " + privilege.getOperation() + " on " + privilege.getTarget() + " from role " + r.getRoleName());
         } else {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }

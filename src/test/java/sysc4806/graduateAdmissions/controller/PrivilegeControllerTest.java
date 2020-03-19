@@ -133,7 +133,15 @@ public class PrivilegeControllerTest {
     public void testUpdatePrivilege() throws Exception {
         mockMvc.perform(post("/privilege/update").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
-                        Privilege.builder().owner(Owner.SELF).target(Target.APPLICATION).build())))
+                        Privilege.builder().owner(Owner.SELF).target(Target.APPLICATION).operation(Operation.CREATE).build())))
                 .andExpect(status().isOk());
+    }
+
+    /* Test update Privilege with an invalid Privilege*/
+    @Test
+    public void testUpdatePrivilegeInvalidPrivilege() throws Exception {
+        mockMvc.perform(post("/privilege/update").contentType(APPLICATION_JSON_UTF8)
+                .content("{\"id\":0,\"operation\":\"BANANA\",\"target\":\"APPLE\",\"owner\":\"LEMON\"}"))
+                .andExpect(status().isBadRequest());
     }
 }

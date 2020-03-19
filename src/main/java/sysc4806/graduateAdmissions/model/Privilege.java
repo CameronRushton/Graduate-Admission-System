@@ -31,9 +31,12 @@ public class Privilege {
     @EqualsAndHashCode.Exclude
     private long id;
     //the type of CRUD operation the privilege specified
+    @NonNull
     private Operation operation;
     //the type of object that an operation is performed on
+    @NonNull
     private Target target;
     //the owner of the specified target object of the specified operation
+    @NonNull
     private Owner owner;
 }

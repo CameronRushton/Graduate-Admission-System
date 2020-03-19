@@ -16,7 +16,7 @@ export class OwnerManager extends AbstractManager{
 			},
 		};
 
-		return this.httpClient.fetch(`/owner`, options)
+		return this.httpClient.fetch(`/owners`, options)
 			.then(this.handleError)
 			.then(this.json);
 	}

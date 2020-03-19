@@ -19,7 +19,7 @@ public class OperationController {
      *
      * @return JSON containing every Operation
      */
-    @GetMapping("/operations/")
+    @GetMapping("/operations")
     public ResponseEntity getOperations() {
         return ResponseEntity.status(HttpStatus.OK).body(Operation.values());
     }

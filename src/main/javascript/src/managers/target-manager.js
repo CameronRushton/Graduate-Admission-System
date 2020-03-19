@@ -16,7 +16,7 @@ export class TargetManager extends AbstractManager{
 			},
 		};
 
-		return this.httpClient.fetch(`/targets/`, options)
+		return this.httpClient.fetch(`/targets`, options)
 			.then(this.handleError)
 			.then(this.json);
 	}

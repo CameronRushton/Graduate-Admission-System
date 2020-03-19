@@ -16,7 +16,7 @@ export class OperationManager extends AbstractManager{
 			},
 		};
 
-		return this.httpClient.fetch(`/operations/`, options)
+		return this.httpClient.fetch(`/operations`, options)
 			.then(this.handleError)
 			.then(this.json);
 	}

@@ -29,7 +29,7 @@ public class PrivilegeController {
      * @param id optional to return only Privilege with specified id
      * @return JSON containing the requested Privilege(s)
      */
-    @GetMapping("")
+    @GetMapping()
     public ResponseEntity getPrivilege(@RequestParam(required=false) Long id) {
         if(id == null)
             return ResponseEntity.status(HttpStatus.OK).body(repository.findAll());
