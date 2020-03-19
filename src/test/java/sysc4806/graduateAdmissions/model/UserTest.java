@@ -1,12 +1,15 @@
 package sysc4806.graduateAdmissions.model;
 
+import com.google.common.collect.Sets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.HashSet;
+import java.util.Set;
 
-import java.util.*;
-import com.google.common.collect.Sets;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests the functionality of the User class
@@ -14,20 +17,21 @@ import com.google.common.collect.Sets;
  * @author Kevin Sun
  */
 public class UserTest {
-
-    private long id = 1234;
+    private long id = 1324;
     private User user, professor;
     private String firstName = "John";
     private String lastName = "Smith";
     private String email = "JohnSmith@gmail.com";
     private Role role, profRole;
-    private Privilege createSelfApplication, updateSelfApplication;;
+    private Privilege createSelfApplication, updateSelfApplication;
     private Set<Privilege> privileges;
     private Set<Interest> interests;
     private Application application;
-    private Term term = new Term("Tommorrow!", Season.FALL, "2020", true);
-    private Set<Application> applications; //need to be changed to actual applications object
+    private Term term = new Term(new SimpleDateFormat("yyyy-MM-dd").
+            parse("2020-01-01"), Season.FALL, "2020", true);
+    private Set<Application> applications;
 
+    public UserTest() throws ParseException {}
 
     @BeforeEach
     void setUp() {
