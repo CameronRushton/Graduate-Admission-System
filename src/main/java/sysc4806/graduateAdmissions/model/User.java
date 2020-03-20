@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.*;
 /**
  * Represents one of three possible users in the system (Student, Professor, or Admin)
@@ -25,13 +26,14 @@ public class User {
     private long id;
     private String firstName;
     private String lastName;
+    @Email
     private String email;
     private String password;
-    @OneToOne
+    @OneToOne(cascade=CascadeType.PERSIST)
     private Role role;
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL)
     private Set<Interest> interests;
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL)
     private Set<Application> applications;
 
     /**

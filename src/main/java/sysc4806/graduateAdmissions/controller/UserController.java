@@ -6,10 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sysc4806.graduateAdmissions.model.User;
 import sysc4806.graduateAdmissions.model.Role;
-import sysc4806.graduateAdmissions.model.Application;
 import sysc4806.graduateAdmissions.model.Interest;
 import sysc4806.graduateAdmissions.repositories.UserRepository;
+import sysc4806.graduateAdmissions.service.UserManager;
 
+import java.util.HashSet;
 import java.util.Optional;
 
 /**
@@ -18,11 +19,12 @@ import java.util.Optional;
  * @author Kevin Sun
  */
 @RestController
-
 @RequestMapping("/user/")
 public class UserController {
     @Autowired
     private UserRepository repository;
+    @Autowired
+    private UserManager userManager;
 
     /**
      * get all Users or return User specified by id
@@ -41,12 +43,14 @@ public class UserController {
     /**
      * get all Privilege(s) with a specified Role
      *
-     * @param role the Role of the returned User
+     * @param roleName the Role of the returned User
      * @return JSON containing the User(s)
      */
     @GetMapping("role")
-    public ResponseEntity getUserOfRole(@RequestParam() Role role){
-        return ResponseEntity.status(HttpStatus.OK).body(repository.findByRole(role));
+    public ResponseEntity getUserOfRole(@RequestParam String roleName) {
+        userManager.getUsersByRoleName(roleName);
+
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     /**
@@ -66,8 +70,9 @@ public class UserController {
      * @param user the Privilege to be created
      * @return ResponseEntity describing the outcome of the operation
      */
-    @PostMapping("create")
+    @PostMapping()
     public ResponseEntity createUser(@RequestBody User user){
+        user.setRole(Role.builder().roleName("Student").privileges(new HashSet<>()).build());
         repository.save(user);
         return ResponseEntity.ok("User added");
     }

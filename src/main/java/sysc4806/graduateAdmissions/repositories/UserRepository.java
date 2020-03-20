@@ -3,7 +3,6 @@ package sysc4806.graduateAdmissions.repositories;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import sysc4806.graduateAdmissions.model.User;
-import sysc4806.graduateAdmissions.model.Application;
 import sysc4806.graduateAdmissions.model.Interest;
 import sysc4806.graduateAdmissions.model.Role;
 

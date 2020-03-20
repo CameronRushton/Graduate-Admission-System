@@ -19,7 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -84,14 +83,13 @@ public class UserControllerTest {
         Interest i = new Interest(5, Department.SYSC, "Web Dev");
         interests.add(i);
         applications = new HashSet<Application>();
-
+        users = new ArrayList<>();
         user = new User(id, firstName, lastName, email, password, role, interests, applications);
+        users.add(user);
+        users.add(user);
 
-        users = Arrays.asList(
-        when(repository.findAll()).thenReturn(users),
-        when(repository.findById(0L)).thenReturn(Optional.of(users.get(0))),
-        when(repository.findByInterests(i)).thenReturn(users.get(0)),
-        when(repository.findByRole(role)).thenReturn(users.get(0)));
+        when(repository.findByInterests(i)).thenReturn(users);
+        when(repository.findByRole(role)).thenReturn(users);
 
     }
 
@@ -99,6 +97,7 @@ public class UserControllerTest {
     /* Test get user with id */
     @Test
     public void testGetUserById() throws Exception {
+        when(repository.findById(0L)).thenReturn(Optional.of(users.get(0)));
         this.mockMvc.perform(get("/user/?id=0"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(toJson(users.get(0))));
@@ -107,6 +106,7 @@ public class UserControllerTest {
     /* Test get user without id */
     @Test
     public void testGetAllUsers() throws Exception {
+        when(repository.findAll()).thenReturn(users);
         this.mockMvc.perform(get("/user/"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(toJson(users)));
