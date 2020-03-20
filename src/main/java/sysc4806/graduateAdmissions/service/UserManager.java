@@ -36,8 +36,8 @@ public class UserManager {
     public Collection<User> getUsersByKeyword(String keyword) {
         List<Interest> interest = interestRepository.findByKeyword(keyword);
         if (!interest.isEmpty()) {
-            String word = interest.getKeyword();
-            System.out.println(Arrays.toString(interestRepository.findByKeyword(word).toArray()));
+            //String word = interest.getKeyword();
+            //System.out.println(Arrays.toString(interestRepository.findByKeyword(word).toArray()));
         }
         return null;
     }
@@ -45,8 +45,8 @@ public class UserManager {
     public Collection<User> getUsersByEmail(String email) {
         List<User> mail = userRepository.findByEmail(email);
         if (!mail.isEmpty()) {
-            String Email = mail.getEmail();
-            System.out.println(Arrays.toString(userRepository.findByEmail(email).toArray()));
+           // String Email = mail.getEmail();
+           // System.out.println(Arrays.toString(userRepository.findByEmail(email).toArray()));
         }
         return null;
     }
