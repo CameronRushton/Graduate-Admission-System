@@ -14,4 +14,5 @@ import java.util.List;
  */
 public interface InterestRepository extends CrudRepository<Interest, Long> {
     List<Interest> findByDepartment(Department department);
+    List<Interest> findByKeyword(String keyword);
 }

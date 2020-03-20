@@ -1,9 +1,6 @@
 package sysc4806.graduateAdmissions.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -27,7 +24,7 @@ public class User {
     private String firstName;
     private String lastName;
     @Email
-    private String email;
+    @Getter private String email;
     private String password;
     @OneToOne(cascade=CascadeType.PERSIST)
     private Role role;

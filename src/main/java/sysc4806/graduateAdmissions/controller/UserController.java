@@ -56,12 +56,27 @@ public class UserController {
     /**
      * get all User(s) with a specified Interest
      *
-     * @param interest the Interest of users to be returned
+     * @param keyword the String of keywords to be returned
      * @return JSON containing the User(s)
      */
-    @GetMapping("interest")
-    public ResponseEntity getUserOfInterest(@RequestParam() Interest interest){
-        return ResponseEntity.status(HttpStatus.OK).body(repository.findByInterests(interest));
+    @GetMapping("keyword")
+    public ResponseEntity getUserOfKeyword(@RequestParam() String keyword){
+        userManager.getUsersByKeyword(keyword);
+
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    /**
+     * get all User(s) with a specified email
+     *
+     * @param email the String of email to be returned
+     * @return JSON containing the User(s)
+     */
+    @GetMapping("keyword")
+    public ResponseEntity getUserOfEmail(@RequestParam() String email){
+        userManager.getUsersByEmail(email);
+
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     /**
