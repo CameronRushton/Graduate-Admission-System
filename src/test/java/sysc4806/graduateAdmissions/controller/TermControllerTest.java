@@ -49,9 +49,9 @@ public class TermControllerTest {
                 .active(true)
                 .deadline(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"))
                 .season(Season.SUMMER)
-                .year("1234")
+                .year(1234)
                 .build();
-        List<Term> terms = new ArrayList<Term>();
+        List<Term> terms = new ArrayList<>();
         terms.add(term);
         when(repository.findAll()).thenReturn(terms);
         mockMvc.perform(get("/terms")
@@ -66,7 +66,7 @@ public class TermControllerTest {
                 .active(true)
                 .deadline(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"))
                 .season(Season.SUMMER)
-                .year("1234")
+                .year(1234)
                 .build();
         when(repository.findById(any(Long.class))).thenReturn(java.util.Optional.ofNullable(term));
         mockMvc.perform(get("/terms/{id}", term.getId())
@@ -81,7 +81,7 @@ public class TermControllerTest {
                 .active(true)
                 .deadline(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"))
                 .season(Season.SUMMER)
-                .year("1234")
+                .year(1234)
                 .build();
         when(repository.findById(any(Long.class))).thenReturn(java.util.Optional.empty());
         mockMvc.perform(get("/terms/{id}", term.getId())
@@ -95,7 +95,7 @@ public class TermControllerTest {
                 .deadline(new SimpleDateFormat("yyyy-MM-dd").parse("2020-02-01"))
                 .active(true)
                 .season(Season.SUMMER)
-                .year("1234")
+                .year(1234)
                 .build();
         when(repository.save(any(Term.class))).thenReturn(termMapper.map(termDTO));
         mockMvc.perform(post("/terms")
@@ -111,10 +111,10 @@ public class TermControllerTest {
                 .active(true)
                 .deadline(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"))
                 .season(Season.SUMMER)
-                .year("1234")
+                .year(1234)
                 .build();
         when(repository.findById(termDTO.getTermId())).thenReturn(Optional.of(termMapper.map(termDTO)));
-        termDTO.setYear("2021");
+        termDTO.setYear(2021);
         when(repository.save(any(Term.class))).thenReturn(termMapper.map(termDTO));
         mockMvc.perform(put("/terms")
                 .content(toJson(termDTO))
@@ -130,7 +130,7 @@ public class TermControllerTest {
                 .active(true)
                 .deadline(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"))
                 .season(Season.SUMMER)
-                .year("1234")
+                .year(1234)
                 .build();
         mockMvc.perform(put("/terms")
                 .content(toJson(termDTO))
