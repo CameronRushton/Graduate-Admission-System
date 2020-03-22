@@ -22,7 +22,7 @@ public class Application {
 
     //generated Primary key
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @EqualsAndHashCode.Exclude
     private long id;
 

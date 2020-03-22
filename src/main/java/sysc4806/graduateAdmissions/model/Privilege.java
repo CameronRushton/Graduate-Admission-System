@@ -2,10 +2,7 @@ package sysc4806.graduateAdmissions.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * This class is used to specify privileges for roles. A Role with have a collection
@@ -27,13 +24,16 @@ import javax.persistence.Id;
 public class Privilege {
     //the primary key for a privilege
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @EqualsAndHashCode.Exclude
     private long id;
     //the type of CRUD operation the privilege specified
+    @Enumerated(EnumType.STRING)
     private Operation operation;
     //the type of object that an operation is performed on
+    @Enumerated(EnumType.STRING)
     private Target target;
     //the owner of the specified target object of the specified operation
+    @Enumerated(EnumType.STRING)
     private Owner owner;
 }
