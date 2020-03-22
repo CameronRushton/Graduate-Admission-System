@@ -10,7 +10,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 import sysc4806.graduateAdmissions.dto.TermDTO;
 import sysc4806.graduateAdmissions.mapper.TermMapper;
 import sysc4806.graduateAdmissions.model.Season;
