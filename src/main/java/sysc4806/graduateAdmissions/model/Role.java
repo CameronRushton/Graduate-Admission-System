@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.*;
 
 /**
@@ -30,7 +27,7 @@ public class Role {
     @Id
     private String roleName;
     //the privileges for the role
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Builder.Default
     private Set<Privilege> privileges = new HashSet<>();
 

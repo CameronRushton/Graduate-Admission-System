@@ -1,8 +1,6 @@
 package sysc4806.graduateAdmissions.model;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,6 +21,8 @@ import javax.persistence.Id;
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Privilege {
     //the primary key for a privilege

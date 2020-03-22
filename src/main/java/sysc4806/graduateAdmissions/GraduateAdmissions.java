@@ -1,5 +1,6 @@
 package sysc4806.graduateAdmissions;
 
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import lombok.var;
 import org.springframework.boot.CommandLineRunner;
@@ -7,11 +8,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 import sysc4806.graduateAdmissions.model.*;
-import sysc4806.graduateAdmissions.repositories.InterestRepository;
+import sysc4806.graduateAdmissions.repositories.UserRepository;
 
 import java.util.HashSet;
 
 @SpringBootApplication
+@Slf4j
 public class GraduateAdmissions {
     public static void main(String[] args) {
         new SpringApplicationBuilder(GraduateAdmissions.class)
@@ -20,7 +22,7 @@ public class GraduateAdmissions {
     }
 
     @Bean
-    public CommandLineRunner demo(InterestRepository repository) {
+    public CommandLineRunner demo(UserRepository repository) {
         return (args) -> {
             //set student privileges
             var studentRole = new Role();
@@ -87,9 +89,15 @@ public class GraduateAdmissions {
                     adminRole, new HashSet<>(), new HashSet<>());
 
             //save the users into repository
-            //repository.save(sampleStudent);
-            //repository.save(sampleProf);
-            //repository.save(sampleAdmin);
+            repository.save(sampleStudent);
+            repository.save(sampleProf);
+            repository.save(sampleAdmin);
+
+
+            var users = repository.findAll();
+            var i = users.iterator();
+            while(i.hasNext())
+                log.info(i.next().toString());
         };
     }
 }
