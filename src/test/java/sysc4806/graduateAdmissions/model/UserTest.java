@@ -28,7 +28,7 @@ public class UserTest {
     private Set<Interest> interests;
     private Application application;
     private Term term = new Term(new SimpleDateFormat("yyyy-MM-dd").
-            parse("2020-01-01"), Season.FALL, "2020", true);
+            parse("2020-01-01"), Season.FALL, 2020, true);
     private Set<Application> applications;
 
     public UserTest() throws ParseException {}
