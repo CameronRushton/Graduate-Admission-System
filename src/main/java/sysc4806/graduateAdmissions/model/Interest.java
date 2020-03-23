@@ -21,6 +21,7 @@ import javax.persistence.*;
 public class Interest {
     //the primary key
     @Id
+    @Column(name = "interest_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     @EqualsAndHashCode.Exclude
     private long id;

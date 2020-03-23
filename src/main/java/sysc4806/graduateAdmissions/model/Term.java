@@ -20,6 +20,7 @@ import java.util.Date;
 public class Term {
 
     @Id
+    @Column(name = "term_id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private Boolean active;

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sysc4806.graduateAdmissions.model.Term;
 import sysc4806.graduateAdmissions.model.User;
 import sysc4806.graduateAdmissions.model.Role;
 import sysc4806.graduateAdmissions.model.Interest;
@@ -11,7 +12,9 @@ import sysc4806.graduateAdmissions.repositories.UserRepository;
 import sysc4806.graduateAdmissions.service.UserManager;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Controller for CRUD operations on User
@@ -19,7 +22,7 @@ import java.util.Optional;
  * @author Kevin Sun
  */
 @RestController
-@RequestMapping("/user/")
+@RequestMapping("/users")
 public class UserController {
     @Autowired
     private UserRepository repository;
@@ -27,41 +30,49 @@ public class UserController {
     private UserManager userManager;
 
     /**
-     * get all Users or return User specified by id
+     * GET /users
      *
-     * @param id optional to return only User with specified id
-     * @return JSON containing the requested User(s)
+     * @return JSON containing the requested Users
      */
-    @GetMapping("")
-    public ResponseEntity getUser(@RequestParam(required=false) Long id) {
-        if(id == null)
-            return ResponseEntity.status(HttpStatus.OK).body(repository.findAll());
-        else
-            return ResponseEntity.status(HttpStatus.OK).body(repository.findById(id));
+    @GetMapping
+    public ResponseEntity queryAllUsers() {
+        Iterable<User> users = repository.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(users);
     }
 
     /**
-     * get all Privilege(s) with a specified Role
+     * get User specified by id
+     *
+     * @param userId the user's id
+     * @return JSON containing the requested User(s)
+     */
+    @GetMapping(path="/{id}")
+    public ResponseEntity queryTerm(@PathVariable("id") Long userId) {
+        Optional<User> user = repository.findById(userId);
+        return ResponseEntity.status(user.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND)
+                .body(user.orElse(null));
+    }
+
+    /**
+     * get all Privilege(s) with a specified role name
      *
      * @param roleName the Role of the returned User
      * @return JSON containing the User(s)
      */
-    @GetMapping("role")
-    public ResponseEntity getUserOfRole(@RequestParam String roleName) {
-        userManager.getUsersByRoleName(roleName);
-
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+    @GetMapping("/role")
+    public ResponseEntity getUserOfRole(@RequestParam("roleName") String roleName) {
+        return ResponseEntity.status(HttpStatus.OK).body(userManager.getUsersByRoleName(roleName));
     }
 
     /**
      * get all User(s) with a specified Interest
      *
-     * @param interest the Interest of users to be returned
+     * @param interest_id the interest id of users to be returned
      * @return JSON containing the User(s)
      */
-    @GetMapping("interest")
-    public ResponseEntity getUserOfInterest(@RequestParam() Interest interest){
-        return ResponseEntity.status(HttpStatus.OK).body(repository.findByInterests(interest));
+    @GetMapping("/interests/{id}")
+    public ResponseEntity getUserOfInterest(@PathVariable Long interest_id){
+        return ResponseEntity.status(HttpStatus.OK).body(userManager.getUsersByInterestId(interest_id));
     }
 
     /**
@@ -84,7 +95,6 @@ public class UserController {
      * @return ResponseEntity describing the outcome of the operation
      */
     @DeleteMapping("{id}")
-    @CrossOrigin
     public ResponseEntity deleteUser(@PathVariable("id") Long id){
         Optional<User> user = repository.findById(id);
         if(user.isPresent()){
@@ -101,8 +111,8 @@ public class UserController {
      * @param user the User to be updated
      * @return ResponseEntity describing the outcome of the operation
      */
-    @PostMapping("updateUser")
-    public ResponseEntity updateUser(@RequestBody User user){
+    @PutMapping
+    public ResponseEntity updateUser(@RequestBody User user) {
         repository.save(user);
         return ResponseEntity.ok("user with id " + user.getId() + " updated");
     }

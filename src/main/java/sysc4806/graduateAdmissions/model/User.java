@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.*;
+import java.util.Set;
+
 /**
  * Represents one of three possible users in the system (Student, Professor, or Admin)
  * Used to user details, credentials, and information.
@@ -22,6 +23,7 @@ import java.util.*;
 public class User {
 
     @Id
+    @Column(name = "user_id")
     @GeneratedValue
     private long id;
     private String firstName;
@@ -29,11 +31,14 @@ public class User {
     @Email
     private String email;
     private String password;
-    @OneToOne(cascade=CascadeType.PERSIST)
+    @JoinColumn(name = "user_id")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Role role;
-    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Interest> interests;
-    @OneToMany(cascade=CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Application> applications;
 
     /**
