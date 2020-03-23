@@ -45,9 +45,9 @@ INSERT INTO role_privileges (role_role_name, privileges_id) VALUES
     ('ADMIN', 14);
 
 INSERT INTO user (id, email, first_name, last_name, role_role_name) VALUES
-    (0, 'Peter', 'Parker', 'GAS.student4806@gmail.com', 'STUDENT'),
-    (1, 'Bruce', 'Wayne', 'GAS.prof4806@gmail.com', 'PROFESSOR'),
-    (2, 'Clark', 'Kent', 'GAS.staff4806@gmail.com', 'ADMIN');
+    (0, 'gas.student4806@gmail.com', 'Parker', 'Peter', 'STUDENT'),
+    (1, 'gas.prof4806@gmail.com', 'Wayne', 'Bruce', 'PROFESSOR'),
+    (2, 'gas.staff4806@gmail.com', 'Kent', 'Clark', 'ADMIN');
 
 
 
