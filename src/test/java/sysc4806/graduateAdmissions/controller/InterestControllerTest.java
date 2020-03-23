@@ -4,12 +4,12 @@ import lombok.val;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import sysc4806.graduateAdmissions.model.Department;
 import sysc4806.graduateAdmissions.model.Interest;
 import sysc4806.graduateAdmissions.repositories.InterestRepository;
@@ -35,6 +35,7 @@ import static sysc4806.graduateAdmissions.utilities.Utility.toJson;
  */
 @SpringBootTest
 @AutoConfigureMockMvc
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 class InterestControllerTest {
     private final MediaType APPLICATION_JSON_UTF8 =
             new MediaType(MediaType.APPLICATION_JSON.getType(),

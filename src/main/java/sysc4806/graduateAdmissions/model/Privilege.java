@@ -24,8 +24,7 @@ import javax.persistence.*;
 public class Privilege {
     //the primary key for a privilege
     @Id
-    @Column(name = "privilege_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @EqualsAndHashCode.Exclude
     private long id;
     //the type of CRUD operation the privilege specified

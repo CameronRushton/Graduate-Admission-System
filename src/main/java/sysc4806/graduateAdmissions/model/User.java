@@ -1,6 +1,7 @@
 package sysc4806.graduateAdmissions.model;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -20,22 +21,26 @@ import java.util.Set;
 public class User {
 
     @Id
-//    @Column(name = "user_id")
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(generator = "sequence-generator")
+    @GenericGenerator(
+            name = "sequence-generator",
+            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(name = "sequence_name", value = "user_sequence"),
+                    @org.hibernate.annotations.Parameter(name = "initial_value", value = "3"),
+                    @org.hibernate.annotations.Parameter(name = "increment_size", value = "1")
+            }
+    )
+    private Long id;
     private String firstName;
     private String lastName;
     @Email
     private String email;
-    private String password;
-//    @JoinColumn(name = "user_id")
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Role role;
-//    @JoinColumn(name = "user_id")
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Interest> interests;
-//    @JoinColumn(name = "user_id")
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Application> applications;
 
     /**
@@ -48,11 +53,10 @@ public class User {
      * @param interest Array List interest contains the chosen interests of the user
      * @param application ArrayList application contains all applications of the user
      */
-    public User(String firstname, String lastname, String mail, String pass, Role r, Set<Interest> interest, Set<Application> application){
+    public User(String firstname, String lastname, String mail, Role r, Set<Interest> interest, Set<Application> application){
         this.firstName = firstname;
         this.lastName = lastname;
         this.email = mail;
-        this.password = pass;
         this.role = r;
         this.interests = interest;
         this.applications = application;

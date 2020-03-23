@@ -64,7 +64,7 @@ public class UserControllerTest {
         lastName = "Smith";
         email = "JohnSmith@gmail.com";
         password = "password";
-        term = new Term(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"), Season.FALL, "2020", true);
+        term = new Term(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"), Season.FALL, 2020, true);
 
         createSelfApplication = Privilege.builder().id(42)
                 .operation(Operation.CREATE).owner(Owner.SELF)
@@ -75,7 +75,7 @@ public class UserControllerTest {
         privileges = Sets.newHashSet(createSelfApplication, updateSelfApplication);
         role = Role.builder().roleName("Student").privileges(privileges).build();
         profRole = Role.builder().roleName("Professor").privileges(privileges).build();
-        professor = new User(id, firstName, lastName, email, password, profRole, interests, applications);
+        professor = new User(id, firstName, lastName, email, profRole, interests, applications);
         Set<User> professors = new HashSet<User>();
         professors.add(professor);
         application = new Application(5, user, term, Department.SYSC, "Software Engineering", professors, Status.INCOMPLETE, 10, "resume.pdf");
@@ -84,7 +84,7 @@ public class UserControllerTest {
         interests.add(i);
         applications = new HashSet<Application>();
         users = new ArrayList<>();
-        user = new User(id, firstName, lastName, email, password, role, interests, applications);
+        user = new User(id, firstName, lastName, email, role, interests, applications);
         users.add(user);
         users.add(user);
 

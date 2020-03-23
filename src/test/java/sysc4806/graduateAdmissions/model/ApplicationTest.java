@@ -36,7 +36,7 @@ class ApplicationTest {
         application = new Application();
         ID = 5;
         applicant = new User();
-        term = new Term(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"), Season.FALL, "2020", true);
+        term = new Term(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"), Season.FALL, 2020, true);
         department = Department.SYSC;
         degree = "test case";
         status = Status.INCOMPLETE;
@@ -76,7 +76,7 @@ class ApplicationTest {
     /**Test to ensure that the builder correctly sets fields*/
     @Test
     public void testBuilder(){
-        application = application.builder().id(ID).applicant(applicant).build();
+        application = Application.builder().id(ID).applicant(applicant).build();
         assertEquals(ID, application.getId());
         assertEquals(applicant, application.getApplicant());
     }

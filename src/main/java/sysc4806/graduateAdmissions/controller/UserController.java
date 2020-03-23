@@ -56,10 +56,10 @@ public class UserController {
     /**
      * get all Users with a specified role name
      *
-     * @param roleName the Role of the returned User
+     * @param roleName the case sensitive role name of the user
      * @return JSON containing the User(s)
      */
-    @GetMapping("/role")
+    @GetMapping("/roles")
     public ResponseEntity getUserOfRole(@RequestParam("roleName") String roleName) {
         return ResponseEntity.status(HttpStatus.OK).body(userManager.getUsersByRoleName(roleName));
     }
@@ -81,11 +81,9 @@ public class UserController {
      * @param email the String of email to be returned
      * @return JSON containing the User(s)
      */
-    @GetMapping
+    @GetMapping("/email")
     public ResponseEntity getUserOfEmail(@RequestParam("email") String email){
-        userManager.getUsersByEmail(email);
-
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        return ResponseEntity.status(HttpStatus.OK).body(userManager.getUsersByEmail(email));
     }
 
     /**
@@ -94,11 +92,13 @@ public class UserController {
      * @param user the Privilege to be created
      * @return ResponseEntity describing the outcome of the operation
      */
-    @PostMapping()
+    @PostMapping
     public ResponseEntity createUser(@RequestBody User user){
-        user.setRole(Role.builder().roleName("Student").privileges(new HashSet<>()).build());
-        repository.save(user);
-        return ResponseEntity.ok("User added");
+        Optional<User> newUser = userManager.createNewUser(user);
+        if (newUser.isPresent()) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("User with ID " + user.getId() + " already exists.");
     }
 
     /**
@@ -112,7 +112,7 @@ public class UserController {
         Optional<User> user = repository.findById(id);
         if(user.isPresent()){
             repository.deleteById(id);
-            return ResponseEntity.ok("user with id " + user.get().getId() + " deleted");
+            return ResponseEntity.ok("User with id " + user.get().getId() + " deleted");
         } else {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
@@ -126,8 +126,10 @@ public class UserController {
      */
     @PutMapping
     public ResponseEntity updateUser(@RequestBody User user) {
-        repository.save(user);
-        return ResponseEntity.ok("user with id " + user.getId() + " updated");
+        Optional<User> updatedUser = userManager.updateUser(user);
+        if (updatedUser.isPresent()) {
+            return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
-
 }
