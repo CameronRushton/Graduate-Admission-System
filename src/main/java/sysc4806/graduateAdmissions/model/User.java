@@ -1,9 +1,6 @@
 package sysc4806.graduateAdmissions.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -23,7 +20,7 @@ import java.util.Set;
 public class User {
 
     @Id
-    @Column(name = "user_id")
+//    @Column(name = "user_id")
     @GeneratedValue
     private long id;
     private String firstName;
@@ -31,13 +28,13 @@ public class User {
     @Email
     private String email;
     private String password;
-    @JoinColumn(name = "user_id")
+//    @JoinColumn(name = "user_id")
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Role role;
-    @JoinColumn(name = "user_id")
+//    @JoinColumn(name = "user_id")
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Interest> interests;
-    @JoinColumn(name = "user_id")
+//    @JoinColumn(name = "user_id")
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Application> applications;
 

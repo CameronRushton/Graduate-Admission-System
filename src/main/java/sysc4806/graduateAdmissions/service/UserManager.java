@@ -2,7 +2,6 @@ package sysc4806.graduateAdmissions.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sysc4806.graduateAdmissions.model.Department;
 import sysc4806.graduateAdmissions.model.Interest;
 import sysc4806.graduateAdmissions.model.Role;
 import sysc4806.graduateAdmissions.model.User;
@@ -10,8 +9,8 @@ import sysc4806.graduateAdmissions.repositories.InterestRepository;
 import sysc4806.graduateAdmissions.repositories.RoleRepository;
 import sysc4806.graduateAdmissions.repositories.UserRepository;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 @Service
@@ -34,18 +33,21 @@ public class UserManager {
         Optional<Role> role = roleRepository.findByRoleName(roleName);
         if (role.isPresent()) {
             Role myRole = role.get();
-            System.out.println(Arrays.toString(userRepository.findByRole(myRole).toArray()));
+            return userRepository.findByRole(myRole);
         }
-        return null;
+        return Collections.emptyList();
     }
 
     public Collection<User> getUsersByInterestId(Long interestId) {
         Optional<Interest> interest = interestRepository.findById(interestId);
         if (interest.isPresent()) {
             Interest myInterest = interest.get();
-            System.out.println(Arrays.toString(userRepository.findByInterests(myInterest).toArray()));
+            return userRepository.findByInterests(myInterest);
         }
-        return null;
+        return Collections.emptyList();
     }
 
+    public Collection<User> getUsersByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 }

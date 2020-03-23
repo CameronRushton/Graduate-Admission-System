@@ -17,4 +17,5 @@ import java.util.List;
 public interface UserRepository extends CrudRepository<User, Long> {
     List<User> findByRole(Role role);
     List<User> findByInterests(Interest interest);
+    List<User> findByEmail(String email);
 }

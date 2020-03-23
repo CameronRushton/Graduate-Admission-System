@@ -54,7 +54,7 @@ public class UserController {
     }
 
     /**
-     * get all Privilege(s) with a specified role name
+     * get all Users with a specified role name
      *
      * @param roleName the Role of the returned User
      * @return JSON containing the User(s)
@@ -65,14 +65,27 @@ public class UserController {
     }
 
     /**
-     * get all User(s) with a specified Interest
+     * get all Users with a specified interest ID
      *
      * @param interest_id the interest id of users to be returned
      * @return JSON containing the User(s)
      */
     @GetMapping("/interests/{id}")
-    public ResponseEntity getUserOfInterest(@PathVariable Long interest_id){
+    public ResponseEntity getUserOfInterest(@PathVariable Long interest_id) {
         return ResponseEntity.status(HttpStatus.OK).body(userManager.getUsersByInterestId(interest_id));
+    }
+
+    /**
+     * get all User(s) with a specified email
+     *
+     * @param email the String of email to be returned
+     * @return JSON containing the User(s)
+     */
+    @GetMapping
+    public ResponseEntity getUserOfEmail(@RequestParam("email") String email){
+        userManager.getUsersByEmail(email);
+
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     /**
