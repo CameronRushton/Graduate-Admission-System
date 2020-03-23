@@ -3,6 +3,7 @@ package sysc4806.graduateAdmissions.controller;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -32,6 +33,7 @@ import static sysc4806.graduateAdmissions.utilities.Utility.toJson;
  */
 @AutoConfigureMockMvc
 @SpringBootTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 public class TermControllerTest {
 
     @Autowired
@@ -45,7 +47,7 @@ public class TermControllerTest {
     @Test
     public void testGetTerms() throws Exception {
         Term term = Term.builder()
-                .id(0L)
+                .id(1000L)
                 .active(true)
                 .deadline(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"))
                 .season(Season.SUMMER)
@@ -62,7 +64,7 @@ public class TermControllerTest {
     @Test
     public void testGetTermWithId() throws Exception {
         Term term = Term.builder()
-                .id(0L)
+                .id(1000L)
                 .active(true)
                 .deadline(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"))
                 .season(Season.SUMMER)
@@ -77,7 +79,7 @@ public class TermControllerTest {
     @Test
     public void testGetTermNotFound() throws Exception {
         Term term = Term.builder()
-                .id(0L)
+                .id(1000L)
                 .active(true)
                 .deadline(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"))
                 .season(Season.SUMMER)
@@ -107,7 +109,7 @@ public class TermControllerTest {
     @Test
     public void testUpdateTerm() throws Exception {
         TermDTO termDTO = TermDTO.builder()
-                .termId(0L)
+                .termId(1000L)
                 .active(true)
                 .deadline(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"))
                 .season(Season.SUMMER)
@@ -126,7 +128,7 @@ public class TermControllerTest {
     @Test
     public void testUpdateTermDoesNotExist() throws Exception {
         TermDTO termDTO = TermDTO.builder()
-                .termId(99L)
+                .termId(1099L)
                 .active(true)
                 .deadline(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"))
                 .season(Season.SUMMER)
@@ -140,7 +142,7 @@ public class TermControllerTest {
 
     @Test
     public void testDeleteTermNotExist() throws Exception {
-        mockMvc.perform(delete("/terms/{id}", 1L)
+        mockMvc.perform(delete("/terms/{id}", 1001L)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(404));
     }
@@ -149,7 +151,7 @@ public class TermControllerTest {
     public void testDeleteTerm() throws Exception {
         doNothing().when(repository).deleteById(any(Long.class));
         when(repository.existsById(any(Long.class))).thenReturn(true);
-        mockMvc.perform(delete("/terms/{id}", 0L)
+        mockMvc.perform(delete("/terms/{id}", 1000L)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200));
     }

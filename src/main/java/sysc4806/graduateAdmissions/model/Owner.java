@@ -13,7 +13,8 @@ import lombok.Getter;
 public enum Owner {
     SELF("self"),
     ALL_PROFS("all professors"),
-    ALL_STUDENTS("all students");
+    ALL_STUDENTS("all students"),
+    ALL("all");
 
     @Getter
     private final String description;

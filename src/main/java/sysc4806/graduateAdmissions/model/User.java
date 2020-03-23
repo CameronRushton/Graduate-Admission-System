@@ -24,12 +24,11 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
-    private String password;
-    @OneToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Role role;
-    @OneToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Interest> interests;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Application> applications;
 
     /**
@@ -42,11 +41,10 @@ public class User {
      * @param interest Array List interest contains the chosen interests of the user
      * @param application ArrayList application contains all applications of the user
      */
-    public User(String firstname, String lastname, String mail, String pass, Role r, Set<Interest> interest, Set<Application> application){
+    public User(String firstname, String lastname, String mail, Role r, Set<Interest> interest, Set<Application> application){
         this.firstName = firstname;
         this.lastName = lastname;
         this.email = mail;
-        this.password = pass;
         this.role = r;
         this.interests = interest;
         this.applications = application;
