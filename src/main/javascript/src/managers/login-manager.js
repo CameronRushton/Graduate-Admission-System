@@ -25,7 +25,6 @@ export class LoginManager extends AbstractManager{
 		let auth2 = gapi.auth2.getAuthInstance();
 		let parent = this;
 		auth2.signOut().then(function () {
-			console.log('User signed out.');
 			parent.aurelia.setRoot(PLATFORM.moduleName('pages/login/login'));
 		});
 	}

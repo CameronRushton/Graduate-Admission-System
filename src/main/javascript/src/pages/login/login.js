@@ -35,6 +35,7 @@ export class Login {
 		this.loginManager.login(id_token).then(response => {//the handler for login success
 			//load rest of the app
             parent.aurelia.setRoot('app');
+            response.text().then(role => {console.log(role)});
 		}).catch(err => {//the handler for login rejection
 			err.text().then(
 				msg => {

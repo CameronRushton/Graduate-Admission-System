@@ -75,7 +75,7 @@ public class SessionController {
                 val user = isValidUserEmail(payload.getEmail());
                 //TODO: create a session in backend and give session cookie to frontend with response
                 log.info(payload.getEmail() + " signing in");
-                return new ResponseEntity<>("Login success", HttpStatus.OK);
+                return new ResponseEntity<>(user.getRole().getRoleName(), HttpStatus.OK);
             } catch (InvalidLoginException e) {
                 log.info(payload.getEmail() + " is not a valid email in the user database");
                 return new ResponseEntity<>("Login failed: " + e.getMessage(), HttpStatus.UNAUTHORIZED);
