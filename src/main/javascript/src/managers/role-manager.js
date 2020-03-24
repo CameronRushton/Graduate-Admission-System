@@ -89,5 +89,4 @@ export class RoleManager extends AbstractManager{
 		return this.httpClient.fetch(`/role/remove?name=${name}`, options)
 			.then(this.handleError);
 	}
-
 }

@@ -10,6 +10,7 @@ import sysc4806.graduateAdmissions.model.Privilege;
 import sysc4806.graduateAdmissions.model.Target;
 import sysc4806.graduateAdmissions.repositories.PrivilegeRepository;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 /**
@@ -18,7 +19,7 @@ import java.util.Optional;
  * @author Eric
  */
 @RestController
-@RequestMapping("/privilege/")
+@RequestMapping("/privileges/")
 public class PrivilegeController {
     @Autowired
     private PrivilegeRepository repository;
@@ -66,7 +67,7 @@ public class PrivilegeController {
      * @return JSON containing the Privilege(s)
      */
     @GetMapping("operation")
-    public ResponseEntity getPrivilegeOfOperation(@RequestParam()Operation operation){
+    public ResponseEntity getPrivilegeOfOperation(@RequestParam() Operation operation){
         return ResponseEntity.status(HttpStatus.OK).body(repository.findByOperation(operation));
     }
 
@@ -76,10 +77,10 @@ public class PrivilegeController {
      * @param privilege the Privilege to be created
      * @return ResponseEntity describing the outcome of the operation
      */
-    @PostMapping("create")
-    public ResponseEntity createPrivilege(@RequestBody Privilege privilege){
+    @PostMapping
+    public ResponseEntity createPrivilege(@Valid @RequestBody Privilege privilege){
         repository.save(privilege);
-        return ResponseEntity.ok("Privilege added");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Privilege added");
     }
 
     /**
@@ -106,8 +107,8 @@ public class PrivilegeController {
      * @param privilege the Privilege to be updated
      * @return ResponseEntity describing the outcome of the operation
      */
-    @PostMapping("update")
-    public ResponseEntity updatePrivilege(@RequestBody Privilege privilege){
+    @PutMapping
+    public ResponseEntity updatePrivilege(@Valid @RequestBody Privilege privilege){
         repository.save(privilege);
         return ResponseEntity.ok("privilege with id " + privilege.getId() + " updated");
     }

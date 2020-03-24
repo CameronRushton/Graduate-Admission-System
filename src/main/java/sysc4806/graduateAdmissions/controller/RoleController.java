@@ -8,6 +8,7 @@ import sysc4806.graduateAdmissions.model.Privilege;
 import sysc4806.graduateAdmissions.model.Role;
 import sysc4806.graduateAdmissions.repositories.RoleRepository;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 /**
@@ -16,7 +17,7 @@ import java.util.Optional;
  * @author Eric
  */
 @RestController
-@RequestMapping("/role/")
+@RequestMapping("/roles/")
 public class RoleController {
     @Autowired
     RoleRepository repository;
@@ -27,7 +28,7 @@ public class RoleController {
      * @param name optional to find specific role
      * @return JSON containing Roles
      */
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity getRole(@RequestParam(required=false) String name) {
         if(name == null)
             return ResponseEntity.status(HttpStatus.OK).body(repository.findAll());
@@ -41,10 +42,10 @@ public class RoleController {
      * @param role the Role to be added to the system
      * @return ResponseEntity describing the outcome of the operation
      */
-    @PostMapping("create")
-    public ResponseEntity createRole(@RequestBody() Role role) {
+    @PostMapping
+    public ResponseEntity createRole(@Valid @RequestBody() Role role) {
         repository.save(role);
-        return ResponseEntity.ok("Role added");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Role added");
     }
 
     /**
@@ -70,8 +71,8 @@ public class RoleController {
      * @param role the Role to be updated
      * @return ResponseEntity describing the outcome of the operation
      */
-    @PostMapping("update")
-    public ResponseEntity updateRole(@RequestBody Role role){
+    @PutMapping
+    public ResponseEntity updateRole(@Valid @RequestBody Role role){
         repository.save(role);
         return ResponseEntity.ok(role.getRoleName() + " Role updated");
     }
@@ -83,14 +84,18 @@ public class RoleController {
      * @param privilege the privilege to be added
      * @return ResponseEntity describing the outcome of the operation
      */
-    @PostMapping("add")
-    public ResponseEntity addRolePrivilege(@RequestParam String name, @RequestBody Privilege privilege){
+    @PutMapping("privilege")
+    public ResponseEntity addRolePrivilege(@RequestParam String name, @Valid @RequestBody Privilege privilege){
         Optional<Role> role = repository.findByRoleName(name);
         if(role.isPresent()){
             Role r = role.get();
-            r.addPrivilege(privilege);
-            repository.save(r);
-            return ResponseEntity.ok("added privilege " + privilege.getId() + " too Role");
+            if(!r.hasPrivilege(privilege)) {
+                r.addPrivilege(privilege);
+                repository.save(r);
+                return ResponseEntity.ok("added privilege " + privilege.getId() + " too Role");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("role already has this privilege");
+            }
         } else {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
@@ -103,8 +108,8 @@ public class RoleController {
      * @param privilege the privilege to be removed
      * @return ResponseEntity describing the outcome of the operation
      */
-    @DeleteMapping("remove")
-    public ResponseEntity removeRolePrivilege(@RequestParam String name, @RequestBody Privilege privilege){
+    @DeleteMapping("privilege")
+    public ResponseEntity removeRolePrivilege(@RequestParam String name, @Valid @RequestBody Privilege privilege){
         Optional<Role> role = repository.findByRoleName(name);
         if(role.isPresent()){
             Role r = role.get();

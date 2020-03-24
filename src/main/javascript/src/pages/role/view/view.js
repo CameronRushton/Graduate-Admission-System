@@ -30,6 +30,14 @@ export class InterestView {
 		});
 	}
 
+	hasPrivilege(privilege){
+		this.roleManager.deleteRole(roleName).then(()=>{
+			this.roleManager.getRoles().then(response => {
+				this.roles = response;
+			});
+		});
+	}
+
 	updateRole(roleName, privilegeChoices){
 		this.myRole = {
 			roleName: roleName,

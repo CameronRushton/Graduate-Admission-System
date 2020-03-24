@@ -7,12 +7,12 @@
 				<p>Name: <input type="text" value.two-way="role.roleName"/></p>
 				<label>Privileges:</label>
 				<label repeat.for="privilege of privileges">
-					<input type="checkbox" model.bind="privilege" checked.bind="selectedPrivileges">
+					<input type="checkbox" model.bind="privilege">
 					Target: ${privilege.target}, Owner: ${privilege.owner}, Operation: ${privilege.operation}
 				</label>
 				<p>
-					<button class="deleteButton" click.delegate="deleteInterest(role.roleName)">Delete</button>
-					<button class="updateButton" click.delegate="updateInterest(role.roleName, role.privileges)">Update</button>
+					<button class="deleteButton" click.delegate="deleteRole(role.roleName)">Delete</button>
+					<button class="updateButton" click.delegate="updateRole(role.roleName, role.privileges)">Update</button>
 				</p>
 			</div>
 			<a route-href="route: add role">Add new Role</a>
