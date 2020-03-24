@@ -26,13 +26,17 @@ public class TermManagerImpl implements TermManager {
             return Optional.empty();
         }
         Term newTerm = termMapper.map(termDTO);
-        return Optional.of(termMapper.map(termRepository.save(newTerm)));
+        if(newTerm.getYear() >= 0){
+            return Optional.of(termMapper.map(termRepository.save(newTerm)));
+        } else{
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<TermDTO> updateTerm(@Valid TermDTO termDTO) {
         Optional<Term> existingTerm = termRepository.findById(termDTO.getTermId());
-        if (existingTerm.isPresent()) {
+        if (existingTerm.isPresent() && termDTO.getYear() >= 0) {
             Term updatedTerm = termRepository.save(termMapper.map(termDTO, existingTerm.get()));
             return Optional.ofNullable(termMapper.map(updatedTerm));
         } else {

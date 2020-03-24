@@ -21,7 +21,7 @@ import javax.persistence.*;
 public class Interest {
     //the primary key
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @EqualsAndHashCode.Exclude
     private long id;
     //the department for interest context
