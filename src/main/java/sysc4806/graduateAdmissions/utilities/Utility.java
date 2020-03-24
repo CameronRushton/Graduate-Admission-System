@@ -30,14 +30,14 @@ public class Utility {
     }
 
     /**
-     * generates a random alphanumeric string of 128 characters
+     * generates a random alphanumeric string of 64 characters
      *
      * @return the generated string
      */
-    public static String generateRandom128CharacterString(){
+    public static String generateRandom64CharacterString(){
         val leftLimit = 48; // numeral '0'
         val rightLimit = 122; // letter 'z'
-        val targetStringLength = 128;
+        val targetStringLength = 64;
         val random = new Random();
 
         return random.ints(leftLimit, rightLimit + 1)

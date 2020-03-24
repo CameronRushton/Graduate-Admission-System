@@ -8,16 +8,22 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import sysc4806.graduateAdmissions.model.Session;
 import sysc4806.graduateAdmissions.model.User;
+import sysc4806.graduateAdmissions.repositories.SessionRepository;
 import sysc4806.graduateAdmissions.repositories.UserRepository;
+import sysc4806.graduateAdmissions.utilities.Utility;
 
+import javax.servlet.http.Cookie;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -32,10 +38,38 @@ import java.util.Collections;
 public class SessionController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private SessionRepository sessionRepository;
     private static final HttpTransport transport = new NetHttpTransport();
     private static final JsonFactory jsonFactory = new JacksonFactory();
     //this is assigned by the google sign in site
     private static final String CLIENT_ID = "787575027862-t2vb0ae8ftk68nr9br9s4untp9e6t614.apps.googleusercontent.com";
+
+    /**
+     * authenticates login tokens to set up user session
+     *
+     * @param loginDetails the token from google sign in to authenticate
+     * @return OK if the token is valid, otherwise UNAUTHORIZED
+     */
+    @PostMapping("login")
+    public ResponseEntity<String> authenticateLogin(@RequestBody String loginDetails) {
+        val payload = verifyToken(loginDetails);
+        if(payload != null) {
+            try {
+                val user = isValidUserEmail(payload.getEmail());
+                val sessionId = createNewSession(user);
+                log.info(payload.getEmail() + " signing in with session id" + sessionId);
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Set-Cookie","sessionID="+sessionId+"; Max-Age=3600; Path=/; HttpOnly");
+                return new ResponseEntity<>(user.getRole().getRoleName(), headers, HttpStatus.OK);
+            } catch (InvalidLoginException e) {
+                log.info(payload.getEmail() + " is not a valid email in the user database");
+                return new ResponseEntity<>("Login failed: " + e.getMessage(), HttpStatus.UNAUTHORIZED);
+            }
+        } else {
+            return new ResponseEntity<>("Login failed: 3rd party token invalid", HttpStatus.UNAUTHORIZED);
+        }
+    }
 
     /**
      * performs token authentication with google and returns user info
@@ -51,10 +85,10 @@ public class SessionController {
                 .build();
 
         try {
-           val idToken = verifier.verify(idTokenString);
-           assert(idToken != null);
-           log.info("token " + idTokenString + " for " + idToken.getPayload().getEmail() + " validated");
-           return idToken.getPayload();
+            val idToken = verifier.verify(idTokenString);
+            assert(idToken != null);
+            log.info("token " + idTokenString + " for " + idToken.getPayload().getEmail() + " validated");
+            return idToken.getPayload();
         } catch(Exception | AssertionError  e) {
             log.info("token " + idTokenString + " is invalid");
             return null;
@@ -62,31 +96,7 @@ public class SessionController {
     }
 
     /**
-     * authenticates login tokens to set up user session
-     *
-     * @param loginDetails the token from google sign in to authenticate
-     * @return OK if the token is valid, otherwise UNAUTHORIZED
-     */
-    @PostMapping("login")
-    public ResponseEntity<String> authenticateLogin(@RequestBody String loginDetails) {
-        val payload = verifyToken(loginDetails);
-        if(payload != null) {
-            try {
-                val user = isValidUserEmail(payload.getEmail());
-                //TODO: create a session in backend and give session cookie to frontend with response
-                log.info(payload.getEmail() + " signing in");
-                return new ResponseEntity<>(user.getRole().getRoleName(), HttpStatus.OK);
-            } catch (InvalidLoginException e) {
-                log.info(payload.getEmail() + " is not a valid email in the user database");
-                return new ResponseEntity<>("Login failed: " + e.getMessage(), HttpStatus.UNAUTHORIZED);
-            }
-        } else {
-            return new ResponseEntity<>("Login failed: 3rd party token invalid", HttpStatus.UNAUTHORIZED);
-        }
-    }
-
-    /**
-     * returns the User entity for a given emil address
+     * returns the User entity for a given email address
      *
      * @param email the email address to search for in the system
      * @return the USer object containing the passed email
@@ -101,6 +111,29 @@ public class SessionController {
         } else {
             throw new InvalidLoginException("no account with the specified email address is registered with the system");
         }
+    }
+
+    /**
+     * creates a new session for the user signing in
+     *
+     * @param user the user to create the session for
+     */
+    private String createNewSession(User user) {
+        /*users shouldn't have more than one session at a time, so first we remove
+        any existing sessions for the user*/
+        val currentUserSessions = sessionRepository.findByUser(user);
+        for(Session session : currentUserSessions)
+            sessionRepository.delete(session);
+
+        /*the newly created session needs a new unique session id, which is used
+        to create the session and then returned from the function*/
+        String newSessionId;
+        do {
+            newSessionId = Utility.generateRandom64CharacterString();
+        }while(!sessionRepository.findById(newSessionId).isEmpty());
+
+        sessionRepository.save(new Session(newSessionId, user));
+        return newSessionId;
     }
 }
 

@@ -19,6 +19,6 @@ public class Session {
     @Id
     private String id;
     //the user associated with the session
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private User user;
 }

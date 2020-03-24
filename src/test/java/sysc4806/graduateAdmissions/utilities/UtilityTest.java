@@ -31,11 +31,11 @@ class UtilityTest {
 
     @Test
     void generateRandom128CharacterString() {
-        val randomString1 = Utility.generateRandom128CharacterString();
-        val randomString2 = Utility.generateRandom128CharacterString();
+        val randomString1 = Utility.generateRandom64CharacterString();
+        val randomString2 = Utility.generateRandom64CharacterString();
 
-        assertEquals(128, randomString1.length());
-        assertEquals(128, randomString2.length());
+        assertEquals(64, randomString1.length());
+        assertEquals(64, randomString2.length());
         assertNotEquals(randomString1, randomString2);
     }
 }
