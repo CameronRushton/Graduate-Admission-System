@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import sysc4806.graduateAdmissions.model.*;
+import sysc4806.graduateAdmissions.repositories.RoleRepository;
 import sysc4806.graduateAdmissions.repositories.UserRepository;
 
 import java.nio.charset.StandardCharsets;
@@ -21,8 +22,7 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static sysc4806.graduateAdmissions.utilities.Utility.toJson;
 
 /**
@@ -55,6 +55,8 @@ public class UserControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private UserRepository repository;
+    @MockBean
+    private RoleRepository roleRepository;
 
     @SneakyThrows
     @BeforeEach
@@ -88,79 +90,114 @@ public class UserControllerTest {
         users.add(user);
         users.add(user);
 
-        when(repository.findByInterests(i)).thenReturn(users);
-        when(repository.findByRole(role)).thenReturn(users);
-
     }
 
-
-    /* Test get user with id */
+    /**
+     * Test get user with id
+     */
     @Test
     public void testGetUserById() throws Exception {
-        when(repository.findById(0L)).thenReturn(Optional.of(users.get(0)));
-        this.mockMvc.perform(get("/user/?id=0"))
+        when(repository.findById(1234L)).thenReturn(Optional.of(users.get(0)));
+        this.mockMvc.perform(get("/users/{id}", "1234"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(toJson(users.get(0))));
     }
 
-    /* Test get user without id */
+    /**
+     * Test get user with id
+     */
+    @Test
+    public void testGetUserIdNotFound() throws Exception {
+        when(repository.findById(1234L)).thenReturn(Optional.empty());
+        this.mockMvc.perform(get("/users/{id}", "1111"))
+                .andExpect(status().isNotFound());
+    }
+
+    /** Test get user without id */
+
     @Test
     public void testGetAllUsers() throws Exception {
         when(repository.findAll()).thenReturn(users);
-        this.mockMvc.perform(get("/user/"))
+        this.mockMvc.perform(get("/users"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(toJson(users)));
     }
 
-    /* Test getUserOfRole */
+    /** Test getUserOfRole */
     @Test
     public void testGetUserOfRole() throws Exception {
-        this.mockMvc.perform(get("/user/role?role=Student"))
+        Role role = Role.builder().roleName("STUDENT").privileges(privileges).build();
+        when(roleRepository.findByRoleName(role.getRoleName())).thenReturn(Optional.of(role));
+        when(repository.findByRole(role)).thenReturn(users);
+        this.mockMvc.perform(get("/users/roles?roleName=STUDENT"))
                 .andExpect(status().isOk())
-                .andExpect(content().json(toJson(users.get(0))));
+                .andExpect(content().json(toJson(users)));
     }
 
-    /* Test getUserOfInterest */
-    @Test
-    public void testGetUserOfInterest() throws Exception {
-        this.mockMvc.perform(get("/user/interest?interest=Student"))
-                .andExpect(status().isOk())
-                .andExpect(content().json(toJson(users.get(0))));
-    }
+//    /** Test getUserOfInterest */
+//    @Test
+//    public void testGetUserOfInterest() throws Exception {
+//        this.mockMvc.perform(get("/user/interest?interest=Student"))
+//                .andExpect(status().isOk())
+//                .andExpect(content().json(toJson(users.get(0))));
+//    }
 
-    /* Test createUser */
+    /** Test createUser */
     @Test
     public void testCreateUser() throws Exception {
-        MvcResult result = mockMvc.perform(post("/user/create").contentType(APPLICATION_JSON_UTF8)
+        User testUser = User.builder().firstName(firstName).lastName(lastName).email(email).role(role).interests(interests).applications(applications).build();
+        when(repository.save(testUser)).thenReturn(testUser);
+        MvcResult result = mockMvc.perform(post("/users").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
-                        Privilege.builder().operation(Operation.READ).owner(Owner.SELF).target(Target.USER).build())))
-                .andExpect(status().isOk())
+                        testUser)))
+                .andExpect(status().isCreated())
                 .andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains("User added"));
+        assertTrue(result.getResponse().getContentAsString().contains("John"));
     }
 
-    /* Test delete existing User */
+    /** Test delete existing User */
     @Test
     public void testDeleteUser() throws Exception {
-        MvcResult result = mockMvc.perform(delete("/user/{id}", "5"))
+        User testUser = User.builder().id(1L).firstName(firstName).lastName(lastName).email(email).role(role).interests(interests).applications(applications).build();
+        when(repository.findById(1L)).thenReturn(Optional.of(testUser));
+        MvcResult result = mockMvc.perform(delete("/users/{id}", "1"))
                 .andExpect(status().isOk())
                 .andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains("User with id 5 deleted"));
+        assertTrue(result.getResponse().getContentAsString().contains("User with id 1 deleted"));
     }
 
-    /* Test delete User that does not exist */
+    /** Test delete User that does not exist */
     @Test
     public void testDeleteUserDoesNotExist() throws Exception {
-        mockMvc.perform(delete("/user/{id}", "999"))
+        when(repository.findById(1L)).thenReturn(Optional.empty());
+        mockMvc.perform(delete("/users/{id}", "999"))
                 .andExpect(status().isNotFound());
     }
 
-    /* Test update User */
+    /** Test update User */
     @Test
     public void testUpdateUser() throws Exception {
-        mockMvc.perform(post("/user/update").contentType(APPLICATION_JSON_UTF8)
+        User testUser = User.builder().id(1L).firstName("Will").lastName(lastName).email(email).role(role).interests(interests).applications(applications).build();
+        User newUser = User.builder().id(1L).firstName("Chad").lastName("Banana").build();
+        when(repository.findById(1L)).thenReturn(Optional.of(testUser));
+        when(repository.save(testUser)).thenReturn(newUser);
+        mockMvc.perform(put("/users").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
-                        Privilege.builder().owner(Owner.SELF).target(Target.APPLICATION).build())))
-                .andExpect(status().isOk());
+                        testUser)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.firstName").value("Chad"));
+
+    }
+
+    /** Test update User */
+    @Test
+    public void testUpdateUserNotFound() throws Exception {
+        User testUser = User.builder().id(1L).firstName("Will").lastName(lastName).email(email).role(role).interests(interests).applications(applications).build();
+        when(repository.findById(1L)).thenReturn(Optional.empty());
+        mockMvc.perform(put("/users").contentType(APPLICATION_JSON_UTF8)
+                .content(toJson(
+                        testUser)))
+                .andExpect(status().isNotFound());
+
     }
 }

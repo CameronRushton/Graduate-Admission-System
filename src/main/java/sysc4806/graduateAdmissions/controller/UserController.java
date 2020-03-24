@@ -36,8 +36,7 @@ public class UserController {
      */
     @GetMapping
     public ResponseEntity queryAllUsers() {
-        Iterable<User> users = repository.findAll();
-        return ResponseEntity.status(HttpStatus.OK).body(users);
+        return ResponseEntity.status(HttpStatus.OK).body(repository.findAll());
     }
 
     /**
@@ -47,7 +46,7 @@ public class UserController {
      * @return JSON containing the requested User(s)
      */
     @GetMapping(path="/{id}")
-    public ResponseEntity queryTerm(@PathVariable("id") Long userId) {
+    public ResponseEntity getUserByID(@PathVariable("id") Long userId) {
         Optional<User> user = repository.findById(userId);
         return ResponseEntity.status(user.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND)
                 .body(user.orElse(null));
