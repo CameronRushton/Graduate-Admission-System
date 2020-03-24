@@ -16,7 +16,7 @@ export class RoleManager extends AbstractManager{
 			},
 		};
 
-		return this.httpClient.fetch(`/role/`, options)
+		return this.httpClient.fetch(`/roles/`, options)
 			.then(this.handleError)
 			.then(this.json);
 	}
@@ -29,7 +29,7 @@ export class RoleManager extends AbstractManager{
 			},
 		};
 
-		return this.httpClient.fetch(`/privilege/?name=${name}`, options)
+		return this.httpClient.fetch(`/roles/?name=${name}`, options)
 			.then(this.handleError)
 			.then(this.json);
 	}
@@ -42,7 +42,7 @@ export class RoleManager extends AbstractManager{
 			},
 			body: JSON.stringify(role)
 		};
-		return this.httpClient.fetch(`/role/create`, options)
+		return this.httpClient.fetch(`/roles/`, options)
 			.then(this.handleError);
     }
 
@@ -50,43 +50,43 @@ export class RoleManager extends AbstractManager{
 		var options = {
 			method: "DELETE"
 		};
-		return this.httpClient.fetch(`/role/${name}`, options)
+		return this.httpClient.fetch(`/roles/${name}`, options)
 			.then(this.handleError);
 	}
 
 	updateRole(role) {
 		var options = {
-			method: "POST",
+			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify(role)
 		};
-		return this.httpClient.fetch(`/role/update`, options)
+		return this.httpClient.fetch(`/roles/`, options)
 			.then(this.handleError);
 	}
 
 	addRolePrivilege(name, privilege) {
 		var options = {
-			method: "POST",
+			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify(privilege)
 		};
-		return this.httpClient.fetch(`/role/add?name=${name}`, options)
+		return this.httpClient.fetch(`/roles/privilege?name=${name}`, options)
 			.then(this.handleError);
 	}
 
 	removeRolePrivilege(name, privilege) {
 		var options = {
-			method: "POST",
+			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify(privilege)
 		};
-		return this.httpClient.fetch(`/role/remove?name=${name}`, options)
+		return this.httpClient.fetch(`/roles/privilege?name=${name}`, options)
 			.then(this.handleError);
 	}
 }

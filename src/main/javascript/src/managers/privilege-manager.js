@@ -16,7 +16,7 @@ export class PrivilegeManager extends AbstractManager{
 			},
 		};
 
-		return this.httpClient.fetch(`/privilege/`, options)
+		return this.httpClient.fetch(`/privileges/`, options)
 			.then(this.handleError)
 			.then(this.json);
 	}
@@ -29,7 +29,7 @@ export class PrivilegeManager extends AbstractManager{
 			},
 		};
 
-		return this.httpClient.fetch(`/privilege/?id=${id}`, options)
+		return this.httpClient.fetch(`/privileges/?id=${id}`, options)
 			.then(this.handleError)
 			.then(this.json);
 	}
@@ -42,7 +42,7 @@ export class PrivilegeManager extends AbstractManager{
 			},
 		};
 
-		return this.httpClient.fetch(`/privilege/owner?owner=${owner}`, options)
+		return this.httpClient.fetch(`/privileges/owner?owner=${owner}`, options)
 			.then(this.handleError)
 			.then(this.json);
 	}
@@ -55,7 +55,7 @@ export class PrivilegeManager extends AbstractManager{
 			},
 		};
 
-		return this.httpClient.fetch(`/privilege/target?target=${target}`, options)
+		return this.httpClient.fetch(`/privileges/target?target=${target}`, options)
 			.then(this.handleError)
 			.then(this.json);
 	}
@@ -68,7 +68,7 @@ export class PrivilegeManager extends AbstractManager{
 			},
 		};
 
-		return this.httpClient.fetch(`/privilege/operation?operation=${operation}`, options)
+		return this.httpClient.fetch(`/privileges/operation?operation=${operation}`, options)
 			.then(this.handleError)
 			.then(this.json);
 	}
@@ -81,7 +81,7 @@ export class PrivilegeManager extends AbstractManager{
 			},
 			body: JSON.stringify(privilege)
 		};
-		return this.httpClient.fetch(`/privilege/create`, options)
+		return this.httpClient.fetch(`/privileges/`, options)
 			.then(this.handleError);
 	}
 
@@ -95,13 +95,13 @@ export class PrivilegeManager extends AbstractManager{
 
 	updatePrivilege(privilege) {
 		var options = {
-			method: "POST",
+			method: "PUT",
 			headers: {
 				"Content-Type": "application/json"
 			},
 			body: JSON.stringify(privilege)
 		};
-		return this.httpClient.fetch(`/privilege/update`, options)
+		return this.httpClient.fetch(`/privileges/`, options)
 			.then(this.handleError);
 	}
 
