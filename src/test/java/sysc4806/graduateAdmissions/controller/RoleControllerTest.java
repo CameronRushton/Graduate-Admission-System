@@ -45,7 +45,7 @@ public class RoleControllerTest {
 
     @BeforeEach
     void setUpMocks() {
-        duplicatePrivilege = Privilege.builder().id(1L).owner(Owner.SELF).target(Target.USER).operation(Operation.UPDATE).build();
+        duplicatePrivilege = Privilege.builder().id(1001L).owner(Owner.SELF).target(Target.USER).operation(Operation.UPDATE).build();
         Set<Privilege> studentPrivileges = new HashSet<>();
         studentPrivileges.add(Privilege.builder().id(1000L).owner(Owner.ALL_STUDENTS).target(Target.TERM).operation(Operation.DELETE).build());
         Set<Privilege> adminPrivileges = new HashSet<>();

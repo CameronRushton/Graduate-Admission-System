@@ -20,8 +20,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Privilege {
     //the primary key for a privilege
