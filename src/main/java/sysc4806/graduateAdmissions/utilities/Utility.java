@@ -2,9 +2,11 @@ package sysc4806.graduateAdmissions.utilities;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import lombok.val;
 import lombok.var;
+
+import java.util.Random;
 
 /**
  * class for utility functions that are useful for a number of
@@ -25,5 +27,23 @@ public class Utility {
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
         var ow = mapper.writer();
         return ow.writeValueAsString(o);
+    }
+
+    /**
+     * generates a random alphanumeric string of 128 characters
+     *
+     * @return the generated string
+     */
+    public static String generateRandom128CharacterString(){
+        val leftLimit = 48; // numeral '0'
+        val rightLimit = 122; // letter 'z'
+        val targetStringLength = 128;
+        val random = new Random();
+
+        return random.ints(leftLimit, rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
     }
 }
