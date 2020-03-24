@@ -3,6 +3,7 @@ package sysc4806.graduateAdmissions.controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -10,14 +11,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import sysc4806.graduateAdmissions.model.*;
-import sysc4806.graduateAdmissions.repositories.PrivilegeRepository;
 import sysc4806.graduateAdmissions.repositories.RoleRepository;
 
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -31,6 +30,7 @@ import static sysc4806.graduateAdmissions.utilities.Utility.toJson;
  */
 @SpringBootTest
 @AutoConfigureMockMvc
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 public class RoleControllerTest {
     private List<Role> roles;
     private final MediaType APPLICATION_JSON_UTF8 =
@@ -47,20 +47,20 @@ public class RoleControllerTest {
     void setUpMocks() {
         duplicatePrivilege = Privilege.builder().id(1L).owner(Owner.SELF).target(Target.USER).operation(Operation.UPDATE).build();
         Set<Privilege> studentPrivileges = new HashSet<>();
-        studentPrivileges.add(Privilege.builder().id(0L).owner(Owner.ALL_STUDENTS).target(Target.TERM).operation(Operation.DELETE).build());
+        studentPrivileges.add(Privilege.builder().id(1000L).owner(Owner.ALL_STUDENTS).target(Target.TERM).operation(Operation.DELETE).build());
         Set<Privilege> adminPrivileges = new HashSet<>();
         adminPrivileges.add(duplicatePrivilege);
         Set<Privilege> professorPrivileges = new HashSet<>();
-        professorPrivileges.add(Privilege.builder().id(2L).owner(Owner.ALL_PROFS).target(Target.INTEREST).operation(Operation.CREATE).build());
+        professorPrivileges.add(Privilege.builder().id(1002L).owner(Owner.ALL_PROFS).target(Target.INTEREST).operation(Operation.CREATE).build());
 
         roles = Arrays.asList(
-                Role.builder().roleName("Student").privileges(studentPrivileges).build(),
-                Role.builder().roleName("Admin").privileges(adminPrivileges).build(),
-                Role.builder().roleName("Professor").privileges(professorPrivileges).build());
+                Role.builder().roleName("apple").privileges(studentPrivileges).build(),
+                Role.builder().roleName("banana").privileges(adminPrivileges).build(),
+                Role.builder().roleName("orange").privileges(professorPrivileges).build());
 
         when(repository.findAll()).thenReturn(roles);
-        when(repository.findByRoleName("Admin")).thenReturn(Optional.of(roles.get(1)));
-        when(repository.findByRoleName("Student")).thenReturn(Optional.of(roles.get(0)));
+        when(repository.findByRoleName("banana")).thenReturn(Optional.of(roles.get(1)));
+        when(repository.findByRoleName("apple")).thenReturn(Optional.of(roles.get(0)));
     }
 
     /* Test get roles without id */
@@ -74,7 +74,7 @@ public class RoleControllerTest {
     /* Test getting role by name */
     @Test
     public void testGetRoleByName() throws Exception {
-        this.mockMvc.perform(get("/roles/?name=Admin"))
+        this.mockMvc.perform(get("/roles/?name=banana"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(toJson(roles.get(1))));
     }
@@ -83,7 +83,7 @@ public class RoleControllerTest {
     @Test
     public void testCreateRole() throws Exception {
         Set<Privilege> privileges = new HashSet<>();
-        privileges.add(Privilege.builder().id(0L).owner(Owner.ALL_STUDENTS).target(Target.TERM).operation(Operation.UPDATE).build());
+        privileges.add(Privilege.builder().id(1000L).owner(Owner.ALL_STUDENTS).target(Target.TERM).operation(Operation.UPDATE).build());
         MvcResult result = mockMvc.perform(post("/roles/").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
                         Role.builder().roleName("new").privileges(privileges).build())))
@@ -95,16 +95,16 @@ public class RoleControllerTest {
     /* Test delete existing Role */
     @Test
     public void testDeleteRole() throws Exception {
-        MvcResult result = mockMvc.perform(delete("/roles/{name}", "Student"))
+        MvcResult result = mockMvc.perform(delete("/roles/{name}", "apple"))
                 .andExpect(status().isOk())
                 .andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains("Student Role deleted"));
+        assertTrue(result.getResponse().getContentAsString().contains("apple Role deleted"));
     }
 
     /* Test delete Role that does not exist */
     @Test
     public void testDeleteRoleDoesNotExist() throws Exception {
-        mockMvc.perform(delete("/roles/{name}", "banana"))
+        mockMvc.perform(delete("/roles/{name}", "guava"))
                 .andExpect(status().isNotFound());
     }
 
@@ -113,19 +113,19 @@ public class RoleControllerTest {
     public void testUpdateRole() throws Exception {
         mockMvc.perform(put("/roles/").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
-                        Role.builder().roleName("Student").build())))
+                        Role.builder().roleName("apple").build())))
                 .andExpect(status().isOk());
     }
 
     /* Test add privilege too Role */
     @Test
     public void testAddPrivilegeToRole() throws Exception {
-        MvcResult result = mockMvc.perform(put("/roles/privilege?name=Admin").contentType(APPLICATION_JSON_UTF8)
+        MvcResult result = mockMvc.perform(post("/roles/privilege?name=banana").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
-                        Privilege.builder().owner(Owner.SELF).target(Target.APPLICATION).operation(Operation.UPDATE).id(1L).build())))
+                        Privilege.builder().owner(Owner.ALL_STUDENTS).target(Target.APPLICATION).operation(Operation.UPDATE).id(1001L).build())))
                 .andExpect(status().isOk())
                 .andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains("added privilege 1 too Role"));
+        assertTrue(result.getResponse().getContentAsString().contains("added privilege 1001 too Role"));
     }
 
     /* Test add duplicate privilege too Role */
@@ -141,9 +141,9 @@ public class RoleControllerTest {
     /* Test remove privilege from Role */
     @Test
     public void testRemovePrivilegeFromRole() throws Exception {
-        MvcResult result = mockMvc.perform(delete("/roles/privilege?name=Admin").contentType(APPLICATION_JSON_UTF8)
+        MvcResult result = mockMvc.perform(delete("/roles/privilege?name=banana").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
-                        Privilege.builder().owner(Owner.ALL_STUDENTS).target(Target.APPLICATION).operation(Operation.UPDATE).id(1L).build())))
+                        Privilege.builder().owner(Owner.ALL_STUDENTS).target(Target.APPLICATION).operation(Operation.UPDATE).id(1001L).build())))
                 .andExpect(status().isOk())
                 .andReturn();
         assertTrue(result.getResponse().getContentAsString().contains("Removed privilege ALL_STUDENTS UPDATE on APPLICATION from role Admin"));

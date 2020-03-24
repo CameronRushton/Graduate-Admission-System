@@ -28,6 +28,5 @@ public class TermDTO {
     @Enumerated(EnumType.STRING)
     private Season season;
     @NotNull
-    @NotBlank
-    private String year;
+    private int year;
 }

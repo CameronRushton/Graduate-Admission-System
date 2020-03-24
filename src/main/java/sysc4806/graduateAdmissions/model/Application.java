@@ -22,16 +22,16 @@ public class Application {
 
     //generated Primary key
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @EqualsAndHashCode.Exclude
     private long id;
 
     //The owner of the application
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private User applicant;
 
     //term that the application is for
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Term term;
 
     //department and degree type. We may want to make
@@ -42,7 +42,7 @@ public class Application {
 
     //Preferred professors. These will be the ones
     // to approve the application.
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<User> professors;
 
 
