@@ -120,7 +120,7 @@ public class RoleControllerTest {
     /* Test add privilege too Role */
     @Test
     public void testAddPrivilegeToRole() throws Exception {
-        MvcResult result = mockMvc.perform(post("/roles/privilege?name=banana").contentType(APPLICATION_JSON_UTF8)
+        MvcResult result = mockMvc.perform(put("/roles/privilege?name=banana").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
                         Privilege.builder().owner(Owner.ALL_STUDENTS).target(Target.APPLICATION).operation(Operation.UPDATE).id(1001L).build())))
                 .andExpect(status().isOk())
@@ -131,7 +131,7 @@ public class RoleControllerTest {
     /* Test add duplicate privilege too Role */
     @Test
     public void testAddDuplicatePrivilegeToRole() throws Exception {
-        MvcResult result = mockMvc.perform(put("/roles/privilege?name=Admin").contentType(APPLICATION_JSON_UTF8)
+        MvcResult result = mockMvc.perform(put("/roles/privilege?name=banana").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(duplicatePrivilege)))
                 .andExpect(status().is5xxServerError())
                 .andReturn();
@@ -146,6 +146,6 @@ public class RoleControllerTest {
                         Privilege.builder().owner(Owner.ALL_STUDENTS).target(Target.APPLICATION).operation(Operation.UPDATE).id(1001L).build())))
                 .andExpect(status().isOk())
                 .andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains("Removed privilege ALL_STUDENTS UPDATE on APPLICATION from role Admin"));
+        assertTrue(result.getResponse().getContentAsString().contains("Removed privilege ALL_STUDENTS UPDATE on APPLICATION from role banana"));
     }
 }

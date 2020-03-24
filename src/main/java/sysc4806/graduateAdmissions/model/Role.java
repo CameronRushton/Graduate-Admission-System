@@ -25,11 +25,9 @@ import java.util.*;
 public class Role {
     //the primary key a role
     @Id
-    @Column(name = "role_id")
     private String roleName;
     //the privileges for the role
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
-    @JoinColumn(name = "role_id", nullable = false)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Builder.Default
     private Set<Privilege> privileges = new HashSet<>();
 
