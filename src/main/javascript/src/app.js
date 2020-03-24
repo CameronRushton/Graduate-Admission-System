@@ -57,6 +57,14 @@ export class App {
 				icon: "glyphicon-file"
 			},
 			{
+				show: true,
+				route: '/profile',
+				name: 'profile',
+				moduleId: PLATFORM.moduleName('pages/profile/profile'),
+				title: "Profile",
+				icon: "glyphicon-user"
+			},
+			{
 				show: false,
 				route: '/login',
 				name: 'login',
