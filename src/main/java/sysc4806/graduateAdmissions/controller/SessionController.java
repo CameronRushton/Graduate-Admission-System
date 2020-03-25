@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import sysc4806.graduateAdmissions.model.User;
+import sysc4806.graduateAdmissions.model.UserAccount;
 import sysc4806.graduateAdmissions.repositories.UserRepository;
 
 import java.util.Arrays;
@@ -92,7 +92,7 @@ public class SessionController {
      * @return the USer object containing the passed email
      * @throws InvalidLoginException when there are 0 or multiple users with the email address.
      */
-    private User isValidUserEmail(String email) throws InvalidLoginException {
+    private UserAccount isValidUserEmail(String email) throws InvalidLoginException {
         val usersMatchingEmail = userRepository.findByEmail(email);
         if(usersMatchingEmail.size() == 1){
             return usersMatchingEmail.get(0);
