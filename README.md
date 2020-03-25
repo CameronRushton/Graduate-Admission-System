@@ -22,7 +22,7 @@ The project is in its [fourth sprint](https://github.com/CameronRushton/Graduate
 
 ## Login Details
 The system has three different roles for different system views: these are student, prof, and admin
-Each role has one user in the databae to show that it works. The details for logging in are below:
+Each role has one userAccount in the database to show that it works. The details for logging in are below:
 
 ### student account:
 email: GAS.student4806@gmail.com <br/>

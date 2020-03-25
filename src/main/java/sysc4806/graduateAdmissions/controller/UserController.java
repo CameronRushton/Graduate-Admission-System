@@ -4,17 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sysc4806.graduateAdmissions.model.Term;
-import sysc4806.graduateAdmissions.model.User;
-import sysc4806.graduateAdmissions.model.Role;
-import sysc4806.graduateAdmissions.model.Interest;
+import sysc4806.graduateAdmissions.model.UserAccount;
 import sysc4806.graduateAdmissions.repositories.UserRepository;
 import sysc4806.graduateAdmissions.service.UserManager;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Controller for CRUD operations on User
@@ -47,7 +41,7 @@ public class UserController {
      */
     @GetMapping(path="/{id}")
     public ResponseEntity getUserByID(@PathVariable("id") Long userId) {
-        Optional<User> user = repository.findById(userId);
+        Optional<UserAccount> user = repository.findById(userId);
         return ResponseEntity.status(user.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND)
                 .body(user.orElse(null));
     }
@@ -88,16 +82,16 @@ public class UserController {
     /**
      * Create a new user in the system
      *
-     * @param user the Privilege to be created
+     * @param userAccount the Privilege to be created
      * @return ResponseEntity describing the outcome of the operation
      */
     @PostMapping
-    public ResponseEntity createUser(@RequestBody User user){
-        Optional<User> newUser = userManager.createNewUser(user);
+    public ResponseEntity createUser(@RequestBody UserAccount userAccount){
+        Optional<UserAccount> newUser = userManager.createNewUser(userAccount);
         if (newUser.isPresent()) {
             return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
         }
-        return ResponseEntity.status(HttpStatus.CONFLICT).body("User with ID " + user.getId() + " already exists.");
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("User with ID " + userAccount.getId() + " already exists.");
     }
 
     /**
@@ -108,7 +102,7 @@ public class UserController {
      */
     @DeleteMapping("{id}")
     public ResponseEntity deleteUser(@PathVariable("id") Long id){
-        Optional<User> user = repository.findById(id);
+        Optional<UserAccount> user = repository.findById(id);
         if(user.isPresent()){
             repository.deleteById(id);
             return ResponseEntity.ok("User with id " + user.get().getId() + " deleted");
@@ -120,12 +114,12 @@ public class UserController {
     /**
      * update a specified User
      *
-     * @param user the User to be updated
+     * @param userAccount the User to be updated
      * @return ResponseEntity describing the outcome of the operation
      */
     @PutMapping
-    public ResponseEntity updateUser(@RequestBody User user) {
-        Optional<User> updatedUser = userManager.updateUser(user);
+    public ResponseEntity updateUser(@RequestBody UserAccount userAccount) {
+        Optional<UserAccount> updatedUser = userManager.updateUser(userAccount);
         if (updatedUser.isPresent()) {
             return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
         }

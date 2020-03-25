@@ -2,16 +2,13 @@ package sysc4806.graduateAdmissions.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sysc4806.graduateAdmissions.dto.TermDTO;
 import sysc4806.graduateAdmissions.model.Interest;
 import sysc4806.graduateAdmissions.model.Role;
-import sysc4806.graduateAdmissions.model.Term;
-import sysc4806.graduateAdmissions.model.User;
+import sysc4806.graduateAdmissions.model.UserAccount;
 import sysc4806.graduateAdmissions.repositories.InterestRepository;
 import sysc4806.graduateAdmissions.repositories.RoleRepository;
 import sysc4806.graduateAdmissions.repositories.UserRepository;
 
-import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
@@ -32,29 +29,29 @@ public class UserManager {
         this.interestRepository = interestRepository;
     }
 
-    public Optional<User> createNewUser(User user) {
-        if (user.getId() != null && userRepository.existsById(user.getId())) {
+    public Optional<UserAccount> createNewUser(UserAccount userAccount) {
+        if (userAccount.getId() != null && userRepository.existsById(userAccount.getId())) {
             return Optional.empty();
         }
-        return Optional.of(userRepository.save(user));
+        return Optional.of(userRepository.save(userAccount));
     }
 
     // TODO: replace mapping with Mapper object
-    public Optional<User> updateUser(User user) {
-        Optional<User> existingUser = userRepository.findById(user.getId());
+    public Optional<UserAccount> updateUser(UserAccount userAccount) {
+        Optional<UserAccount> existingUser = userRepository.findById(userAccount.getId());
         if (existingUser.isPresent()) {
-            if (user.getFirstName() != null && !user.getFirstName().isEmpty()) existingUser.get().setFirstName(user.getFirstName());
-            if (user.getLastName() != null && !user.getLastName().isEmpty()) existingUser.get().setLastName(user.getLastName());
-            if (user.getRole() != null) existingUser.get().setRole(user.getRole());
-            if (user.getRole() != null) existingUser.get().setInterests(user.getInterests());
-            if (user.getRole() != null) existingUser.get().setApplications(user.getApplications());
-            if (user.getEmail() != null && !user.getEmail().isEmpty()) existingUser.get().setEmail(user.getEmail());
+            if (userAccount.getFirstName() != null && !userAccount.getFirstName().isEmpty()) existingUser.get().setFirstName(userAccount.getFirstName());
+            if (userAccount.getLastName() != null && !userAccount.getLastName().isEmpty()) existingUser.get().setLastName(userAccount.getLastName());
+            if (userAccount.getRole() != null) existingUser.get().setRole(userAccount.getRole());
+            if (userAccount.getRole() != null) existingUser.get().setInterests(userAccount.getInterests());
+            if (userAccount.getRole() != null) existingUser.get().setApplications(userAccount.getApplications());
+            if (userAccount.getEmail() != null && !userAccount.getEmail().isEmpty()) existingUser.get().setEmail(userAccount.getEmail());
             return Optional.of(userRepository.save(existingUser.get()));
         }
         return Optional.empty();
     }
 
-    public Collection<User> getUsersByRoleName(String roleName) {
+    public Collection<UserAccount> getUsersByRoleName(String roleName) {
         Optional<Role> role = roleRepository.findByRoleName(roleName);
         if (role.isPresent()) {
             Role myRole = role.get();
@@ -63,7 +60,7 @@ public class UserManager {
         return Collections.emptyList();
     }
 
-    public Collection<User> getUsersByInterestId(Long interestId) {
+    public Collection<UserAccount> getUsersByInterestId(Long interestId) {
         Optional<Interest> interest = interestRepository.findById(interestId);
         if (interest.isPresent()) {
             Interest myInterest = interest.get();
@@ -72,7 +69,7 @@ public class UserManager {
         return Collections.emptyList();
     }
 
-    public Collection<User> getUsersByEmail(String email) {
+    public Collection<UserAccount> getUsersByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 }

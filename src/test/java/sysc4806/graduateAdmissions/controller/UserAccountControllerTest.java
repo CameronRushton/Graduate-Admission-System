@@ -32,9 +32,9 @@ import static sysc4806.graduateAdmissions.utilities.Utility.toJson;
  */
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserControllerTest {
+public class UserAccountControllerTest {
     private long id;
-    private User user, professor;
+    private UserAccount userAccount, professor;
     private String firstName;
     private String lastName;
     private String email;
@@ -46,7 +46,7 @@ public class UserControllerTest {
     private Application application;
     private Set<Application> applications;
     private Term term;
-    private List<User> users;
+    private List<UserAccount> userAccounts;
     private final MediaType APPLICATION_JSON_UTF8 =
             new MediaType(MediaType.APPLICATION_JSON.getType(),
                     MediaType.APPLICATION_JSON.getSubtype(),
@@ -77,18 +77,18 @@ public class UserControllerTest {
         privileges = Sets.newHashSet(createSelfApplication, updateSelfApplication);
         role = Role.builder().roleName("Student").privileges(privileges).build();
         profRole = Role.builder().roleName("Professor").privileges(privileges).build();
-        professor = new User(id, firstName, lastName, email, profRole, interests, applications);
-        Set<User> professors = new HashSet<User>();
+        professor = new UserAccount(id, firstName, lastName, email, profRole, interests, applications);
+        Set<UserAccount> professors = new HashSet<UserAccount>();
         professors.add(professor);
-        application = new Application(5, user, term, Department.SYSC, "Software Engineering", professors, Status.INCOMPLETE, 10, "resume.pdf");
+        application = new Application(5, userAccount, term, Department.SYSC, "Software Engineering", professors, Status.INCOMPLETE, 10, "resume.pdf");
         interests = new HashSet<Interest>();
         Interest i = new Interest(5, Department.SYSC, "Web Dev");
         interests.add(i);
         applications = new HashSet<Application>();
-        users = new ArrayList<>();
-        user = new User(id, firstName, lastName, email, role, interests, applications);
-        users.add(user);
-        users.add(user);
+        userAccounts = new ArrayList<>();
+        userAccount = new UserAccount(id, firstName, lastName, email, role, interests, applications);
+        userAccounts.add(userAccount);
+        userAccounts.add(userAccount);
 
     }
 
@@ -97,10 +97,10 @@ public class UserControllerTest {
      */
     @Test
     public void testGetUserById() throws Exception {
-        when(repository.findById(1234L)).thenReturn(Optional.of(users.get(0)));
+        when(repository.findById(1234L)).thenReturn(Optional.of(userAccounts.get(0)));
         this.mockMvc.perform(get("/users/{id}", "1234"))
                 .andExpect(status().isOk())
-                .andExpect(content().json(toJson(users.get(0))));
+                .andExpect(content().json(toJson(userAccounts.get(0))));
     }
 
     /**
@@ -117,10 +117,10 @@ public class UserControllerTest {
 
     @Test
     public void testGetAllUsers() throws Exception {
-        when(repository.findAll()).thenReturn(users);
+        when(repository.findAll()).thenReturn(userAccounts);
         this.mockMvc.perform(get("/users"))
                 .andExpect(status().isOk())
-                .andExpect(content().json(toJson(users)));
+                .andExpect(content().json(toJson(userAccounts)));
     }
 
     /** Test getUserOfRole */
@@ -128,10 +128,10 @@ public class UserControllerTest {
     public void testGetUserOfRole() throws Exception {
         Role role = Role.builder().roleName("STUDENT").privileges(privileges).build();
         when(roleRepository.findByRoleName(role.getRoleName())).thenReturn(Optional.of(role));
-        when(repository.findByRole(role)).thenReturn(users);
+        when(repository.findByRole(role)).thenReturn(userAccounts);
         this.mockMvc.perform(get("/users/roles?roleName=STUDENT"))
                 .andExpect(status().isOk())
-                .andExpect(content().json(toJson(users)));
+                .andExpect(content().json(toJson(userAccounts)));
     }
 
 //    /** Test getUserOfInterest */
@@ -145,11 +145,11 @@ public class UserControllerTest {
     /** Test createUser */
     @Test
     public void testCreateUser() throws Exception {
-        User testUser = User.builder().firstName(firstName).lastName(lastName).email(email).role(role).interests(interests).applications(applications).build();
-        when(repository.save(testUser)).thenReturn(testUser);
+        UserAccount testUserAccount = UserAccount.builder().firstName(firstName).lastName(lastName).email(email).role(role).interests(interests).applications(applications).build();
+        when(repository.save(testUserAccount)).thenReturn(testUserAccount);
         MvcResult result = mockMvc.perform(post("/users").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
-                        testUser)))
+                        testUserAccount)))
                 .andExpect(status().isCreated())
                 .andReturn();
         assertTrue(result.getResponse().getContentAsString().contains("John"));
@@ -158,8 +158,8 @@ public class UserControllerTest {
     /** Test delete existing User */
     @Test
     public void testDeleteUser() throws Exception {
-        User testUser = User.builder().id(1L).firstName(firstName).lastName(lastName).email(email).role(role).interests(interests).applications(applications).build();
-        when(repository.findById(1L)).thenReturn(Optional.of(testUser));
+        UserAccount testUserAccount = UserAccount.builder().id(1L).firstName(firstName).lastName(lastName).email(email).role(role).interests(interests).applications(applications).build();
+        when(repository.findById(1L)).thenReturn(Optional.of(testUserAccount));
         MvcResult result = mockMvc.perform(delete("/users/{id}", "1"))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -177,13 +177,13 @@ public class UserControllerTest {
     /** Test update User */
     @Test
     public void testUpdateUser() throws Exception {
-        User testUser = User.builder().id(1L).firstName("Will").lastName(lastName).email(email).role(role).interests(interests).applications(applications).build();
-        User newUser = User.builder().id(1L).firstName("Chad").lastName("Banana").build();
-        when(repository.findById(1L)).thenReturn(Optional.of(testUser));
-        when(repository.save(testUser)).thenReturn(newUser);
+        UserAccount testUserAccount = UserAccount.builder().id(1L).firstName("Will").lastName(lastName).email(email).role(role).interests(interests).applications(applications).build();
+        UserAccount newUserAccount = UserAccount.builder().id(1L).firstName("Chad").lastName("Banana").build();
+        when(repository.findById(1L)).thenReturn(Optional.of(testUserAccount));
+        when(repository.save(testUserAccount)).thenReturn(newUserAccount);
         mockMvc.perform(put("/users").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
-                        testUser)))
+                        testUserAccount)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.firstName").value("Chad"));
 
@@ -192,11 +192,11 @@ public class UserControllerTest {
     /** Test update User */
     @Test
     public void testUpdateUserNotFound() throws Exception {
-        User testUser = User.builder().id(1L).firstName("Will").lastName(lastName).email(email).role(role).interests(interests).applications(applications).build();
+        UserAccount testUserAccount = UserAccount.builder().id(1L).firstName("Will").lastName(lastName).email(email).role(role).interests(interests).applications(applications).build();
         when(repository.findById(1L)).thenReturn(Optional.empty());
         mockMvc.perform(put("/users").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
-                        testUser)))
+                        testUserAccount)))
                 .andExpect(status().isNotFound());
 
     }
