@@ -10,8 +10,8 @@ public class CORSConfiguration implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("localhost:9000", "localhost:8080", "https://graduate-admission-system.herokuapp.com/",
-                        "https://graduate-admission-staging.herokuapp.com/")
+                .allowedOrigins("localhost:9000", "localhost:8080", "https://graduate-admission-system.herokuapp.com/*",
+                        "https://graduate-admission-staging.herokuapp.com/*")
                 .maxAge(3600);
     }
 }
