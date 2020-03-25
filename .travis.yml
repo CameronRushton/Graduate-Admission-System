@@ -8,13 +8,8 @@ before_deploy:
   - npm install aurelia-cli -g
   - cd ./src/main/javascript
   - npm install
-  - |
-    if [[ $TRAVIS_BRANCH != $TRAVIS_PULL_REQUEST_BRANCH && $TRAVIS_BRANCH = 'master' ]]; then
-      au build --env prod
-    else
-      au build --env stage
-    fi
-    cp -RT dist ../resources/static
+  - au build --env prod
+  - cp -RT dist ../resources/static
   - cd ../../..
 deploy:
   - provider: heroku

@@ -1,12 +1,11 @@
 package sysc4806.graduateAdmissions.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.*;
 
 /**
@@ -21,12 +20,14 @@ import java.util.*;
 @Data
 @Builder
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Role {
     //the primary key a role
     @Id
     private String roleName;
     //the privileges for the role
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @Builder.Default
     private Set<Privilege> privileges = new HashSet<>();
 
