@@ -1,5 +1,4 @@
 <template>
-
     <div class="header">
         <div class="header-title">
             <img src="/assets/images/carleton-header-logo.png" alt="" class="logo">
@@ -9,7 +8,7 @@
                 <span class="glyphicon ${route.icon} icon"></span>
                 ${route.title}
             </a>
-            <a href="#" if.bind="isSignedIn()" click.delegate="onSignOut()" class="item">
+            <a href="#" if.bind="isSignedIn()" click.delegate="logout()" class="item">
                 <span class="glyphicon glyphicon-lock icon"></span>
                 Logout
             </a>

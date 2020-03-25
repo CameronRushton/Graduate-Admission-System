@@ -1,11 +1,12 @@
 import { AbstractManager } from "./abstract-manager";
 import { HttpClient } from "aurelia-fetch-client";
-import { inject } from "aurelia-framework";
+import { inject, Aurelia } from "aurelia-framework";
 
-@inject(HttpClient)
+@inject(HttpClient, Aurelia)
 export class LoginManager extends AbstractManager{
-    constructor(httpClient) {
+    constructor(httpClient, aurelia) {
 		super(httpClient);
+		this.aurelia = aurelia;
 	}
 
     login(token) {
@@ -18,6 +19,13 @@ export class LoginManager extends AbstractManager{
     	};
     	return this.httpClient.fetch(`/login`, options)
     		.then(this.handleError)
-    		.then(this.JSON);
    	}
+
+   	logout() {
+		let auth2 = gapi.auth2.getAuthInstance();
+		let parent = this;
+		auth2.signOut().then(function () {
+			parent.aurelia.setRoot(PLATFORM.moduleName('pages/login/login'));
+		});
+	}
 }
