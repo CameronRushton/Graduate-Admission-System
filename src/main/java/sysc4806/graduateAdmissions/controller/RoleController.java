@@ -73,8 +73,13 @@ public class RoleController {
      */
     @PutMapping
     public ResponseEntity updateRole(@Valid @RequestBody Role role){
-        repository.save(role);
-        return ResponseEntity.ok(role.getRoleName() + " Role updated");
+        Optional<Role> oldRole = repository.findByRoleName(role.getRoleName());
+        if(oldRole.isPresent()){
+            repository.save(role);
+            return ResponseEntity.ok(role.getRoleName() + " Role updated");
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 
     /**

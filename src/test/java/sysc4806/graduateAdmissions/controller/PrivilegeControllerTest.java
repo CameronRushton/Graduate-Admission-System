@@ -142,7 +142,7 @@ public class PrivilegeControllerTest {
     public void testUpdatePrivilege() throws Exception {
         mockMvc.perform(put("/privileges/").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
-                        Privilege.builder().owner(Owner.SELF).target(Target.APPLICATION).operation(Operation.CREATE).build())))
+                        Privilege.builder().id(1000L).operation(Operation.READ).target(Target.APPLICATION).owner(Owner.ALL_STUDENTS).build())))
                 .andExpect(status().isOk());
     }
 

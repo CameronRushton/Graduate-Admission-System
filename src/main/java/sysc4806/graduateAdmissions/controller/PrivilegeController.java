@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sysc4806.graduateAdmissions.model.Operation;
-import sysc4806.graduateAdmissions.model.Owner;
-import sysc4806.graduateAdmissions.model.Privilege;
-import sysc4806.graduateAdmissions.model.Target;
+import sysc4806.graduateAdmissions.model.*;
 import sysc4806.graduateAdmissions.repositories.PrivilegeRepository;
 
 import javax.validation.Valid;
@@ -109,8 +106,13 @@ public class PrivilegeController {
      */
     @PutMapping
     public ResponseEntity updatePrivilege(@Valid @RequestBody Privilege privilege){
-        repository.save(privilege);
-        return ResponseEntity.ok("privilege with id " + privilege.getId() + " updated");
+        Optional<Privilege> oldPrivilege = repository.findById(privilege.getId());
+        if(oldPrivilege.isPresent()){
+            repository.save(privilege);
+            return ResponseEntity.ok("Privilege updated");
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 
 }
