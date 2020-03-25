@@ -28,5 +28,5 @@ public class Interest {
     @Enumerated(EnumType.STRING)
     private Department department;
     //the keyword which defines the interest
-    private String keyword;
+    @Getter private String keyword;
 }
