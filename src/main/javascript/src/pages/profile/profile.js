@@ -1,12 +1,14 @@
 import { inject } from 'aurelia-framework';
 import { Router } from "aurelia-router"
+import { Login } from 'pages/login/login';
 import { UserManager } from 'managers/user-manager';
 
-@inject(Router, UserManager)
+@inject(Router, Login, UserManager)
 export class Profile {
     
-    constructor(router, userManager) {
+    constructor(router, login, userManager) {
         this.router = router;
+        this.authService = login;
         this.userManager = userManager;
         this.scrollTop = 0;
     }
