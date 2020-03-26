@@ -1,5 +1,6 @@
 package sysc4806.graduateAdmissions.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.HttpTransport;
@@ -20,6 +21,8 @@ import sysc4806.graduateAdmissions.repositories.UserRepository;
 
 import java.util.Arrays;
 import java.util.Collections;
+
+import static sysc4806.graduateAdmissions.utilities.Utility.toJson;
 
 /**
  * This controller handles the creation and deletion of sessions in the system
@@ -75,9 +78,12 @@ public class SessionController {
                 val user = isValidUserEmail(payload.getEmail());
                 //TODO: create a session in backend and give session cookie to frontend with response
                 log.info(payload.getEmail() + " signing in");
-                return new ResponseEntity<>(user.getRole().getRoleName(), HttpStatus.OK);
+                return new ResponseEntity<>(toJson(user), HttpStatus.OK);
             } catch (InvalidLoginException e) {
                 log.info(payload.getEmail() + " is not a valid email in the user database");
+                return new ResponseEntity<>("Login failed: " + e.getMessage(), HttpStatus.UNAUTHORIZED);
+            } catch (JsonProcessingException e){
+                log.info("failed to parse user to json");
                 return new ResponseEntity<>("Login failed: " + e.getMessage(), HttpStatus.UNAUTHORIZED);
             }
         } else {

@@ -29,10 +29,13 @@ export class Header {
     }
 
 	isSignedIn(){
-		return true;
+		//if the userID cookie is in the list of cookies, then we are signed in
+		return document.cookie.indexOf('userID=') !== -1;
 	}
 
 	logout(){
+		//delete the cookie by setting it to a date in the past
+		document.cookie = "userID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 		this.loginManager.logout();
 	}
 }
