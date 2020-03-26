@@ -80,7 +80,7 @@ public class UserAccountControllerTest {
         professor = new UserAccount(id, firstName, lastName, email, profRole, interests, applications);
         Set<UserAccount> professors = new HashSet<UserAccount>();
         professors.add(professor);
-        application = new Application(5, userAccount, term, Department.SYSC, "Software Engineering", professors, Status.INCOMPLETE, 10, "resume.pdf");
+        application = new Application(5, term, Department.SYSC, "Software Engineering", professors, Status.INCOMPLETE, 10, "resume.pdf");
         interests = new HashSet<Interest>();
         Interest i = new Interest(5, Department.SYSC, "Web Dev");
         interests.add(i);

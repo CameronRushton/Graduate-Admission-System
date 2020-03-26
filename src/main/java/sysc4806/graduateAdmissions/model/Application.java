@@ -26,10 +26,6 @@ public class Application {
     @EqualsAndHashCode.Exclude
     private long id;
 
-    //The owner of the application
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private UserAccount applicant;
-
     //term that the application is for
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Term term;

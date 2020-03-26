@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sysc4806.graduateAdmissions.model.Application;
 import sysc4806.graduateAdmissions.repositories.ApplicationRepository;
+import sysc4806.graduateAdmissions.repositories.UserRepository;
 
 /**
  * This controller specifies CRUD operations on the application class
@@ -17,7 +18,9 @@ import sysc4806.graduateAdmissions.repositories.ApplicationRepository;
 @RequestMapping("/application/")
 public class ApplicationController {
     @Autowired
-    ApplicationRepository repo;
+    ApplicationRepository applicationRepository;
+    @Autowired
+    UserRepository userRepository;
 
     /**
      * get Application objects as JSON, either by ID or all at once
@@ -28,9 +31,9 @@ public class ApplicationController {
     @GetMapping("")
     public ResponseEntity getApplication(@RequestParam(required=false) Long id) {
         if(id == null)
-            return ResponseEntity.status(HttpStatus.OK).body(repo.findAll());
+            return ResponseEntity.status(HttpStatus.OK).body(applicationRepository.findAll());
         else
-            return ResponseEntity.status(HttpStatus.OK).body(repo.findById(id));
+            return ResponseEntity.status(HttpStatus.OK).body(applicationRepository.findById(id));
     }
 
     /**
@@ -41,7 +44,7 @@ public class ApplicationController {
      */
     @GetMapping("applicant")
     public ResponseEntity getApplicationsOfApplicant(@RequestParam() Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(repo.findByApplicant_id(id));
+        return ResponseEntity.status(HttpStatus.OK).body(userRepository.findById(id).get().getApplications());
     }
 
     /**
@@ -52,7 +55,7 @@ public class ApplicationController {
      */
     @PostMapping("create")
     public ResponseEntity createApplication(@RequestBody Application application) {
-        repo.save(application);
+        applicationRepository.save(application);
         return ResponseEntity.ok("application successfully added");
     }
 
@@ -65,9 +68,9 @@ public class ApplicationController {
     @DeleteMapping("{id}")
     @CrossOrigin
     public ResponseEntity deleteApplication(@PathVariable("id") Long id) {
-        val application = repo.findById(id);
+        val application = applicationRepository.findById(id);
         if(application.isPresent()){
-            repo.delete(application.get());
+            applicationRepository.delete(application.get());
             return ResponseEntity.ok("application to " + application.get().getDegree() +
                     " in " + application.get().getDepartment() +
                     " for " + application.get().getTerm().getSeason() +
@@ -86,7 +89,7 @@ public class ApplicationController {
      */
     @PostMapping("update")
     public ResponseEntity updateApplication(@RequestBody Application application) {
-        repo.save(application);
+        applicationRepository.save(application);
         return ResponseEntity.ok("application successfully updated");
     }
 }

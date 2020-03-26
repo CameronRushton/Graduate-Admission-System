@@ -47,7 +47,7 @@ public class UserAccountTest {
         professor = new UserAccount(id, firstName, lastName, email, profRole, interests, applications);
         Set<UserAccount> professors = new HashSet<>();
         professors.add(professor);
-        application = new Application(5, userAccount, term, Department.SYSC, "Software Engineering", professors, Status.INCOMPLETE, 10, "resume.pdf");
+        application = new Application(5, term, Department.SYSC, "Software Engineering", professors, Status.INCOMPLETE, 10, "resume.pdf");
         userAccount = new UserAccount();
     }
 
