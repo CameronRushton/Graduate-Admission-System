@@ -22,11 +22,11 @@ class ApplicationTest {
 
     private Application application;
     private long ID;
-    private User applicant;
+    private UserAccount applicant;
     private Term term;
     private Department department;
     private String degree;
-    private Set<User> professors;
+    private Set<UserAccount> professors;
     private Status status;
     private double gpa;
     private String resumeFileName;
@@ -35,7 +35,7 @@ class ApplicationTest {
     public void setUp() throws ParseException {
         application = new Application();
         ID = 5;
-        applicant = new User();
+        applicant = new UserAccount();
         term = new Term(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"), Season.FALL, 2020, true);
         department = Department.SYSC;
         degree = "test case";

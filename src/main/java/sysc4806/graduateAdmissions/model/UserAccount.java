@@ -18,7 +18,7 @@ import java.util.Set;
 @Data
 @Entity
 @Builder
-public class User {
+public class UserAccount {
 
     @Id
     @GeneratedValue(generator = "sequence-generator")
@@ -53,7 +53,7 @@ public class User {
      * @param interest Array List interest contains the chosen interests of the user
      * @param application ArrayList application contains all applications of the user
      */
-    public User(String firstname, String lastname, String mail, Role r, Set<Interest> interest, Set<Application> application){
+    public UserAccount(String firstname, String lastname, String mail, Role r, Set<Interest> interest, Set<Application> application){
         this.firstName = firstname;
         this.lastName = lastname;
         this.email = mail;
