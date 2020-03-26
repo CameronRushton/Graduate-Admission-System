@@ -25,7 +25,7 @@ public class Term {
     private Long id;
     private Boolean active;
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy.MM.dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date deadline;
     @Enumerated(EnumType.STRING)
     private Season season;

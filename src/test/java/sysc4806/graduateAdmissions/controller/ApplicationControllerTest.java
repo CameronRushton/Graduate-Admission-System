@@ -65,7 +65,7 @@ public class ApplicationControllerTest {
     void setUpMocks() {
         applicant1 = new User();
         applicant2 = new User();
-        term = new Term(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"), Season.FALL, 2020, true);
+        term = new Term(new SimpleDateFormat("yyyy-MM-ddHH:mm:ss.SSSX").parse("2020-08-0100:01:00.000+0000"), Season.FALL, 2020, true);
         degree = "test case";
         status = Status.INCOMPLETE;
         professors = new HashSet<>();
