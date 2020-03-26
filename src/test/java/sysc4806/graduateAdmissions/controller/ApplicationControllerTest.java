@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import sysc4806.graduateAdmissions.model.*;
 import sysc4806.graduateAdmissions.repositories.ApplicationRepository;
+import sysc4806.graduateAdmissions.repositories.UserRepository;
 
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
@@ -47,7 +48,9 @@ public class ApplicationControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    private ApplicationRepository repo;
+    private ApplicationRepository applicationRepository;
+    @MockBean
+    private UserRepository userRepository;
 
     private long ID;
     private UserAccount applicant1;
@@ -64,6 +67,7 @@ public class ApplicationControllerTest {
     void setUpMocks() {
         applicant1 = new UserAccount();
         applicant1.setId(1L);
+
         applicant2 = new UserAccount();
         term = new Term(new SimpleDateFormat("yyyy-MM-ddHH:mm:ss.SSSX").parse("2020-08-0100:01:00.000+0000"), Season.FALL, 2020, true);
         degree = "test case";
@@ -73,16 +77,18 @@ public class ApplicationControllerTest {
         resumeFileName = "resume.pdf";
 
         applications = Arrays.asList(
-                new Application(0, applicant1, term, Department.ELEC, degree,  professors, status, gpa, resumeFileName),
-                new Application(1, applicant1, term, Department.SYSC, degree,  professors, status, gpa, resumeFileName),
-                new Application(2, applicant2, term, Department.SREE, degree,  professors, status, gpa, resumeFileName));
+                new Application(0, term, Department.ELEC, degree,  professors, status, gpa, resumeFileName),
+                new Application(1, term, Department.SYSC, degree,  professors, status, gpa, resumeFileName),
+                new Application(2, term, Department.SREE, degree,  professors, status, gpa, resumeFileName));
+        applicant1.setApplications(new HashSet<>(applications.subList(0, 2)));
+        applicant2.setApplications(new HashSet<>(Collections.singletonList(applications.get(2))));
 
-        when(repo.findAll()).thenReturn(applications);
-        when(repo.findByApplicant_id(applicant1.getId())).thenReturn(applications.subList(0, 2));
-        when(repo.findByApplicant_id(applicant2.getId())).thenReturn(Collections.singletonList(applications.get(2)));
+        when(applicationRepository.findAll()).thenReturn(applications);
+        when(userRepository.findById(applicant1.getId())).thenReturn(Optional.ofNullable(applicant1));
+        when(userRepository.findById(applicant2.getId())).thenReturn(Optional.ofNullable(applicant2));
         for(int i = 0; i < 3; i++) {
-            when(repo.findById((long) i)).thenReturn(Optional.of(applications.get(i)));
-            doNothing().when(repo).deleteById((long) i);
+            when(applicationRepository.findById((long) i)).thenReturn(Optional.of(applications.get(i)));
+            doNothing().when(applicationRepository).deleteById((long) i);
         }
     }
 
@@ -117,7 +123,7 @@ public class ApplicationControllerTest {
     public void testPostNewApplication() throws Exception {
         val result = mockMvc.perform(post("/application/create").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
-                        Application.builder().id(3).applicant(applicant2).department(Department.MAAE).build())))
+                        Application.builder().id(3).department(Department.MAAE).build())))
                 .andExpect(status().isOk())
                 .andReturn();
         assertTrue(result.getResponse().getContentAsString().contains("application successfully added"));
@@ -144,7 +150,7 @@ public class ApplicationControllerTest {
     public void testUpdateApplication() throws Exception {
         mockMvc.perform(post("/application/update").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
-                        Application.builder().applicant(applicant2).department(Department.MAAE).build())))
+                        Application.builder().department(Department.MAAE).build())))
                 .andExpect(status().isOk());
     }
 }

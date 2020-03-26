@@ -12,6 +12,5 @@ import java.util.List;
  * @author Madelyn
  */
 public interface ApplicationRepository extends CrudRepository<Application, Long> {
-    List<Application> findByApplicant_id(Long id);
     //TODO; make findBy professor (may be different because is part of a collection)
 }
