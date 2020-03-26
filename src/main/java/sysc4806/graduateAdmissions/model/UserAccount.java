@@ -1,11 +1,12 @@
 package sysc4806.graduateAdmissions.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.*;
+import javax.validation.constraints.Email;
+import java.util.Set;
+
 /**
  * Represents one of three possible users in the system (Student, Professor, or Admin)
  * Used to user details, credentials, and information.
@@ -16,15 +17,26 @@ import java.util.*;
 @AllArgsConstructor
 @Data
 @Entity
-public class User {
+@Builder
+public class UserAccount {
 
     @Id
-    @GeneratedValue
-    private long id;
+    @GeneratedValue(generator = "sequence-generator")
+    @GenericGenerator(
+            name = "sequence-generator",
+            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(name = "sequence_name", value = "user_sequence"),
+                    @org.hibernate.annotations.Parameter(name = "initial_value", value = "3"),
+                    @org.hibernate.annotations.Parameter(name = "increment_size", value = "1")
+            }
+    )
+    private Long id;
     private String firstName;
     private String lastName;
+    @Email
     private String email;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Role role;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Interest> interests;
@@ -41,7 +53,7 @@ public class User {
      * @param interest Array List interest contains the chosen interests of the user
      * @param application ArrayList application contains all applications of the user
      */
-    public User(String firstname, String lastname, String mail, Role r, Set<Interest> interest, Set<Application> application){
+    public UserAccount(String firstname, String lastname, String mail, Role r, Set<Interest> interest, Set<Application> application){
         this.firstName = firstname;
         this.lastName = lastname;
         this.email = mail;

@@ -1,15 +1,21 @@
 package sysc4806.graduateAdmissions.repositories;
 
 import org.springframework.data.repository.CrudRepository;
-import sysc4806.graduateAdmissions.model.User;
+import org.springframework.stereotype.Repository;
+import sysc4806.graduateAdmissions.model.UserAccount;
+import sysc4806.graduateAdmissions.model.Interest;
+import sysc4806.graduateAdmissions.model.Role;
 
 import java.util.List;
 
 /**
- * Used for persistent storage of User objects
+ * This repository will be used for persistent storage of Users
  *
- * @author luke
+ * @author Kevin Sun
  */
-public interface UserRepository extends CrudRepository<User, Long> {
-    List<User> findByEmail(String email);
+@Repository
+public interface UserRepository extends CrudRepository<UserAccount, Long> {
+    List<UserAccount> findByRole(Role role);
+    List<UserAccount> findByInterests(Interest interest);
+    List<UserAccount> findByEmail(String email);
 }
