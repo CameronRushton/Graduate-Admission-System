@@ -35,7 +35,7 @@ export class Login {
 		this.loginManager.login(id_token).then(response => {//the handler for login success
 			//load rest of the app
             response.json().then(user => {
-            	console.log(user);
+            	this.user = user;
             	console.log(user.role.roleName);
             	document.cookie = "userID="+user.id+";path=/;";
             	parent.aurelia.setRoot('app');
@@ -47,5 +47,9 @@ export class Login {
 					this.loginManager.logout();
 				})
 		 });
-    }
+	}
+	
+	getCurrentUser() {
+		return this.user;
+	}
 }
