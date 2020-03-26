@@ -1,5 +1,6 @@
 package sysc4806.graduateAdmissions.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -26,6 +27,7 @@ public class Term {
     private Boolean active;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date deadline;
     @Enumerated(EnumType.STRING)
     private Season season;

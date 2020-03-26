@@ -15,7 +15,6 @@ import sysc4806.graduateAdmissions.model.*;
 import sysc4806.graduateAdmissions.repositories.ApplicationRepository;
 
 import java.nio.charset.StandardCharsets;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -64,6 +63,7 @@ public class ApplicationControllerTest {
     @SneakyThrows
     void setUpMocks() {
         applicant1 = new User();
+        applicant1.setId(1);
         applicant2 = new User();
         term = new Term(new SimpleDateFormat("yyyy-MM-ddHH:mm:ss.SSSX").parse("2020-08-0100:01:00.000+0000"), Season.FALL, 2020, true);
         degree = "test case";
@@ -78,8 +78,8 @@ public class ApplicationControllerTest {
                 new Application(2, applicant2, term, Department.SREE, degree,  professors, status, gpa, resumeFileName));
 
         when(repo.findAll()).thenReturn(applications);
-        when(repo.findByApplicant(applicant1)).thenReturn(applications.subList(0, 2));
-        when(repo.findByApplicant(applicant2)).thenReturn(Collections.singletonList(applications.get(2)));
+        when(repo.findByApplicant_id(applicant1.getId())).thenReturn(applications.subList(0, 2));
+        when(repo.findByApplicant_id(applicant2.getId())).thenReturn(Collections.singletonList(applications.get(2)));
         for(int i = 0; i < 3; i++) {
             when(repo.findById((long) i)).thenReturn(Optional.of(applications.get(i)));
             doNothing().when(repo).deleteById((long) i);
@@ -107,7 +107,7 @@ public class ApplicationControllerTest {
     /**Test the retrieval of all applications listed under a particular applicant*/
     @Test
     public void testGetApplicationByApplicant() throws Exception {
-        this.mockMvc.perform(get("/application/applicant?applicant=applicant1"))
+        this.mockMvc.perform(get("/application/applicant?id="+applicant1.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().json(toJson(applications.subList(0, 2))));
     }

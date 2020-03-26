@@ -6,9 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sysc4806.graduateAdmissions.model.Application;
-import sysc4806.graduateAdmissions.model.User;
 import sysc4806.graduateAdmissions.repositories.ApplicationRepository;
-import sysc4806.graduateAdmissions.repositories.InterestRepository;
 
 /**
  * This controller specifies CRUD operations on the application class
@@ -38,12 +36,12 @@ public class ApplicationController {
     /**
      * get all Application objects as JSON that have a specified applicant
      *
-     * @param applicant the applicant that the applications belong to
+     * @param id the ID of applicant that the applications belong to
      * @return JSON containing the application(s)
      */
     @GetMapping("applicant")
-    public ResponseEntity getApplicationsOfApplicant(@RequestParam() User applicant) {
-        return ResponseEntity.status(HttpStatus.OK).body(repo.findByApplicant(applicant));
+    public ResponseEntity getApplicationsOfApplicant(@RequestParam() Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(repo.findByApplicant_id(id));
     }
 
     /**
