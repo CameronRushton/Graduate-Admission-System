@@ -9,6 +9,7 @@ import sysc4806.graduateAdmissions.model.Season;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -27,6 +28,6 @@ public class TermDTO {
     @NotNull
     @Enumerated(EnumType.STRING)
     private Season season;
-    @NotNull
+    @Min(message = "Year must be valid.", value = 0)
     private int year;
 }

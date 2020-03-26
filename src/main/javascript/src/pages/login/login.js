@@ -32,9 +32,20 @@ export class Login {
     	//send login token to server to authenticate
 		let id_token = googleUser.getAuthResponse().id_token;
 		let parent = this;
-		this.loginManager.login(id_token).then(response => {
+		this.loginManager.login(id_token).then(response => {//the handler for login success
 			//load rest of the app
-            parent.aurelia.setRoot('app');
-		});
+            response.json().then(user => {
+            	console.log(user);
+            	console.log(user.role.roleName);
+            	document.cookie = "userID="+user.id+";path=/;";
+            	parent.aurelia.setRoot('app');
+            });
+		}).catch(err => {//the handler for login rejection
+			err.text().then(
+				msg => {
+					alert(msg);
+					this.loginManager.logout();
+				})
+		 });
     }
 }

@@ -1,13 +1,14 @@
 import { inject, bindable, Aurelia } from 'aurelia-framework';
 import { Router } from "aurelia-router"
+import { LoginManager } from 'managers/login-manager';
 
-@inject(Router, Aurelia)
+@inject(Router, Aurelia, LoginManager)
 export class Header {
 
     @bindable scroll_position;
     @bindable scroll_fn;
 
-    constructor(router, aurelia) {
+    constructor(router, aurelia, loginManager) {
         this.router = router;
         this.router.routes.forEach((route, index) => {
             if (route.name === "home") {
@@ -17,7 +18,8 @@ export class Header {
             }
         })
         this.showNavOptions = false;
-        this.aurelia = aurelia
+        this.aurelia = aurelia;
+        this.loginManager = loginManager;
     }
 
     scroll_positionChanged(newValue, oldValue) {
@@ -26,16 +28,14 @@ export class Header {
         }
     }
 
-    onSignOut() {
-		let auth2 = gapi.auth2.getAuthInstance();
-		let parent = this;
-		auth2.signOut().then(function () {
-			console.log('User signed out.');
-			parent.aurelia.setRoot(PLATFORM.moduleName('pages/login/login'));
-		});
+	isSignedIn(){
+		//if the userID cookie is in the list of cookies, then we are signed in
+		return document.cookie.indexOf('userID=') !== -1;
 	}
 
-	isSignedIn(){
-		return true;
+	logout(){
+		//delete the cookie by setting it to a date in the past
+		document.cookie = "userID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+		this.loginManager.logout();
 	}
 }
