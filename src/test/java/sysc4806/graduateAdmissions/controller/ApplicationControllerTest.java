@@ -50,11 +50,11 @@ public class ApplicationControllerTest {
     private ApplicationRepository repo;
 
     private long ID;
-    private User applicant1;
-    private User applicant2;
+    private UserAccount applicant1;
+    private UserAccount applicant2;
     private Term term;
     private String degree;
-    private Set<User> professors;
+    private Set<UserAccount> professors;
     private Status status;
     private double gpa;
     private String resumeFileName;
@@ -62,9 +62,9 @@ public class ApplicationControllerTest {
     @BeforeEach
     @SneakyThrows
     void setUpMocks() {
-        applicant1 = new User();
-        applicant1.setId(1);
-        applicant2 = new User();
+        applicant1 = new UserAccount();
+        applicant1.setId(1L);
+        applicant2 = new UserAccount();
         term = new Term(new SimpleDateFormat("yyyy-MM-ddHH:mm:ss.SSSX").parse("2020-08-0100:01:00.000+0000"), Season.FALL, 2020, true);
         degree = "test case";
         status = Status.INCOMPLETE;
