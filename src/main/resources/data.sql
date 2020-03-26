@@ -67,8 +67,8 @@ INSERT INTO user_account_interests (user_account_id, interests_id) values
     (1, 4);
 
 INSERT INTO application (id, degree, department, gpa, resume_file_name, status, applicant_id, term_term_id) VALUES
-    (0, 'MaSc', 'SYSC', 4.0, 'resume.txt', 'submitted', 0, 0),
-    (1, 'MaSc', 'SYSC', 4.0, 'resume2.txt', 'submitted', 0, 1);
+    (0, 'MaSc', 'SYSC', 4.0, 'resume.txt', 'SUBMITTED', 0, 0),
+    (1, 'MaSc', 'SYSC', 4.0, 'resume2.txt', 'SUBMITTED', 0, 1);
 
 INSERT INTO application_professors (application_id, professors_id) VALUES
     (0, 1);
