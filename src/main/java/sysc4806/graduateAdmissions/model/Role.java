@@ -18,16 +18,16 @@ import java.util.*;
  * @author luke
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Role {
     //the primary key a role
     @Id
     private String roleName;
     //the privileges for the role
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @Builder.Default
     private Set<Privilege> privileges = new HashSet<>();
 

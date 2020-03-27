@@ -26,10 +26,6 @@ public class Application {
     @EqualsAndHashCode.Exclude
     private long id;
 
-    //The owner of the application
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private User applicant;
-
     //term that the application is for
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Term term;
@@ -43,7 +39,7 @@ public class Application {
     //Preferred professors. These will be the ones
     // to approve the application.
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<User> professors;
+    private Set<UserAccount> professors;
 
 
     //The status of the application, ie, is it incomplete,

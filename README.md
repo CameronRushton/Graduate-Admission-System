@@ -18,7 +18,23 @@ Kevin Sun
 The project is broken up into weekly sprints, each with their own Kanban board. These can be viewed on the repository's "Projects" tab, here: https://github.com/CameronRushton/Graduate-Admission-System/projects
 
 ## Project Status
-The project is in its [fourth sprint](https://github.com/CameronRushton/Graduate-Admission-System/projects/4). Rather than start new work, the focus for this week is completing all the work from previous sprints that have still not been completed. The project board created for this week contains all the issues that are not completed in previous sprints, so we can see how close we are to getting back on track.
+The project is in its [fifth and final sprint](https://github.com/CameronRushton/Graduate-Admission-System/projects/5). With lots of backend functionality now, the remaining web pages can be made for the system.
+
+## Login Details
+The system has three different roles for different system views: these are student, prof, and admin
+Each role has one userAccount in the database to show that it works. The details for logging in are below:
+
+### student account:
+email: GAS.student4806@gmail.com <br/>
+password: wB2G4GDz2D
+
+### professor account:
+email: GAS.prof4806@gmail.com <br/>
+password: 3HwRTrYQsc
+
+### admin account:
+email: GAS.staff4806@gmail.com <br/>
+password: jU4wAx3r4j
 
 ## Model Class Diagram
 ![UML Class Diagram](/diagrams/ClassDiagram.PNG)

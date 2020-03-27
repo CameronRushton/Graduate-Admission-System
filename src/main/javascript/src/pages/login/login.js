@@ -34,8 +34,12 @@ export class Login {
 		let parent = this;
 		this.loginManager.login(id_token).then(response => {//the handler for login success
 			//load rest of the app
-            parent.aurelia.setRoot('app');
-            response.text().then(role => {console.log(role)});
+            response.json().then(user => {
+            	console.log(user);
+            	console.log(user.role.roleName);
+            	document.cookie = "userID="+user.id+";path=/;";
+            	parent.aurelia.setRoot('app');
+            });
 		}).catch(err => {//the handler for login rejection
 			err.text().then(
 				msg => {

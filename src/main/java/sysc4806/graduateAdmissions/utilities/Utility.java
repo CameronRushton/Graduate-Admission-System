@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.var;
 
+import java.text.SimpleDateFormat;
+
 /**
  * class for utility functions that are useful for a number of
  * parts of the system, or useful for several test classes
@@ -22,6 +24,7 @@ public class Utility {
      */
     public static String toJson(Object o) throws JsonProcessingException {
         var mapper = new ObjectMapper();
+        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
         var ow = mapper.writer();
         return ow.writeValueAsString(o);
