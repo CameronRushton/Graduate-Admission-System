@@ -118,6 +118,7 @@ public class UserController {
      * @return ResponseEntity describing the outcome of the operation
      */
     @PutMapping
+    @CrossOrigin
     public ResponseEntity updateUser(@RequestBody UserAccount userAccount) {
         Optional<UserAccount> updatedUser = userManager.updateUser(userAccount);
         if (updatedUser.isPresent()) {

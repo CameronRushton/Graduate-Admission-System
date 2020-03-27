@@ -1,10 +1,7 @@
 @import "resources/components/header/header";
+@import "resources/components/spinner/spinner";
 @import "pages/home/home";
 @import "resources/css-utils";
-
-.red {
-  color: $red;
-}
 
 body {
   line-height: 24px;
@@ -19,4 +16,25 @@ body {
 
 a {
   text-decoration: none !important;
+}
+
+.btn-red {
+  color: $white;
+  background-color: $red;
+  border-color: darkred;
+}
+
+input {
+  &.disabled {
+    border: none;
+    box-shadow: none;
+    background-color: inherit !important;
+    cursor: default !important;
+  }
+}
+
+.flex {
+  display: flex;
+  justify-content: left;
+  align-items: center;
 }

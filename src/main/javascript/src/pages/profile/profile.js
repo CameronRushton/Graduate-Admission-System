@@ -10,21 +10,45 @@ export class Profile {
         this.router = router;
         this.authService = login;
         this.userManager = userManager;
-        this.scrollTop = 0;
+        this.isDisabled = true;
     }
 
     attached() {
-        this.getCurrentUser();
+        this.currentUserId = this.authService.getCurrentUser().id;
+        this.getUser();
     }
 
-    getCurrentUser() {
-        this.userManager.getUserByEmail().then(result => {
+    getUser() {
+        this.userManager.getUserById(this.currentUserId).then(result => {
             this.currentUser = result;
         }).catch(error => {
-            // TODO: Display a meaningful error message to the user to indicate something went wrong.
-            console.log('Error retrieving user info.');
-            console.log(error);
-        });
+            console.log("Unable to retrieve user with ID " + this.currentUserId);
+            // TODO: Alert popup
+        })
     }
 
+    saveUser() {
+        this.saving = true;
+        this.showSaveSuccess = false;
+        this.showSaveError = false;
+        let newUserInfo = {
+            id: this.currentUserId,
+            firstName: this.currentUser.firstName,
+            lastName: this.currentUser.lastName,
+            email: this.currentUser.email
+        }
+        this.userManager.updateUser(newUserInfo).then(result => {
+            this.saving = false;
+            this.showSaveSuccess = true;
+            this.isDisabled = true;
+        }).catch(error => {
+            this.saving = false;
+            this.showSaveError = true;
+            if (error.status === 500) {
+                this.errorMessage = "Unexpected error occurred."
+            } else {
+                this.errorMessage = "Failed to save user data."; //TODO: Replace with a message from the back end.
+            }
+        })
+    }
 }
