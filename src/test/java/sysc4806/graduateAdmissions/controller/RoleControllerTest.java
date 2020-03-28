@@ -61,6 +61,7 @@ public class RoleControllerTest {
         when(repository.findAll()).thenReturn(roles);
         when(repository.findByRoleName("banana")).thenReturn(Optional.of(roles.get(1)));
         when(repository.findByRoleName("apple")).thenReturn(Optional.of(roles.get(0)));
+        when(repository.existsByRoleName("apple")).thenReturn(true);
     }
 
     /* Test get roles without id */
