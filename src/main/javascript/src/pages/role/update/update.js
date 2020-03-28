@@ -4,7 +4,7 @@ import { RoleManager } from 'managers/role-manager';
 import { PrivilegeManager } from 'managers/privilege-manager';
 
 @inject(Router, RoleManager, PrivilegeManager)
-export class setRoleFormFields {
+export class updateRoleFormFields {
 
     constructor(router, roleManager, privilegeManager) {
         this.router = router;
@@ -18,6 +18,9 @@ export class setRoleFormFields {
     	this.privilegeManager.getPrivileges().then(response => {
     			this.privileges = response;
     		});
+    	this.roleManager.getRoles().then(response => {
+            	this.roles = response;
+            });
     }
 
 	submitHandler(name, selectedPrivileges){
@@ -25,6 +28,6 @@ export class setRoleFormFields {
 			roleName: name,
 			privileges: selectedPrivileges
 		}
-		this.roleManager.addRole(this.myRole).then(()=>{this.router.navigateToRoute("view roles")});
+		this.roleManager.updateRole(this.myRole).then(()=>{this.router.navigateToRoute("view roles")});
 	}
 }

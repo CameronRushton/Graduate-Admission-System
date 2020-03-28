@@ -4,7 +4,7 @@ import { RoleManager } from 'managers/role-manager';
 import { PrivilegeManager } from 'managers/privilege-manager';
 
 @inject(Router, RoleManager, PrivilegeManager)
-export class InterestView {
+export class RoleView {
 
     constructor(router, roleManager, privilegeManager) {
         this.router = router;
@@ -38,11 +38,7 @@ export class InterestView {
 		});
 	}
 
-	updateRole(roleName, privilegeChoices){
-		this.myRole = {
-			roleName: roleName,
-			privileges: privilegeChoices
-		}
-		this.roleManager.updateRole(this.myRole);
+	updateRole(){
+		this.router.navigateToRoute("view roles")
 	}
 }

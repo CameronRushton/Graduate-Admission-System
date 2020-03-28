@@ -8,6 +8,7 @@ import sysc4806.graduateAdmissions.model.Privilege;
 import sysc4806.graduateAdmissions.model.Role;
 import sysc4806.graduateAdmissions.repositories.RoleRepository;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -18,6 +19,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/roles/")
+@Transactional
 public class RoleController {
     @Autowired
     RoleRepository repository;
@@ -56,13 +58,11 @@ public class RoleController {
     @DeleteMapping("{name}")
     @CrossOrigin
     public ResponseEntity deleteRole(@PathVariable("name") String name) {
-        Optional<Role> role = repository.findByRoleName(name);
-        if(role.isPresent()){
-            repository.delete(role.get());
-            return ResponseEntity.ok(role.get().getRoleName() + " Role deleted");
-        } else{
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        if(repository.existsByRoleName(name)){
+            repository.deleteByRoleName(name);
+            return ResponseEntity.ok(name + " Role deleted");
         }
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
     /**
@@ -72,6 +72,7 @@ public class RoleController {
      * @return ResponseEntity describing the outcome of the operation
      */
     @PutMapping
+    @CrossOrigin
     public ResponseEntity updateRole(@Valid @RequestBody Role role){
         Optional<Role> oldRole = repository.findByRoleName(role.getRoleName());
         if(oldRole.isPresent()){
@@ -90,6 +91,7 @@ public class RoleController {
      * @return ResponseEntity describing the outcome of the operation
      */
     @PutMapping("privilege")
+    @CrossOrigin
     public ResponseEntity addRolePrivilege(@RequestParam String name, @Valid @RequestBody Privilege privilege){
         Optional<Role> role = repository.findByRoleName(name);
         if(role.isPresent()){
@@ -114,6 +116,7 @@ public class RoleController {
      * @return ResponseEntity describing the outcome of the operation
      */
     @DeleteMapping("privilege")
+    @CrossOrigin
     public ResponseEntity removeRolePrivilege(@RequestParam String name, @Valid @RequestBody Privilege privilege){
         Optional<Role> role = repository.findByRoleName(name);
         if(role.isPresent()){

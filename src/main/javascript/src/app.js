@@ -57,7 +57,7 @@ export class App {
 				show: false,
 				route: '/role/update',
 				name: 'update role',
-				moduleId: PLATFORM.moduleName('pages/role/create/create'),
+				moduleId: PLATFORM.moduleName('pages/role/update/update'),
 				title: "Update Role",
 			},
 			{
