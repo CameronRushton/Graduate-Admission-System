@@ -21,13 +21,6 @@ export class Login {
 		$("head").append("<meta name='google-signin-client_id' content='787575027862-t2vb0ae8ftk68nr9br9s4untp9e6t614.apps.googleusercontent.com'>");
     }
 
-    scrollFn() {
-        window.scrollTo({top: 0, behavior: 'smooth'});
-        document.getElementById("top").scrollIntoView({ 
-            behavior: 'smooth'
-        });
-    }
-
 	onSignIn(googleUser) {
     	//send login token to server to authenticate
 		let id_token = googleUser.getAuthResponse().id_token;
