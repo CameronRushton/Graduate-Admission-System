@@ -39,6 +39,18 @@ export class ApplicationView {
 			this.requested = response;
 			this.requested.forEach((application, index) => {
 				application.showDetails = false;
+				application.detailToggleId = application.id + "requested"
+				this.userManager.getUserByApplication(this.currentUser.id).then(response => {
+					application.applicant = response[0]
+			 	});
+            });
+		});
+
+		this.applicationManager.getApplicationsWithMatchingInterests(this.currentUser.id).then(response => {
+			this.matchingInterests = response;
+			this.matchingInterests.forEach((application, index) => {
+				application.showDetails = false;
+				application.detailToggleId = application.id + "similar-interest"
 				this.userManager.getUserByApplication(this.currentUser.id).then(response => {
 					application.applicant = response[0]
 			 	});
@@ -47,8 +59,9 @@ export class ApplicationView {
 	}
 
 	toggleDetails(id){
-		this.requested.forEach((application, index) => {
-			if(application.id === id){
+		let allApplications = this.requested.concat(this.matchingInterests);
+		allApplications.forEach((application, index) => {
+			if(application.detailToggleId === id){
 				application.showDetails = !application.showDetails;
 			}
 		});

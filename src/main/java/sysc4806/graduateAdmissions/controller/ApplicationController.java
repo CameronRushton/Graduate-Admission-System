@@ -2,13 +2,19 @@ package sysc4806.graduateAdmissions.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sysc4806.graduateAdmissions.model.Application;
+import sysc4806.graduateAdmissions.model.Interest;
+import sysc4806.graduateAdmissions.model.UserAccount;
 import sysc4806.graduateAdmissions.repositories.ApplicationRepository;
 import sysc4806.graduateAdmissions.repositories.UserRepository;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * This controller specifies CRUD operations on the application class
@@ -118,5 +124,25 @@ public class ApplicationController {
     @GetMapping("requested-prof")
     public ResponseEntity getApplicationsForRequestedProf(@RequestParam() Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(applicationRepository.findByProfessors_id(id));
+    }
+
+    /**
+     * get all Applications that match a user's interests
+     *
+     * @param id the ID the prof
+     * @return JSON containing the application(s)
+     */
+    @GetMapping("similar-interests")
+    public ResponseEntity getApplicationsWithMatchingInterests(@RequestParam() Long id) {
+        val profInterests = userRepository.findById(id).get().getInterests();
+        var students = new HashSet<UserAccount>();
+        for(Interest interest : profInterests)
+            students.addAll(userRepository.findByInterests(interest));
+
+        var applications = new ArrayList<Application>();
+        for(UserAccount student : students)
+            applications.addAll(student.getApplications());
+
+        return ResponseEntity.status(HttpStatus.OK).body(applications);
     }
 }

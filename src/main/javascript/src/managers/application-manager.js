@@ -35,4 +35,17 @@ export class ApplicationManager extends AbstractManager{
 		return this.httpClient.fetch(`/application/update/status`, options)
 			.then(this.handleError);
 	}
+
+	getApplicationsWithMatchingInterests(profId){
+		var options = {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json"
+			}
+		};
+
+		return this.httpClient.fetch(`/application/similar-interests?id=${profId}`, options)
+			.then(this.handleError)
+			.then(this.json);
+	}
 }
