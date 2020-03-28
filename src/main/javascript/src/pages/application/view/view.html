@@ -1,0 +1,17 @@
+<template>
+	<header scroll_position.bind="scrollTop" scroll_fn.bind="scrollFn"></header>
+	<section>
+		<div class="container">
+			<h1>Applications</h1>
+			<div if.bind="isStudent">
+				<p>Put your student application display here!</p>
+			</div>
+			<div if.bind="isProf">
+				<p>Put your prof application display here!</p>
+			</div>
+			<div if.bind="isAdmin">
+				<p>Put your admin application display here!</p>
+			</div>
+		</div>
+	</section>
+</template>

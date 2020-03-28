@@ -50,9 +50,9 @@ export class App {
 			},
 			{
 				show: true,
-				route: '#',
-				name: 'applications',
-				moduleId: PLATFORM.moduleName('pages/home/home'), //TODO
+				route: '/application/view',
+				name: 'view applications',
+				moduleId: PLATFORM.moduleName('pages/application/view/view'),
 				title: "Applications",
 				icon: "glyphicon-file"
 			},
