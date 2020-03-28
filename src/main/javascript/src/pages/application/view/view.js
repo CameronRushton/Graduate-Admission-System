@@ -68,7 +68,8 @@ export class ApplicationView {
 	}
 
 	setApplicationStatus(id, status){
-		this.requested.forEach((application, index) => {
+		let allApplications = this.requested.concat(this.matchingInterests);
+		allApplications.forEach((application, index) => {
 			if(application.id === id){
 				application.status = status;
 			}
