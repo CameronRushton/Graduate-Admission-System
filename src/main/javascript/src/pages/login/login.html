@@ -1,10 +1,11 @@
 <template>
   	<section class="login-background">
-		<div class="container">
-			<div class="card">
-				<h5>Carleton Graduate Admissions</h5>
-				<google-signin-button class="google-button" success.call="onSignIn(googleUser)"></google-signin-button>
-			</div>
-		</div>
+
+				<img class="carleton-logo" src="/assets/images/carleton-header-logo.png" alt="" />
+				<div class="login-card">
+					<div class="title">Carleton Graduate Admissions</div>
+					<google-signin-button class="google-button" success.call="onSignIn(googleUser)"></google-signin-button>
+				</div>
+
   	</section>
 </template>

@@ -1,24 +1,22 @@
 import { inject } from 'aurelia-framework';
 import { Router } from "aurelia-router"
-import { DepartmentManager } from 'managers/department-manager';
+import { Login } from 'pages/login/login';
 
-@inject(Router, DepartmentManager)
+@inject(Router, Login)
 export class Home {
     
-    constructor(router, departmentManager) {
+    constructor(router, login) {
         this.router = router;
-        this.departmentManager = departmentManager;
-        this.scrollTop = 0;
-
-        this.departments = [];
-
+        this.authService = login;
     }
 
     attached() {
-        this.getDepartments();
+        this.currentUser = this.authService.getCurrentUser();
+        console.log(this.currentUser);
+        this.isAdmin = this.currentUser.role.roleName === "ADMIN";
     }
 
-    getDepartments() {
+    getInterests() {
         this.departmentManager.getDepartments().then(result => {
             this.departments = result;
         }).catch(error => {
@@ -27,23 +25,4 @@ export class Home {
             console.log(error);
         });
     }
-
-    handleScroll(event) {
-        // We should be able to see the scroll position in the console when we uncomment the following line
-        // console.log(this.scrollTop)
-    }
-
-    scrollToId(id) {
-        document.getElementById(id).scrollIntoView({ 
-            behavior: 'smooth'
-        });
-    }
-
-    scrollToTopFn() {
-        window.scrollTo({top: 0, behavior: 'smooth'});
-        document.getElementById("top").scrollIntoView({ 
-            behavior: 'smooth'
-        });
-    }
-
 }
