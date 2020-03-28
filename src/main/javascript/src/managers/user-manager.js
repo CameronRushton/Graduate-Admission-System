@@ -170,4 +170,17 @@ export class UserManager extends AbstractManager {
             .then(this.handleError)
             .then(this.json);
     }
+
+    getUserByApplication(application_id) {
+		var options = {
+		method: "GET",
+			headers: {
+			"Content-Type": "application/json"
+			},
+		};
+
+		return this.httpClient.fetch(`/users/applicant?id=${application_id}`, options)
+			.then(this.handleError)
+			.then(this.json);
+	}
 }

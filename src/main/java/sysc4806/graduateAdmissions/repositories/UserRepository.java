@@ -18,4 +18,5 @@ public interface UserRepository extends CrudRepository<UserAccount, Long> {
     List<UserAccount> findByRole(Role role);
     List<UserAccount> findByInterests(Interest interest);
     List<UserAccount> findByEmail(String email);
+    List<UserAccount> findByApplications_id(long id);
 }

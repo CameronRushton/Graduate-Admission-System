@@ -1,5 +1,6 @@
 package sysc4806.graduateAdmissions.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import sysc4806.graduateAdmissions.repositories.UserRepository;
  * @author Madelyn
  */
 @RestController
+@Slf4j
 @RequestMapping("/application/")
 public class ApplicationController {
     @Autowired
@@ -91,5 +93,16 @@ public class ApplicationController {
     public ResponseEntity updateApplication(@RequestBody Application application) {
         applicationRepository.save(application);
         return ResponseEntity.ok("application successfully updated");
+    }
+
+    /**
+     * get all Applications that request a specific prof
+     *
+     * @param id the ID the prof
+     * @return JSON containing the application(s)
+     */
+    @GetMapping("requested-prof")
+    public ResponseEntity getApplicationsForRequestedProf(@RequestParam() Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(applicationRepository.findByProfessors_id(id));
     }
 }
