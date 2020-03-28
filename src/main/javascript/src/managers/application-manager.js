@@ -20,4 +20,19 @@ export class ApplicationManager extends AbstractManager{
 			.then(this.handleError)
 			.then(this.json);
 	}
+
+	updateApplication(application) {
+		delete application["applicant"];
+		delete application["showDetails"];
+
+		var options = {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(application)
+		};
+		return this.httpClient.fetch(`/application/update/status`, options)
+			.then(this.handleError);
+	}
 }

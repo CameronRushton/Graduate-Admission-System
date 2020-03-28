@@ -59,6 +59,7 @@ export class ApplicationView {
 			if(application.id === id){
 				application.status = status;
 			}
+			this.applicationManager.updateApplication(application);
 		});
 	}
 

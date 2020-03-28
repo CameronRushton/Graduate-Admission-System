@@ -96,6 +96,20 @@ public class ApplicationController {
     }
 
     /**
+     * updates an Application  status in the database
+     *
+     * @param application the Application to update
+     * @return a message signifying the operation's success
+     */
+    @PostMapping("update/status")
+    public ResponseEntity updateApplicationStatus(@RequestBody Application application) {
+        val appInDB = applicationRepository.findById(application.getId()).get();
+        appInDB.setStatus(application.getStatus());
+        applicationRepository.save(appInDB);
+        return ResponseEntity.ok("application successfully updated");
+    }
+
+    /**
      * get all Applications that request a specific prof
      *
      * @param id the ID the prof
