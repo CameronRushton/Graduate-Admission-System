@@ -3,6 +3,12 @@
 	<section>
 		<div class="container">
 			<h1>Applications</h1>
+			<p>Filter by:
+				<select value.bind="statusFilter" change.trigger="getApplicationsByFilter()">
+					<option value="all">ALL</option>
+					<option repeat.for="status of statuses" value="${status}">${status}</option>
+				</select>
+			</p>
 			<div if.bind="isStudent">
 				<p>Put your student application display here!</p>
 			</div>
@@ -15,14 +21,15 @@
 							${application.applicant.firstName} ${application.applicant.lastName}: ${application.degree} in ${application.department}
 							<button click.delegate="toggleDetails(application.detailToggleId)">details</button>
 						</p>
+						<p>Status: ${application.status}</p>
 						<p>
 							<button click.delegate="setApplicationStatus(application.id, 'APPROVEDFUNDING')">approve with funding</button>
 							<button click.delegate="setApplicationStatus(application.id, 'APPROVEDNOFUNDING')">approve no funding</button>
 							<button click.delegate="setApplicationStatus(application.id, 'DENIED')">deny</button>
+							<button click.delegate="setApplicationStatus(application.id, 'SUBMITTED')">undo choice</button>
 						</p>
 						<div show.bind="application.showDetails">
 							<p>Term: ${application.term.season} ${application.term.year}</p>
-							<p>Status: ${application.status}</p>
 							<p>GPA: ${application.gpa}</p>
 							<p>Resume: ${application.resumeFileName}</p>
 							<p>Interests:</p>
@@ -41,14 +48,15 @@
 							${application.applicant.firstName} ${application.applicant.lastName}: ${application.degree} in ${application.department}
 							<button click.delegate="toggleDetails(application.detailToggleId)">details</button>
 						</p>
+						<p>Status: ${application.status}</p>
 						<p>
 							<button click.delegate="setApplicationStatus(application.id, 'APPROVEDFUNDING')">approve with funding</button>
 							<button click.delegate="setApplicationStatus(application.id, 'APPROVEDNOFUNDING')">approve no funding</button>
 							<button click.delegate="setApplicationStatus(application.id, 'DENIED')">deny</button>
+							<button click.delegate="setApplicationStatus(application.id, 'SUBMITTED')">undo choice</button>
 						</p>
 						<div show.bind="application.showDetails">
 							<p>Term: ${application.term.season} ${application.term.year}</p>
-							<p>Status: ${application.status}</p>
 							<p>GPA: ${application.gpa}</p>
 							<p>Resume: ${application.resumeFileName}</p>
 							<p>Interests:</p>

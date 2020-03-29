@@ -3,15 +3,17 @@ import { Router } from "aurelia-router";
 import { Login } from 'pages/login/login';
 import { ApplicationManager } from 'managers/application-manager';
 import { UserManager } from 'managers/user-manager';
+import { StatusManager } from 'managers/status-manager';
 
-@inject(Router, Login, ApplicationManager, UserManager)
+@inject(Router, Login, ApplicationManager, UserManager, StatusManager)
 export class ApplicationView {
-    constructor(router, login, applicationManager, userManager) {
+    constructor(router, login, applicationManager, userManager, statusManager) {
         this.router = router;
         this.scrollTop = 0;
         this.login = login;
         this.applicationManager = applicationManager;
         this.userManager = userManager;
+        this.statusManager = statusManager;
 	}
 
     attached() {
@@ -35,26 +37,10 @@ export class ApplicationView {
 	}
 
 	professorAttached(){
-		this.applicationManager.getApplicationsForProf(this.currentUser.id).then(response => {
-			this.requested = response;
-			this.requested.forEach((application, index) => {
-				application.showDetails = false;
-				application.detailToggleId = application.id + "requested"
-				this.userManager.getUserByApplication(this.currentUser.id).then(response => {
-					application.applicant = response[0]
-			 	});
-            });
-		});
-
-		this.applicationManager.getApplicationsWithMatchingInterests(this.currentUser.id).then(response => {
-			this.matchingInterests = response;
-			this.matchingInterests.forEach((application, index) => {
-				application.showDetails = false;
-				application.detailToggleId = application.id + "similar-interest"
-				this.userManager.getUserByApplication(this.currentUser.id).then(response => {
-					application.applicant = response[0]
-			 	});
-            });
+		this.statusFilter = "all";
+		this.getApplicationsByFilter();
+		this.statusManager.getStatuses().then(response => {
+			this.statuses = response;
 		});
 	}
 
@@ -74,6 +60,37 @@ export class ApplicationView {
 				application.status = status;
 			}
 			this.applicationManager.updateApplication(application);
+		});
+	}
+
+	getApplicationsByFilter(){
+		let filter = this.statusFilter
+
+		this.applicationManager.getApplicationsForProf(this.currentUser.id).then(response => {
+			this.requested = [];
+			response.forEach((application, index) => {
+				application.showDetails = false;
+				application.detailToggleId = application.id + "requested"
+				this.userManager.getUserByApplication(this.currentUser.id).then(response => {
+					application.applicant = response[0];
+					if(filter === "all" || application.status === filter){
+						this.requested.push(application);
+					}
+				});
+			});
+		});
+		this.applicationManager.getApplicationsWithMatchingInterests(this.currentUser.id).then(response => {
+			this.matchingInterests = [];
+			response.forEach((application, index) => {
+				application.showDetails = false;
+				application.detailToggleId = application.id + "similar-interest"
+				this.userManager.getUserByApplication(this.currentUser.id).then(response => {
+					application.applicant = response[0];
+					if(filter === "all" || application.status === filter){
+						this.matchingInterests.push(application);
+					}
+				});
+			});
 		});
 	}
 
