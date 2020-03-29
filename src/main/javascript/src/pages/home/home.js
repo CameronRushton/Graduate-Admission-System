@@ -14,6 +14,7 @@ export class Home {
         this.currentUser = this.authService.getCurrentUser();
         console.log(this.currentUser);
         this.isAdmin = this.currentUser.role.roleName === "ADMIN";
+        this.isProf = this.currentUser.role.roleName === "PROFESSOR";
     }
 
     getInterests() {
