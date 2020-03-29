@@ -1,0 +1,24 @@
+<template>
+	<header scroll_position.bind="scrollTop" scroll_fn.bind="scrollFn"></header>
+	<section>
+		<div class="container">
+			<h1>Update Role</h1>
+			<p>Role to be updated: ${role.roleName}</p>
+			<select value.bind="selectedRole">
+				<option repeat.for="role of roles" model.bind="role">
+					${role.roleName}
+				</option>
+			</select>
+			<br>
+			<label>Privileges:</label>
+			<select multiple value.bind="selectedPrivileges">
+				<option repeat.for="privilege of privileges" model.bind="privilege">
+					Target: ${privilege.target}, Owner: ${privilege.owner}, Operation: ${privilege.operation}
+				</option>
+			</select>
+			<p>
+				<button click.delegate="submitHandler(selectedRole.roleName, selectedPrivileges)">Update</button>
+			</p>
+		</div>
+	</section>
+</template>

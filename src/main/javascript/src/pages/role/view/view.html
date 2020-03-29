@@ -1,0 +1,24 @@
+<template>
+	<header scroll_position.bind="scrollTop" scroll_fn.bind="scrollFn"></header>
+	<section>
+		<div class="container">
+			<h1>Roles</h1>
+			<div repeat.for="role of roles">
+				${role.roleName}
+				<label>Privileges:</label>
+				<ul>
+					<li repeat.for="privilege of role.privileges">
+						Target: ${privilege.target}, Owner: ${privilege.owner}, Operation: ${privilege.operation}
+						<br>
+					</li>
+				</ul>
+				<p>
+					<button class="deleteButton" click.delegate="deleteRole(role.roleName)">Delete</button>
+				</p>
+			</div>
+			<a route-href="route: update role">Update a Role</a> <br>
+			<a route-href="route: add role">Add new Role</a> <br>
+			<a route-href="route: add privilege">Add new Privilege</a> <br>
+		</div>
+	</section>
+</template>

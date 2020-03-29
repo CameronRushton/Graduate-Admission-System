@@ -1,5 +1,6 @@
 package sysc4806.graduateAdmissions.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,7 @@ public class PrivilegeControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private PrivilegeRepository repository;
+    private String privilegeJson;
 
     @BeforeEach
     void setUpMocks() {
@@ -54,18 +56,23 @@ public class PrivilegeControllerTest {
                 Privilege.builder().id(1003L).operation(Operation.READ).target(Target.APPLICATION).owner(Owner.SELF).build(),
                 Privilege.builder().id(1004L).operation(Operation.UPDATE).target(Target.INTEREST).owner(Owner.ALL_STUDENTS).build());
 
-        when(repository.findAll()).thenReturn(privileges);
-        when(repository.findById(1000L)).thenReturn(Optional.of(privileges.get(0)));
-        when(repository.findByOwner(Owner.ALL_PROFS)).thenReturn(privileges.subList(0, 2));
-        when(repository.findById(1004L)).thenReturn(Optional.of(privileges.get(4)));
         when(repository.findByTarget(Target.TERM)).thenReturn(Collections.singletonList(privileges.get(2)));
         when(repository.findByOperation(Operation.UPDATE)).thenReturn(Collections.singletonList(privileges.get(4)));
+
+        try {
+            privilegeJson = toJson(
+                    Privilege.builder().operation(Operation.READ).owner(Owner.SELF).target(Target.USER).build());
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     /* Test get privilege with id */
     @Test
     public void testGetPrivilegeById() throws Exception {
-        this.mockMvc.perform(get("/privilege/?id=1000"))
+        when(repository.findById(1000L)).thenReturn(Optional.of(privileges.get(0)));
+
+        this.mockMvc.perform(get("/privileges/?id=1000"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(toJson(privileges.get(0))));
     }
@@ -73,7 +80,9 @@ public class PrivilegeControllerTest {
     /* Test get privilege without id */
     @Test
     public void testGetAllPrivileges() throws Exception {
-        this.mockMvc.perform(get("/privilege/"))
+        when(repository.findAll()).thenReturn(privileges);
+
+        this.mockMvc.perform(get("/privileges/"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(toJson(privileges)));
     }
@@ -81,7 +90,9 @@ public class PrivilegeControllerTest {
     /* Test getPrivilegeOfOwner */
     @Test
     public void testGetPrivilegeByOwner() throws Exception {
-        this.mockMvc.perform(get("/privilege/owner?owner=ALL_PROFS"))
+        when(repository.findByOwner(Owner.ALL_PROFS)).thenReturn(privileges.subList(0, 2));
+
+        this.mockMvc.perform(get("/privileges/owner?owner=ALL_PROFS"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(toJson(privileges.subList(0, 2))));
     }
@@ -89,7 +100,7 @@ public class PrivilegeControllerTest {
     /* Test getPrivilegeOfTarget */
     @Test
     public void testGetPrivilegeByTarget() throws Exception {
-        this.mockMvc.perform(get("/privilege/target?target=TERM"))
+        this.mockMvc.perform(get("/privileges/target?target=TERM"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(toJson(Collections.singletonList(privileges.get(2)))));
     }
@@ -97,7 +108,9 @@ public class PrivilegeControllerTest {
     /* Test getPrivilegeOfOperation */
     @Test
     public void testGetPrivilegeByOperation() throws Exception {
-        this.mockMvc.perform(get("/privilege/operation?operation=UPDATE"))
+        when(repository.findById(1004L)).thenReturn(Optional.of(privileges.get(4)));
+
+        this.mockMvc.perform(get("/privileges/operation?operation=UPDATE"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(toJson(Collections.singletonList(privileges.get(4)))));
     }
@@ -105,10 +118,9 @@ public class PrivilegeControllerTest {
     /* Test createPrivilege */
     @Test
     public void testCreatePrivilege() throws Exception {
-        MvcResult result = mockMvc.perform(post("/privilege/create").contentType(APPLICATION_JSON_UTF8)
-                .content(toJson(
-                        Privilege.builder().operation(Operation.READ).owner(Owner.SELF).target(Target.USER).build())))
-                .andExpect(status().isOk())
+        MvcResult result = mockMvc.perform(post("/privileges/").contentType(APPLICATION_JSON_UTF8)
+                .content(privilegeJson))
+                .andExpect(status().isCreated())
                 .andReturn();
         assertTrue(result.getResponse().getContentAsString().contains("Privilege added"));
     }
@@ -116,7 +128,9 @@ public class PrivilegeControllerTest {
     /* Test delete existing Privilege */
     @Test
     public void testDeletePrivilege() throws Exception {
-        MvcResult result = mockMvc.perform(delete("/privilege/{id}", "1004"))
+        when(repository.findById(1004L)).thenReturn(Optional.of(privileges.get(4)));
+
+        MvcResult result = mockMvc.perform(delete("/privileges/{id}", "1004"))
                 .andExpect(status().isOk())
                 .andReturn();
         assertTrue(result.getResponse().getContentAsString().contains("privilege with id 1004 deleted"));
@@ -125,16 +139,26 @@ public class PrivilegeControllerTest {
     /* Test delete Privilege that does not exist */
     @Test
     public void testDeletePrivilegeDoesNotExist() throws Exception {
-        mockMvc.perform(delete("/privilege/{id}", "999"))
+        mockMvc.perform(delete("/privileges/{id}", "999"))
                 .andExpect(status().isNotFound());
     }
 
     /* Test update Privilege */
     @Test
     public void testUpdatePrivilege() throws Exception {
-        mockMvc.perform(post("/privilege/update").contentType(APPLICATION_JSON_UTF8)
+        when(repository.findById(1000L)).thenReturn(Optional.of(privileges.get(0)));
+
+        mockMvc.perform(put("/privileges/").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
-                        Privilege.builder().owner(Owner.SELF).target(Target.APPLICATION).build())))
+                        Privilege.builder().id(1000L).operation(Operation.READ).target(Target.APPLICATION).owner(Owner.ALL_STUDENTS).build())))
                 .andExpect(status().isOk());
+    }
+
+    /* Test update Privilege with an invalid Privilege*/
+    @Test
+    public void testUpdatePrivilegeInvalidPrivilege() throws Exception {
+        mockMvc.perform(put("/privileges/").contentType(APPLICATION_JSON_UTF8)
+                .content("{\"id\":0,\"operation\":\"BANANA\",\"target\":\"APPLE\",\"owner\":\"LEMON\"}"))
+                .andExpect(status().isBadRequest());
     }
 }

@@ -1,0 +1,23 @@
+<template>
+	<header scroll_position.bind="scrollTop" scroll_fn.bind="scrollFn"></header>
+	<section>
+		<div class="container">
+			<h1>Create Privilege</h1>
+			<label>Target:</label>
+			<select value.bind="$targetChoice">
+				<option repeat.for="target of targets" value="${target}">${target}</option>
+			</select>
+			<label>Owner:</label>
+			<select value.bind="$ownerChoice">
+				<option repeat.for="owner of owners" value="${owner}">${owner}</option>
+			</select>
+			<label>Operation:</label>
+			<select value.bind="$operationChoice">
+				<option repeat.for="operation of operations" value="${operation}">${operation}</option>
+			</select>
+			<p>
+				<button click.delegate="submitHandler($privilegeID, $targetChoice, $ownerChoice, $operationChoice)">Submit</button>
+			</p>
+		</div>
+	</section>
+</template>
