@@ -101,7 +101,7 @@
 
               </div>
             </div>
-            <div class="panel">
+            <div if.bind="!isProf" class="panel">
               <div class="tiled-container">
                 <a class="how-to-apply" href="https://graduate.carleton.ca/apply-online/" target="_blank">
                   <span class="glyphicon glyphicon-send send-icon"></span>
@@ -109,7 +109,7 @@
                 </a>
               </div>
             </div>
-            <div class="panel">
+            <div if.bind="!isProf" class="panel">
               <div class="tiled-container">
                 <a class="how-to-apply" route-href="route: home" target="_blank">
                   <span class="glyphicon glyphicon-list-alt send-icon"></span>
