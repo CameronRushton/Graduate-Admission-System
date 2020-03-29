@@ -1,0 +1,14 @@
+footer {
+	position: absolute;
+	bottom: 0;
+	height: 100px;
+	background-color: #ebebeb;
+	width: 100%;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+
+	.logo {
+		width: 300px;
+	}
+}
