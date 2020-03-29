@@ -101,7 +101,7 @@ public class RoleController {
                 repository.save(r);
                 return ResponseEntity.ok("added privilege " + privilege.getId() + " too Role");
             } else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("role already has this privilege");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("role already has this privilege");
             }
         } else {
             return new ResponseEntity(HttpStatus.NOT_FOUND);

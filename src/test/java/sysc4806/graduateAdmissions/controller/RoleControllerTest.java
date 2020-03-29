@@ -44,7 +44,7 @@ public class RoleControllerTest {
     private Privilege duplicatePrivilege;
 
     @BeforeEach
-    void setUpMocks() {
+    void setUp() {
         duplicatePrivilege = Privilege.builder().id(1001L).owner(Owner.SELF).target(Target.USER).operation(Operation.UPDATE).build();
         Set<Privilege> studentPrivileges = new HashSet<>();
         studentPrivileges.add(Privilege.builder().id(1000L).owner(Owner.ALL_STUDENTS).target(Target.TERM).operation(Operation.DELETE).build());
@@ -57,16 +57,13 @@ public class RoleControllerTest {
                 Role.builder().roleName("apple").privileges(studentPrivileges).build(),
                 Role.builder().roleName("banana").privileges(adminPrivileges).build(),
                 Role.builder().roleName("orange").privileges(professorPrivileges).build());
-
-        when(repository.findAll()).thenReturn(roles);
-        when(repository.findByRoleName("banana")).thenReturn(Optional.of(roles.get(1)));
-        when(repository.findByRoleName("apple")).thenReturn(Optional.of(roles.get(0)));
-        when(repository.existsByRoleName("apple")).thenReturn(true);
     }
 
     /* Test get roles without id */
     @Test
     public void testGetAllRoles() throws Exception {
+        when(repository.findAll()).thenReturn(roles);
+
         this.mockMvc.perform(get("/roles/"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(toJson(roles)));
@@ -75,6 +72,8 @@ public class RoleControllerTest {
     /* Test getting role by name */
     @Test
     public void testGetRoleByName() throws Exception {
+        when(repository.findByRoleName("banana")).thenReturn(Optional.of(roles.get(1)));
+
         this.mockMvc.perform(get("/roles/?name=banana"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(toJson(roles.get(1))));
@@ -96,6 +95,8 @@ public class RoleControllerTest {
     /* Test delete existing Role */
     @Test
     public void testDeleteRole() throws Exception {
+        when(repository.existsByRoleName("apple")).thenReturn(true);
+
         MvcResult result = mockMvc.perform(delete("/roles/{name}", "apple"))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -112,6 +113,8 @@ public class RoleControllerTest {
     /* Test update Role */
     @Test
     public void testUpdateRole() throws Exception {
+        when(repository.findByRoleName("apple")).thenReturn(Optional.of(roles.get(0)));
+
         mockMvc.perform(put("/roles/").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
                         Role.builder().roleName("apple").build())))
@@ -121,6 +124,8 @@ public class RoleControllerTest {
     /* Test add privilege too Role */
     @Test
     public void testAddPrivilegeToRole() throws Exception {
+        when(repository.findByRoleName("banana")).thenReturn(Optional.of(roles.get(1)));
+
         MvcResult result = mockMvc.perform(put("/roles/privilege?name=banana").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
                         Privilege.builder().owner(Owner.ALL_STUDENTS).target(Target.APPLICATION).operation(Operation.UPDATE).id(1001L).build())))
@@ -132,9 +137,11 @@ public class RoleControllerTest {
     /* Test add duplicate privilege too Role */
     @Test
     public void testAddDuplicatePrivilegeToRole() throws Exception {
+        when(repository.findByRoleName("banana")).thenReturn(Optional.of(roles.get(1)));
+
         MvcResult result = mockMvc.perform(put("/roles/privilege?name=banana").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(duplicatePrivilege)))
-                .andExpect(status().is5xxServerError())
+                .andExpect(status().isNotFound())
                 .andReturn();
         assertTrue(result.getResponse().getContentAsString().contains("role already has this privilege"));
     }
@@ -142,6 +149,8 @@ public class RoleControllerTest {
     /* Test remove privilege from Role */
     @Test
     public void testRemovePrivilegeFromRole() throws Exception {
+        when(repository.findByRoleName("banana")).thenReturn(Optional.of(roles.get(1)));
+
         MvcResult result = mockMvc.perform(delete("/roles/privilege?name=banana").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
                         Privilege.builder().owner(Owner.ALL_STUDENTS).target(Target.APPLICATION).operation(Operation.UPDATE).id(1001L).build())))
