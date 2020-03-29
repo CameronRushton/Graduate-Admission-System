@@ -1,13 +1,17 @@
 import { inject } from 'aurelia-framework';
 import { Router } from "aurelia-router";
 import { Login } from 'pages/login/login';
+import { ApplicationManager } from 'managers/application-manager';
+import { UserManager } from 'managers/user-manager';
 
-@inject(Router, Login)
+@inject(Router, Login, ApplicationManager, UserManager)
 export class ApplicationView {
-    constructor(router, login) {
+    constructor(router, login, applicationManager, userManager) {
         this.router = router;
         this.scrollTop = 0;
         this.login = login;
+        this.applicationManager = applicationManager;
+        this.userManager = userManager;
 	}
 
     attached() {
@@ -31,10 +35,51 @@ export class ApplicationView {
 	}
 
 	professorAttached(){
-		console.log("put your prof attached function here!");
+		this.applicationManager.getApplicationsForProf(this.currentUser.id).then(response => {
+			this.requested = response;
+			this.requested.forEach((application, index) => {
+				application.showDetails = false;
+				application.detailToggleId = application.id + "requested"
+				this.userManager.getUserByApplication(this.currentUser.id).then(response => {
+					application.applicant = response[0]
+			 	});
+            });
+		});
+
+		this.applicationManager.getApplicationsWithMatchingInterests(this.currentUser.id).then(response => {
+			this.matchingInterests = response;
+			this.matchingInterests.forEach((application, index) => {
+				application.showDetails = false;
+				application.detailToggleId = application.id + "similar-interest"
+				this.userManager.getUserByApplication(this.currentUser.id).then(response => {
+					application.applicant = response[0]
+			 	});
+            });
+		});
+	}
+
+	toggleDetails(id){
+		let allApplications = this.requested.concat(this.matchingInterests);
+		allApplications.forEach((application, index) => {
+			if(application.detailToggleId === id){
+				application.showDetails = !application.showDetails;
+			}
+		});
+	}
+
+	setApplicationStatus(id, status){
+		let allApplications = this.requested.concat(this.matchingInterests);
+		allApplications.forEach((application, index) => {
+			if(application.id === id){
+				application.status = status;
+			}
+			this.applicationManager.updateApplication(application);
+		});
 	}
 
 	adminAttached(){
 		console.log("put your admin attached function here!");
 	}
+
+
 }

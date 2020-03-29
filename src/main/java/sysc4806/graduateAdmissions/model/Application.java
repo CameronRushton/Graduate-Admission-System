@@ -27,7 +27,7 @@ public class Application {
     private long id;
 
     //term that the application is for
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Term term;
 
     //department and degree type. We may want to make
@@ -38,7 +38,7 @@ public class Application {
 
     //Preferred professors. These will be the ones
     // to approve the application.
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private Set<UserAccount> professors;
 
 

@@ -7,7 +7,57 @@
 				<p>Put your student application display here!</p>
 			</div>
 			<div if.bind="isProf">
-				<p>Put your prof application display here!</p>
+				<h4>Applications Requesting you as Supervisor</h4>
+				<p if.bind="requested.length === 0">No applications at this time</p>
+				<div  if.bind="requested.length > 0">
+					<div repeat.for="application of requested">
+						<p>
+							${application.applicant.firstName} ${application.applicant.lastName}: ${application.degree} in ${application.department}
+							<button click.delegate="toggleDetails(application.detailToggleId)">details</button>
+						</p>
+						<p>
+							<button click.delegate="setApplicationStatus(application.id, 'APPROVEDFUNDING')">approve with funding</button>
+							<button click.delegate="setApplicationStatus(application.id, 'APPROVEDNOFUNDING')">approve no funding</button>
+							<button click.delegate="setApplicationStatus(application.id, 'DENIED')">deny</button>
+						</p>
+						<div show.bind="application.showDetails">
+							<p>Term: ${application.term.season} ${application.term.year}</p>
+							<p>Status: ${application.status}</p>
+							<p>GPA: ${application.gpa}</p>
+							<p>Resume: ${application.resumeFileName}</p>
+							<p>Interests:</p>
+							<ul>
+								<li repeat.for="interest of application.applicant.interests">${interest.keyword}
+							</ul>
+						</div>
+					</div>
+				</div>
+				<br/>
+				<h4>Applications With Similar Interests</h4>
+				<p if.bind="matchingInterests.length === 0">No applications at this time</p>
+				<div  if.bind="matchingInterests.length > 0">
+					<div repeat.for="application of matchingInterests">
+						<p>
+							${application.applicant.firstName} ${application.applicant.lastName}: ${application.degree} in ${application.department}
+							<button click.delegate="toggleDetails(application.detailToggleId)">details</button>
+						</p>
+						<p>
+							<button click.delegate="setApplicationStatus(application.id, 'APPROVEDFUNDING')">approve with funding</button>
+							<button click.delegate="setApplicationStatus(application.id, 'APPROVEDNOFUNDING')">approve no funding</button>
+							<button click.delegate="setApplicationStatus(application.id, 'DENIED')">deny</button>
+						</p>
+						<div show.bind="application.showDetails">
+							<p>Term: ${application.term.season} ${application.term.year}</p>
+							<p>Status: ${application.status}</p>
+							<p>GPA: ${application.gpa}</p>
+							<p>Resume: ${application.resumeFileName}</p>
+							<p>Interests:</p>
+							<ul>
+								<li repeat.for="interest of application.applicant.interests">${interest.keyword}
+							</ul>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div if.bind="isAdmin">
 				<p>Put your admin application display here!</p>

@@ -45,9 +45,9 @@ INSERT INTO role_privileges (role_role_name, privileges_id) VALUES
     ('ADMIN', 14);
 
 INSERT INTO user_account (id, email, first_name, last_name, role_role_name) VALUES
-    (0, 'gas.student4806@gmail.com', 'Parker', 'Peter', 'STUDENT'),
-    (1, 'gas.prof4806@gmail.com', 'Wayne', 'Bruce', 'PROFESSOR'),
-    (2, 'gas.staff4806@gmail.com', 'Kent', 'Clark', 'ADMIN');
+    (0, 'gas.student4806@gmail.com', 'Peter', 'Parker', 'STUDENT'),
+    (1, 'gas.prof4806@gmail.com', 'Bruce', 'Wayne', 'PROFESSOR'),
+    (2, 'gas.staff4806@gmail.com', 'Clark', 'Kent', 'ADMIN');
 
 INSERT INTO term (term_id, active, deadline, season, year) VALUES
     (0, true, '2020-08-15', 'FALL', 2020),
@@ -74,4 +74,5 @@ INSERT INTO application_professors (application_id, professors_id) VALUES
     (0, 1);
 
 INSERT INTO user_account_applications (user_account_id, applications_id) VALUES
-    (0, 0);
+    (0, 0),
+    (0, 1);
