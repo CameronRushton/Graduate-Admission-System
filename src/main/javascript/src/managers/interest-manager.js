@@ -67,17 +67,6 @@ export class InterestManager extends AbstractManager{
     		.then(this.handleError);
    	}
 
-   	getUpdateInterestFormInfo(id) {
-		var options = {
-        method: "GET",
-        headers: {
-        	"Content-Type": "application/json"
-        	},
-       	};
-  		return this.httpClient.fetch(`/interest/update?id=${id}`, options)
-     		.then(this.handleError);
-    }
-
      updateInterest(interest) {
      	var options = {
         	method: "POST",

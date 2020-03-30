@@ -17,7 +17,7 @@
               <div class="list-group">
                 <div class="accordion">
 
-                  <div  if.bind="interests.length > 0" repeat.for="interest of interests" class="card">
+                  <div if.bind="currentUser.interests.length > 0" repeat.for="interest of currentUser.interests" class="card">
                     <div class="card-header clickable grey-hover" click.trigger="interest.collapse = !interest.collapse">
                       <h2 class="mb-0">
                         <div class="interest-name">
@@ -26,22 +26,25 @@
                       </h2>
                     </div>
                     <div show.bind="interest.collapse">
-                      <div class="card-body">
+                      <div if.bind="interest.description" class="card-body">
                         ${interest.description}
+                      </div>
+                      <div else class="pt-3 pb-3 pl-3">
+                        No description available.
                       </div>
                     </div>
                   </div>
 
                   <div else class="card">
-                    <div class="card-header clickable grey-hover">
-                      <h2 class="mb-0">
-                        <div class="centered-interest-name">
-                          <a route-href="route: home"> <!-- TODO: This goes to edit interests -->
+                    <a route-href="route: profile">
+                      <div class="card-header clickable grey-hover">
+                        <h2 class="mb-0">
+                          <div class="centered-interest-name">
                             <span class="glyphicon glyphicon-plus plus light-grey"></span>
-                          </a>
-                        </div>
-                      </h2>
-                    </div>
+                          </div>
+                        </h2>
+                      </div>
+                    </a>
                   </div>    
                 </div>
               </div>
@@ -64,7 +67,7 @@
                           <h4>
                             ${currentUser.firstName} ${currentUser.lastName}
                           </h4>
-                          <button type="button" class="btn btn-red">Edit Interests</button>
+                          <button type="button" class="btn btn-red" click.delegate="navigateToRoute('profile')">Edit Interests</button>
                         </div>
                       </div>
                     </a>
