@@ -60,7 +60,7 @@
                                     <span show.bind="showSaveError" class="glyphicon glyphicon-remove red">${errorMessage}</span>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div if.bind="!isAdmin" class="col-md-6">
                                 <div class="panel">
                                     <div class="panel-heading">
                                         AREAS OF INTEREST
@@ -96,11 +96,8 @@
                         </div>
 
                     </div>
-                    <div class="panel-footer">
-
-                    </div>
                 </div>
-                <div class="panel">
+                <div if.bind="!isAdmin" class="panel">
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-6">
@@ -143,7 +140,7 @@
                         </span> -->
                         <button class="btn btn-red" click.delegate="addInterest()">
                             Add
-                        </button>
+                        </button>  
                     </div>
                 </div>
 

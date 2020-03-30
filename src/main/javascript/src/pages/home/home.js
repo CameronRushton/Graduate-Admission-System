@@ -13,6 +13,8 @@ export class Home {
     }
 
     attached() {
+        this.isAdmin = this.authService.getCurrentUser().role.roleName === "ADMIN";
+        this.isProf = this.authService.getCurrentUser().role.roleName === "PROFESSOR";
         this.currentUserId = this.authService.getCurrentUser().id;
         this.getUser();
     }
@@ -21,8 +23,6 @@ export class Home {
         this.userManager.getUserById(this.currentUserId).then(result => {
             this.currentUser = result;
             console.log(this.currentUser);
-            this.isAdmin = this.currentUser.role.roleName === "ADMIN";
-            this.isProf = this.currentUser.role.roleName === "PROFESSOR";
         }).catch(error => {
             console.log("Unable to retrieve user with ID " + this.currentUserId);
             // TODO: Alert popup

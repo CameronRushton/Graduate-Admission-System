@@ -25,6 +25,7 @@ export class Profile {
 
     attached() {
         this.currentUserId = this.authService.getCurrentUser().id;
+        this.isAdmin = this.authService.getCurrentUser().role.roleName === "ADMIN";
         this.getUser();
         Promise.all([
             this.departmentManager.getDepartments(),
