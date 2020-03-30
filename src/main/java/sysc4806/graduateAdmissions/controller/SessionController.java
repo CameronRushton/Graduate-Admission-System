@@ -1,6 +1,5 @@
 package sysc4806.graduateAdmissions.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.HttpTransport;
@@ -24,8 +23,6 @@ import sysc4806.graduateAdmissions.utilities.Utility;
 
 import java.util.Arrays;
 import java.util.Collections;
-
-import static sysc4806.graduateAdmissions.utilities.Utility.toJson;
 
 /**
  * This controller handles the creation and deletion of sessions in the system
@@ -52,19 +49,16 @@ public class SessionController {
      * @return OK if the token is valid, otherwise UNAUTHORIZED
      */
     @PostMapping("login")
-    public ResponseEntity<String> authenticateLogin(@RequestBody String loginDetails) {
+    public ResponseEntity authenticateLogin(@RequestBody String loginDetails) {
         val payload = verifyToken(loginDetails);
         if(payload != null) {
             try {
                 val user = isValidUserEmail(payload.getEmail());
-                val sessionId = createNewSession(user);
-                log.info(payload.getEmail() + " signing in with session id" + sessionId);
-                return new ResponseEntity<>(toJson(user), HttpStatus.OK);
+                val session = createNewSession(user);
+                log.info(payload.getEmail() + " signing in with session id" + session.getId());
+                return new ResponseEntity(session, HttpStatus.OK);
             } catch (InvalidLoginException e) {
                 log.info(payload.getEmail() + " is not a valid email in the user database");
-                return new ResponseEntity<>("Login failed: " + e.getMessage(), HttpStatus.UNAUTHORIZED);
-            } catch (JsonProcessingException e){
-                log.info("failed to parse user to json");
                 return new ResponseEntity<>("Login failed: " + e.getMessage(), HttpStatus.UNAUTHORIZED);
             }
         } else {
@@ -119,7 +113,7 @@ public class SessionController {
      *
      * @param user the user to create the session for
      */
-    private String createNewSession(UserAccount user) {
+    private Session createNewSession(UserAccount user) {
         /*users shouldn't have more than one session at a time, so first we remove
         any existing sessions for the user*/
         val currentUserSessions = sessionRepository.findByUser(user);
@@ -133,8 +127,9 @@ public class SessionController {
             newSessionId = Utility.generateRandom64CharacterString();
         }while(!sessionRepository.findById(newSessionId).isEmpty());
 
-        sessionRepository.save(new Session(newSessionId, user));
-        return newSessionId;
+        val session = new Session(newSessionId, user);
+        sessionRepository.save(session);
+        return session;
     }
 }
 

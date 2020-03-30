@@ -26,13 +26,14 @@ export class Login {
 		let id_token = googleUser.getAuthResponse().id_token;
 		let parent = this;
 		this.loginManager.login(id_token).then(response => {//the handler for login success
-			//load rest of the app
-            response.json().then(user => {
-            	this.user = user;
-            	console.log(user.role.roleName);
-            	document.cookie = "userID="+user.id+";path=/;";
-            	parent.aurelia.setRoot('app');
-            });
+			//create session cookie and load rest of app
+			response.json().then(content => {
+				this.user = content.user;
+				console.log(this.user.role.roleName);
+				parent.aurelia.setRoot('app');
+				document.cookie = "userID="+content.user.id+";path=/;"; //if no one id actually using this, we can remove it
+				document.cookie = "sessionID="+content.id+";path=/;";
+			});
 		}).catch(err => {//the handler for login rejection
 			err.text().then(
 				msg => {

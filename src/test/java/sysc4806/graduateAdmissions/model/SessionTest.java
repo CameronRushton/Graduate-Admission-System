@@ -14,13 +14,13 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class SessionTest {
     Session session1, session2;
-    User user1, user2;
+    UserAccount user1, user2;
     String id1, id2;
 
     @BeforeEach
     void setUp() {
-        user1 = new User("Luke","Skywalker", "email", new Role(), new HashSet<>(), new HashSet<>());
-        user2 = new User("Darth","Vader", "email", new Role(), new HashSet<>(), new HashSet<>());
+        user1 = new UserAccount("Luke","Skywalker", "email", new Role(), new HashSet<>(), new HashSet<>());
+        user2 = new UserAccount("Darth","Vader", "email", new Role(), new HashSet<>(), new HashSet<>());
         id1 = "mario";
         id2 = "luigi";
         session1 = new Session(id1, user1);
