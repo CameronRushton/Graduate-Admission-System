@@ -115,6 +115,7 @@ public class UserController {
      * @return ResponseEntity describing the outcome of the operation
      */
     @DeleteMapping("{id}")
+    @CrossOrigin
     public ResponseEntity deleteUser(@PathVariable("id") Long id){
         Optional<UserAccount> user = repository.findById(id);
         if(user.isPresent()){

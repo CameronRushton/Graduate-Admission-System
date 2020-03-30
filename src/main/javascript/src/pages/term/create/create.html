@@ -1,0 +1,24 @@
+<template>
+	<header scroll_position.bind="scrollTop" scroll_fn.bind="scrollFn"></header>
+	<section>
+		<div class="container">
+			<h1>Create Term</h1>
+			<p>year: <input type="number" value.bind="year"/></p>
+			<p>Deadline: <input type="date" value.bind="deadline"/></p>
+			<label>Season:</label>
+			<select value.bind="season">
+				<option repeat.for="season of seasons" value="${season}">${season}</option>
+			</select>
+			<label>Active:</label>
+			<select value.bind="active">
+				<option value="Null">Select...</option>
+				<option value="true">yes</option>
+				<option value="false">no</option>
+			</select>
+			<p>
+				<button click.delegate="submitHandler(termId, active, deadline, season, year)">Submit</button>
+			</p>
+		</div>
+	</section>
+</template>
+

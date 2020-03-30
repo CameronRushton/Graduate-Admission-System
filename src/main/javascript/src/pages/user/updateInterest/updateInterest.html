@@ -1,0 +1,24 @@
+<template>
+	<header scroll_position.bind="scrollTop" scroll_fn.bind="scrollFn"></header>
+	<section>
+		<div class="container">
+			<h1>Update User's Interest</h1>
+			<br>
+			<select value.bind="selectedUser">
+				<option model.bind="null">Select...</option>
+				<option repeat.for="user of users" model.bind="user">
+					${user.firstName} ${user.lastName}
+				</option>
+			</select>
+			<label>Interests:</label>
+			<select multiple value.bind="selectedInterests">
+				<option repeat.for="interest of interests" model.bind="interest">
+					${interest.keyword}
+				</option>
+			</select>
+			<p>
+				<button click.delegate="submitHandler(selectedUser.id, selectedUser.firstName, selectedUser.lastName, selectedUser.email, selectedUser.role, selectedInterests, selectedUser.applications)">Update</button>
+			</p>
+		</div>
+	</section>
+</template>

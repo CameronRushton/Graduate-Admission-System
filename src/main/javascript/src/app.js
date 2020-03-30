@@ -41,7 +41,7 @@ export class App {
 				title: "Update Interest",
 			},
 			{
-				show: true,
+				show: false,
 				route: '/role/view',
 				name: 'view roles',
 				moduleId: PLATFORM.moduleName('pages/role/view/view'),
@@ -99,6 +99,41 @@ export class App {
 				moduleId: PLATFORM.moduleName('pages/login/login'),
 				title: "Login",
 			},
+			{
+				show: false,
+				route: '/term/update',
+				name: 'update term',
+				moduleId: PLATFORM.moduleName('pages/term/update/update'),
+				title: "Update Term"
+			},
+			{
+				show: false,
+				route: '/term/create',
+				name: 'create term',
+				moduleId: PLATFORM.moduleName('pages/term/create/create'),
+				title: "Create Term"
+			},
+			{
+				show: false,
+				route: '/user/create',
+				name: 'create user',
+				moduleId: PLATFORM.moduleName('pages/user/create/create'),
+				title: "Create User"
+			},
+			{
+				show: false,
+				route: '/user/update',
+				name: 'update user',
+				moduleId: PLATFORM.moduleName('pages/user/update/update'),
+				title: "Update User"
+			},
+			{
+				show: false,
+				route: '/user/updateInterest',
+				name: 'update user interest',
+				moduleId: PLATFORM.moduleName('pages/user/updateInterest/updateInterest'),
+				title: "Update User Interest"
+			}
 		]);
 	}
 
