@@ -4,12 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sysc4806.graduateAdmissions.model.Operation;
-import sysc4806.graduateAdmissions.model.Owner;
-import sysc4806.graduateAdmissions.model.Privilege;
-import sysc4806.graduateAdmissions.model.Target;
+import sysc4806.graduateAdmissions.model.*;
 import sysc4806.graduateAdmissions.repositories.PrivilegeRepository;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 /**
@@ -18,7 +16,7 @@ import java.util.Optional;
  * @author Eric
  */
 @RestController
-@RequestMapping("/privilege/")
+@RequestMapping("/privileges/")
 public class PrivilegeController {
     @Autowired
     private PrivilegeRepository repository;
@@ -29,7 +27,7 @@ public class PrivilegeController {
      * @param id optional to return only Privilege with specified id
      * @return JSON containing the requested Privilege(s)
      */
-    @GetMapping("")
+    @GetMapping()
     public ResponseEntity getPrivilege(@RequestParam(required=false) Long id) {
         if(id == null)
             return ResponseEntity.status(HttpStatus.OK).body(repository.findAll());
@@ -66,7 +64,7 @@ public class PrivilegeController {
      * @return JSON containing the Privilege(s)
      */
     @GetMapping("operation")
-    public ResponseEntity getPrivilegeOfOperation(@RequestParam()Operation operation){
+    public ResponseEntity getPrivilegeOfOperation(@RequestParam() Operation operation){
         return ResponseEntity.status(HttpStatus.OK).body(repository.findByOperation(operation));
     }
 
@@ -76,10 +74,10 @@ public class PrivilegeController {
      * @param privilege the Privilege to be created
      * @return ResponseEntity describing the outcome of the operation
      */
-    @PostMapping("create")
-    public ResponseEntity createPrivilege(@RequestBody Privilege privilege){
+    @PostMapping
+    public ResponseEntity createPrivilege(@Valid @RequestBody Privilege privilege){
         repository.save(privilege);
-        return ResponseEntity.ok("Privilege added");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Privilege added");
     }
 
     /**
@@ -106,10 +104,15 @@ public class PrivilegeController {
      * @param privilege the Privilege to be updated
      * @return ResponseEntity describing the outcome of the operation
      */
-    @PostMapping("update")
-    public ResponseEntity updatePrivilege(@RequestBody Privilege privilege){
-        repository.save(privilege);
-        return ResponseEntity.ok("privilege with id " + privilege.getId() + " updated");
+    @PutMapping
+    public ResponseEntity updatePrivilege(@Valid @RequestBody Privilege privilege){
+        Optional<Privilege> oldPrivilege = repository.findById(privilege.getId());
+        if(oldPrivilege.isPresent()){
+            repository.save(privilege);
+            return ResponseEntity.ok("Privilege updated");
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 
 }

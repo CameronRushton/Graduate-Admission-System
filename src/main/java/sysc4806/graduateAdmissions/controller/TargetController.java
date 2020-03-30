@@ -19,7 +19,7 @@ public class TargetController {
      *
      * @return JSON containing every Target
      */
-    @GetMapping("/targets/")
+    @GetMapping("/targets")
     public ResponseEntity getTargets() {
         return ResponseEntity.status(HttpStatus.OK).body(Target.values());
     }

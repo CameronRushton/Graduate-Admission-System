@@ -1,18 +1,153 @@
 <template>
   <header scroll_position.bind="scrollTop" scroll_fn.bind="scrollFn"></header>
-  <div class="scroll-cover" scrolltop.bind="scrollTop" scroll.trigger="handleScroll($event) & throttle">
-    <section>
-      <div class="container">
-        <h1>Departments Example</h1>
-          <custom-table columns.to-view="['Name']" items.bind="departments">
-              <template replace-part="row">
-                <td>
-                  ${item}
-                </td>
-              </template>
-          </custom-table>
+  <section class="container">
+    <div if.bind="!isAdmin" class="row">
+
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <h1 class="accordion-title">My Areas of Interest</h1>
+                  </div>
+                </div>
+              </div>
+              <div class="list-group">
+                <div class="accordion">
+
+                  <div  if.bind="interests.length > 0" repeat.for="interest of interests" class="card">
+                    <div class="card-header clickable grey-hover" click.trigger="interest.collapse = !interest.collapse">
+                      <h2 class="mb-0">
+                        <div class="interest-name">
+                          ${interest.keyword}
+                        </div>
+                      </h2>
+                    </div>
+                    <div show.bind="interest.collapse">
+                      <div class="card-body">
+                        ${interest.description}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div else class="card">
+                    <div class="card-header clickable grey-hover">
+                      <h2 class="mb-0">
+                        <div class="centered-interest-name">
+                          <a route-href="route: home"> <!-- TODO: This goes to edit interests -->
+                            <span class="glyphicon glyphicon-plus plus light-grey"></span>
+                          </a>
+                        </div>
+                      </h2>
+                    </div>
+                  </div>    
+                </div>
+              </div>
+
+            </div>
+          </div>
         </div>
       </div>
-    </section>
-  </div>
+
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel">
+              <div class="list-group">
+                <div>
+                  <div class="cu-card profile">
+                    <a>
+                      <div class="card-head">
+                        <div class="cu-card-details">
+                          <h4>
+                            ${currentUser.firstName} ${currentUser.lastName}
+                          </h4>
+                          <button type="button" class="btn btn-red">Edit Interests</button>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="list-group-links">
+                    <div class="cu-card-grid_top">
+                      <a class="cu-card-grid clickable grey-hover" href="https://housing.carleton.ca/" target="_blank">
+                        <div class="cu-card-grid_content">
+                          <div class="grid-text">Residence</div>
+                          <span class="grid-icon glyphicon glyphicon-new-window"></span>
+                        </div>
+                      </a>
+                      <a class="cu-card-grid clickable grey-hover" href="https://graduate.carleton.ca/financial-assistance/cost-and-fees/" target="_blank">
+                        <div class="cu-card-grid_content">
+                          <div class="grid-text">Costs & Scholarships</div>
+                          <span class="grid-icon glyphicon glyphicon-new-window"></span>
+                        </div>
+                      </a>
+                    </div>
+                    <a class="cu-card-grid clickable grey-hover" href="https://carleton.ca/co-op/" target="_blank">
+                      <div class="cu-card-grid_content">
+                        <div class="grid-text">Co-op</div>
+                        <span class="grid-icon glyphicon glyphicon-new-window"></span>
+                      </div>
+                    </a>
+                    <a class="cu-card-grid clickable grey-hover" href="http://athletics.carleton.ca/" target="_blank">
+                      <div class="cu-card-grid_content">
+                        <div class="grid-text">Athletics</div>
+                        <span class="grid-icon glyphicon glyphicon-new-window"></span>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div if.bind="!isProf" class="panel">
+              <div class="tiled-container">
+                <a class="how-to-apply" href="https://graduate.carleton.ca/apply-online/" target="_blank">
+                  <span class="glyphicon glyphicon-send send-icon"></span>
+                  <div class="apply-text">HOW TO APPLY</div>
+                </a>
+              </div>
+            </div>
+            <div if.bind="!isProf" class="panel">
+              <div class="tiled-container">
+                <a class="how-to-apply" route-href="route: home" target="_blank">
+                  <span class="glyphicon glyphicon-list-alt send-icon"></span>
+                  <div class="apply-text">APPLY NOW</div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div else>
+      <div class="row">
+        
+        <div class="col-md-6">
+          <div class="panel">
+            <div class="tiled-container">
+              <a class="how-to-apply" route-href="route: home"> <!-- TODO: This goes to the edit users panel -->
+                <span class="glyphicon glyphicon-user send-icon"></span>
+                <div class="apply-text">EDIT USERS</div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="panel">
+            <div class="tiled-container">
+              <a class="how-to-apply" route-href="route: home"> <!-- TODO: This goes to the admin panel -->
+                <span class="glyphicon glyphicon-calendar send-icon"></span>
+                <div class="apply-text">EDIT TERMS</div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
 </template>

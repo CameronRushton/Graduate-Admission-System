@@ -1,0 +1,103 @@
+<template>
+    <header></header>
+    <section class="container">
+        <div class="page-header">
+            <h1>
+                MY PROFILE
+            </h1>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        PERSONAL DETAILS
+                                    </div>
+                                    <div class="table-container table-responsive">
+                                        <table class="table">
+                                            <thead></thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="col ">First Name</th>
+                                                    <td scope="row">
+                                                        <input class="form-control ${isDisabled? 'disabled' : ''}" disabled.bind="isDisabled" 
+                                                        value.bind="currentUser.firstName" size="32"></input>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="col">Last Name</th>
+                                                    <td scope="row">
+                                                        <input class="form-control ${isDisabled? 'disabled' : ''}" disabled.bind="isDisabled" 
+                                                        value.bind="currentUser.lastName" size="32"></input>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="col">Email</th>
+                                                    <td scope="row">
+                                                        <input type="email" class="form-control ${isDisabled? 'disabled' : ''}" disabled.bind="isDisabled" 
+                                                        value.bind="currentUser.email"></input>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="flex">
+                                    <button class="btn btn-red" click.trigger="isDisabled = !isDisabled">
+                                        <span if.bind="isDisabled">Edit</span>
+                                        <span else class="glyphicon glyphicon-lock"></span>
+                                    </button>
+                                    <span if.bind="saving">
+                                        <spinner></spinner>
+                                    </span>
+                                    <button else class="btn btn-red ml-1" click.delegate="saveUser()">
+                                        Save
+                                    </button>
+                                    <span show.bind="showSaveSuccess" class="glyphicon glyphicon-ok green">Saved</span>
+                                    <span show.bind="showSaveError" class="glyphicon glyphicon-remove red">${errorMessage}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        AREAS OF INTEREST
+                                    </div>
+                                    <div class="table-container table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">
+                                                        Programs
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr repeat.for="interest of currentUser.interests">
+                                                    <td scope="row">
+                                                        ${interest.keyword}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <button class="btn btn-red" route-href="route: home"> <!-- TODO: Go to interest editing page -->
+                                    Edit
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="panel-footer">
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+</template>

@@ -7,6 +7,7 @@ import lombok.val;
 import lombok.var;
 
 import java.util.Random;
+import java.text.SimpleDateFormat;
 
 /**
  * class for utility functions that are useful for a number of
@@ -24,6 +25,7 @@ public class Utility {
      */
     public static String toJson(Object o) throws JsonProcessingException {
         var mapper = new ObjectMapper();
+        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
         mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
         var ow = mapper.writer();
         return ow.writeValueAsString(o);

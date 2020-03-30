@@ -7,3 +7,110 @@
     overflow: auto;
     z-index: 0;
 }
+
+.interest-card {
+    background-color: $white;
+    height: 200px;
+}
+.card-header {
+    background-color: $white;
+    .interest-name {
+        font-size: 20px;
+        color: $dark-grey;
+    }
+}
+.accordion-title {
+    font-size: x-large;
+    padding-bottom: 0px;
+}
+
+.cu-card {
+    padding-top: 20px;
+    margin: 0 0 20px;
+    background-color: rgba(214,224,226,.2);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-border-top-right-radius: 3px;
+    border-top-right-radius: 3px;
+    -webkit-border-top-left-radius: 3px;
+    border-top-left-radius: 3px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.profile {
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+    text-align: center;
+    background-color: #fff;
+    .card-head {
+        background: linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)),url("/assets/images/cu-portal-bg.jpg");
+        background-size: cover;
+        height: 175px;
+        .cu-card-details {
+            color: $white;
+            padding-top: 40px;
+            z-index: 100;
+            display: block;
+        }
+    }
+}
+.cu-card-grid_top {
+    border-bottom: 1px solid #efefef;
+}
+.cu-card-grid {
+    position: relative;
+    width: 49%;
+    display: inline-block;
+    background-color: #fff;
+}
+.list-group-links a {
+    font-weight: 400;
+    color: #555 !important;
+    font-size: 12px;
+}
+.cu-card-grid_content {
+    display: flex;
+    padding: 15px 5px;
+    text-align: center;
+    justify-content: center;
+    .grid-text {
+        font-size: 12px;
+        font-weight: bold;
+    }
+    .grid-icon {
+        font-size: 10px;
+        padding-top: 1px;
+        padding-left: 5px;
+    }
+}
+
+.how-to-apply:hover {
+    background-color: darkred;
+}
+.how-to-apply {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 150px;
+    color: white !important;
+    background-color: $red;
+    .send-icon {
+        margin-bottom: auto;
+        margin-top: 30px;
+        font-size: 42px;
+    }
+    .apply-text {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: auto;
+    }
+}
+
+.centered-interest-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  

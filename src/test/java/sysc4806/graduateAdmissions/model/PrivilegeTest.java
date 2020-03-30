@@ -20,17 +20,18 @@ class PrivilegeTest {
 
     @BeforeEach
     public void setUp(){
-        privilege = Privilege.builder().build();
+        privilege = Privilege.builder().owner(Owner.SELF).operation(Operation.READ).target(Target.USER).build();
     }
 
     /**Test to ensure default values of fields of a Privilege are correct*/
     @Test
     public void testNoArgsConstructor(){
-        assertNotNull(privilege);
-        assertNull(privilege.getOperation());
-        assertNull(privilege.getOwner());
-        assertNull(privilege.getTarget());
-        assertEquals(0, privilege.getId());
+        Privilege noArgsPrivilege = new Privilege();
+        assertNotNull(noArgsPrivilege);
+        assertNull(noArgsPrivilege.getOperation());
+        assertNull(noArgsPrivilege.getOwner());
+        assertNull(noArgsPrivilege.getTarget());
+        assertNotNull(noArgsPrivilege.getId());
     }
 
     /**Test to ensure that the all args constructor correctly sets fields*/

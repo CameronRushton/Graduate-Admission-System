@@ -1,5 +1,6 @@
 package sysc4806.graduateAdmissions.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.HttpTransport;
@@ -8,9 +9,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,14 +17,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sysc4806.graduateAdmissions.model.Session;
-import sysc4806.graduateAdmissions.model.User;
 import sysc4806.graduateAdmissions.repositories.SessionRepository;
+import sysc4806.graduateAdmissions.model.UserAccount;
 import sysc4806.graduateAdmissions.repositories.UserRepository;
 import sysc4806.graduateAdmissions.utilities.Utility;
 
-import javax.servlet.http.Cookie;
 import java.util.Arrays;
 import java.util.Collections;
+
+import static sysc4806.graduateAdmissions.utilities.Utility.toJson;
 
 /**
  * This controller handles the creation and deletion of sessions in the system
@@ -59,11 +59,12 @@ public class SessionController {
                 val user = isValidUserEmail(payload.getEmail());
                 val sessionId = createNewSession(user);
                 log.info(payload.getEmail() + " signing in with session id" + sessionId);
-                HttpHeaders headers = new HttpHeaders();
-                headers.add("Set-Cookie","sessionID="+sessionId+"; Max-Age=3600; Path=/; HttpOnly");
-                return new ResponseEntity<>(user.getRole().getRoleName(), headers, HttpStatus.OK);
+                return new ResponseEntity<>(toJson(user), HttpStatus.OK);
             } catch (InvalidLoginException e) {
                 log.info(payload.getEmail() + " is not a valid email in the user database");
+                return new ResponseEntity<>("Login failed: " + e.getMessage(), HttpStatus.UNAUTHORIZED);
+            } catch (JsonProcessingException e){
+                log.info("failed to parse user to json");
                 return new ResponseEntity<>("Login failed: " + e.getMessage(), HttpStatus.UNAUTHORIZED);
             }
         } else {
@@ -102,7 +103,7 @@ public class SessionController {
      * @return the USer object containing the passed email
      * @throws InvalidLoginException when there are 0 or multiple users with the email address.
      */
-    private User isValidUserEmail(String email) throws InvalidLoginException {
+    private UserAccount isValidUserEmail(String email) throws InvalidLoginException {
         val usersMatchingEmail = userRepository.findByEmail(email);
         if(usersMatchingEmail.size() == 1){
             return usersMatchingEmail.get(0);
@@ -118,7 +119,7 @@ public class SessionController {
      *
      * @param user the user to create the session for
      */
-    private String createNewSession(User user) {
+    private String createNewSession(UserAccount user) {
         /*users shouldn't have more than one session at a time, so first we remove
         any existing sessions for the user*/
         val currentUserSessions = sessionRepository.findByUser(user);
