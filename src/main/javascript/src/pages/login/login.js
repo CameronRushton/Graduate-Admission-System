@@ -32,7 +32,6 @@ export class Login {
 				console.log(this.user.role.roleName);
 				parent.aurelia.setRoot('app');
 				document.cookie = "userID="+content.user.id+";path=/;"; //if no one id actually using this, we can remove it
-				document.cookie = "sessionID="+content.id+";path=/;";
 			});
 		}).catch(err => {//the handler for login rejection
 			err.text().then(
