@@ -54,11 +54,6 @@ class InterestControllerTest {
                 Interest.builder().id(2).department(Department.SYSC).keyword("machine_learning").build(),
                 Interest.builder().id(3).department(Department.MAAE).keyword("gears").build(),
                 Interest.builder().id(4).department(Department.SREE).keyword("grilled_cheese").build());
-
-        for(int i = 0; i <= 4; i++) {
-            when(repo.findById((long) i)).thenReturn(Optional.of(interests.get(i)));
-
-        }
     }
 
     /**Test the retrieval of all interests*/
@@ -105,6 +100,7 @@ class InterestControllerTest {
     /**Test the deletion of an Interest object via delete*/
     @Test
     public void testDeleteInterest() throws Exception {
+        when(repo.findById(3L)).thenReturn(Optional.of(interests.get(3)));
         doNothing().when(repo).deleteById(3L);
         val result = mockMvc.perform(delete("/interest/{id}", "3"))
                 .andExpect(status().isOk())
