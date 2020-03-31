@@ -60,7 +60,7 @@
                                     <span show.bind="showSaveError" class="glyphicon glyphicon-remove red">${errorMessage}</span>
                                 </div>
                             </div>
-                            <div if.bind="!isAdmin" class="col-md-6">
+                            <div if.bind="userRole !== 'ADMIN'" class="col-md-6">
                                 <div class="panel">
                                     <div class="panel-heading">
                                         AREAS OF INTEREST
@@ -97,13 +97,13 @@
 
                     </div>
                 </div>
-                <div if.bind="!isAdmin" class="panel">
+                <div if.bind="userRole !== 'ADMIN'" class="panel">
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="panel">
                                     <div class="panel-heading">
-                                        ADD AN INTEREST
+                                        ${userRole === 'STUDENT'? 'ADD':'CREATE'} AN INTEREST
                                     </div>
                                     <div class="panel-body">
 
@@ -122,11 +122,16 @@
                                                 <label>
                                                     Keyword
                                                 </label>
-                                                <select class="form-control" value.bind="selectedKeyword">
-                                                    <option repeat.for="interest of filteredInterests">${interest.keyword}</option>
-                                                </select>
-                                                <span if.bind="filteredInterests.length == 0" class="glyphicon glyphicon-exclamation-sign red"></span>
-                                                <span if.bind="filteredInterests.length == 0">None Found</span>
+                                                <div if.bind="roleName === 'STUDENT'">
+                                                    <select class="form-control" value.bind="selectedKeyword">
+                                                        <option repeat.for="interest of filteredInterests">${interest.keyword}</option>
+                                                    </select>
+                                                    <span if.bind="filteredInterests.length == 0" class="glyphicon glyphicon-exclamation-sign red"></span>
+                                                    <span if.bind="filteredInterests.length == 0">None Found</span>
+                                                </div>
+                                                <div else>
+                                                    <input class="form-control" value.bind="selectedKeyword" size="32"/>
+                                                </div>
                                             </div>
                                             
                                         </form>

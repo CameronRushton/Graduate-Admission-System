@@ -25,7 +25,7 @@ export class Profile {
 
     attached() {
         this.currentUserId = this.authService.getCurrentUser().id;
-        this.isAdmin = this.authService.getCurrentUser().role.roleName === "ADMIN";
+        this.userRole = this.authService.getCurrentUser().role.roleName;
         this.getUser();
         Promise.all([
             this.departmentManager.getDepartments(),
@@ -64,6 +64,7 @@ export class Profile {
             interests: this.currentUser.interests
         }
         this.userManager.updateUser(newUserInfo).then(result => {
+            this.currentUser = result;
             handleResultFn(result, this);
         }).catch(error => {
             error.isError = true;
@@ -98,11 +99,14 @@ export class Profile {
         if (foundInterest) {
             this.hasInterest = true;
         } else {
-            let matchingInterest = this.interests.filter(interest => {
-                return interest.keyword == this.selectedKeyword;
-            })
-            this.currentUser.interests.push(matchingInterest[0]);
+            let newInterest = {
+                department: this.selectedDepartment,
+                keyword: this.selectedKeyword
+            }
+            this.interests.push(newInterest);
+            this.currentUser.interests.push(newInterest);
             this.saveUser(this.handleInterestResult);
+            
         }
     }
 
