@@ -17,15 +17,15 @@ export class updateUser {
     }
 
     attached() {
+    	this.userManager.getAllUsers().then(response => {
+				this.users = response;
+			});
     	this.roleManager.getRoles().then(response => {
     			this.roles = response;
     		});
     	this.interestManager.getInterests().then(response => {
     			this.interests = response;
     		});
-    	this.userManager.getAllUsers().then(response => {
-				this.users = response;
-			});
     }
 
 	deleteUser(userId){
@@ -42,9 +42,5 @@ export class updateUser {
 				this.users = response;
 			});
 		});
-	}
-
-	updateUserInterests(){
-		this.router.navigateToRoute('update user interest');
 	}
 }

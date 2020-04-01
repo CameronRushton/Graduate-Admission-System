@@ -3,14 +3,17 @@
 	<section>
 		<div class="container">
 			<h1>Create User</h1>
-			<label>First Name: <input type="text" value.bind="$firstName"/></label>
-			<label>Last Name: <input type="text" value.bind="$lastName"/></label>
-			<label>Email: <input type="email" value.bind="$email"/></label>
+			<br>
+			<label>First Name: <input type="text" value.bind="$firstName"/></label><br>
+			<label>Last Name: <input type="text" value.bind="$lastName"/></label><br>
+			<label>Email: <input type="email" value.bind="$email"/></label><br>
 			<label>Role:</label>
 			<select value.bind="$role">
 				<option model.bind="null">Select...</option>
 				<option repeat.for="role of roles" model.bind="role">${role.roleName}</option>
 			</select>
+			<br>
+			<label>Interests:</label><br>
 			<select multiple value.bind="$interests">
 				<option repeat.for="interest of interests" model.bind="interest">
 					${interest.keyword}
@@ -22,4 +25,3 @@
 		</div>
 	</section>
 </template>
-
