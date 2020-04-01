@@ -126,13 +126,6 @@ export class App {
 				name: 'update user',
 				moduleId: PLATFORM.moduleName('pages/user/update/update'),
 				title: "Update User"
-			},
-			{
-				show: false,
-				route: '/user/updateInterest',
-				name: 'update user interest',
-				moduleId: PLATFORM.moduleName('pages/user/updateInterest/updateInterest'),
-				title: "Update User Interest"
 			}
 		]);
 	}

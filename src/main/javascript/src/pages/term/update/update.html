@@ -6,13 +6,14 @@
 			<div repeat.for="term of terms">
 				<label>Term:</label>
 				<br>
-				<label>year: <input type="number" value.two-way="term.year"/></label>
-				<label>Deadline: <input type="date" value.two-way="term.deadline"/></label>
+				<label>year: <input type="number" value.two-way="term.year"/></label><br>
+				<label>Deadline: <input type="date" value.two-way="term.deadline"/></label><br>
 				<label>Season:</label>
 				<select value.two-way="term.season">
 					<option repeat.for="season of seasons" value="${season}">${season}</option>
 				</select>
-				<label>Active: ${term.active}</label>
+				<br>
+				<label>Active: ${term.active}</label><br>
 				<p>
 					<button class="deleteButton" click.delegate="deleteTerm(term.id)">Delete</button>
 					<button class="updateActiveButton" click.delegate="updateTerm(term.id, true, term.deadline, term.season, term.year)">Update and Activate</button>
