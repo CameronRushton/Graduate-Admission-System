@@ -38,7 +38,7 @@ public class UserAccount {
     private String email;
     @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Role role;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Set<Interest> interests;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Application> applications;

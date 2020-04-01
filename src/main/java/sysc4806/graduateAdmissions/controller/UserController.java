@@ -1,5 +1,6 @@
 package sysc4806.graduateAdmissions.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/users")
+@Slf4j
 public class UserController {
     @Autowired
     private UserRepository repository;
@@ -69,6 +71,18 @@ public class UserController {
     }
 
     /**
+     * get the user who made a specific application
+     *
+     * @param id the id of the application
+     * @return JSON containing the User who made the application
+     */
+    @GetMapping("/applicant")
+    public ResponseEntity getApplicantByApplicationId(@RequestParam("id") long id){
+        log.info(String.valueOf(repository.findByApplications_id(id)));
+        return ResponseEntity.status(HttpStatus.OK).body(repository.findByApplications_id(id));
+    }
+
+    /**
      * get all User(s) with a specified email
      *
      * @param email the String of email to be returned
@@ -118,6 +132,7 @@ public class UserController {
      * @return ResponseEntity describing the outcome of the operation
      */
     @PutMapping
+    @CrossOrigin
     public ResponseEntity updateUser(@RequestBody UserAccount userAccount) {
         Optional<UserAccount> updatedUser = userManager.updateUser(userAccount);
         if (updatedUser.isPresent()) {

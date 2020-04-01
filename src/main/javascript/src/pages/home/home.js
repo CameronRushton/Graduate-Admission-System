@@ -1,24 +1,35 @@
 import { inject } from 'aurelia-framework';
 import { Router } from "aurelia-router"
-import { DepartmentManager } from 'managers/department-manager';
+import { Login } from 'pages/login/login';
+import { UserManager } from 'managers/user-manager';
 
-@inject(Router, DepartmentManager)
+@inject(Router, Login, UserManager)
 export class Home {
     
-    constructor(router, departmentManager) {
+    constructor(router, login, userManager) {
         this.router = router;
-        this.departmentManager = departmentManager;
-        this.scrollTop = 0;
-
-        this.departments = [];
-
+        this.authService = login;
+        this.userManager = userManager;
     }
 
     attached() {
-        this.getDepartments();
+        this.isAdmin = this.authService.getCurrentUser().role.roleName === "ADMIN";
+        this.isProf = this.authService.getCurrentUser().role.roleName === "PROFESSOR";
+        this.currentUserId = this.authService.getCurrentUser().id;
+        this.getUser();
     }
 
-    getDepartments() {
+    getUser() {
+        this.userManager.getUserById(this.currentUserId).then(result => {
+            this.currentUser = result;
+            console.log(this.currentUser);
+        }).catch(error => {
+            console.log("Unable to retrieve user with ID " + this.currentUserId);
+            // TODO: Alert popup
+        })
+    }
+
+    getInterests() {
         this.departmentManager.getDepartments().then(result => {
             this.departments = result;
         }).catch(error => {
@@ -28,22 +39,7 @@ export class Home {
         });
     }
 
-    handleScroll(event) {
-        // We should be able to see the scroll position in the console when we uncomment the following line
-        // console.log(this.scrollTop)
+    navigateToRoute(route) {
+        this.router.navigateToRoute(route);
     }
-
-    scrollToId(id) {
-        document.getElementById(id).scrollIntoView({ 
-            behavior: 'smooth'
-        });
-    }
-
-    scrollToTopFn() {
-        window.scrollTo({top: 0, behavior: 'smooth'});
-        document.getElementById("top").scrollIntoView({ 
-            behavior: 'smooth'
-        });
-    }
-
 }

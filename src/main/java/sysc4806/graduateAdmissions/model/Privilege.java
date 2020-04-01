@@ -17,9 +17,9 @@ import javax.persistence.*;
  * @author luke
  */
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 public class Privilege {
     //the primary key for a privilege
@@ -28,12 +28,15 @@ public class Privilege {
     @EqualsAndHashCode.Exclude
     private long id;
     //the type of CRUD operation the privilege specified
+    @NonNull
     @Enumerated(EnumType.STRING)
     private Operation operation;
     //the type of object that an operation is performed on
+    @NonNull
     @Enumerated(EnumType.STRING)
     private Target target;
     //the owner of the specified target object of the specified operation
+    @NonNull
     @Enumerated(EnumType.STRING)
     private Owner owner;
 }

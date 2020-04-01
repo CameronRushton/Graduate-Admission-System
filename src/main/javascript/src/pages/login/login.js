@@ -21,13 +21,6 @@ export class Login {
 		$("head").append("<meta name='google-signin-client_id' content='787575027862-t2vb0ae8ftk68nr9br9s4untp9e6t614.apps.googleusercontent.com'>");
     }
 
-    scrollFn() {
-        window.scrollTo({top: 0, behavior: 'smooth'});
-        document.getElementById("top").scrollIntoView({ 
-            behavior: 'smooth'
-        });
-    }
-
 	onSignIn(googleUser) {
     	//send login token to server to authenticate
 		let id_token = googleUser.getAuthResponse().id_token;
@@ -35,7 +28,7 @@ export class Login {
 		this.loginManager.login(id_token).then(response => {//the handler for login success
 			//load rest of the app
             response.json().then(user => {
-            	console.log(user);
+            	this.user = user;
             	console.log(user.role.roleName);
             	document.cookie = "userID="+user.id+";path=/;";
             	parent.aurelia.setRoot('app');
@@ -47,5 +40,9 @@ export class Login {
 					this.loginManager.logout();
 				})
 		 });
-    }
+	}
+	
+	getCurrentUser() {
+		return this.user;
+	}
 }

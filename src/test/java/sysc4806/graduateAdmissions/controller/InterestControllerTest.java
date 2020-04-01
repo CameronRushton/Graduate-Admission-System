@@ -24,8 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static sysc4806.graduateAdmissions.utilities.Utility.toJson;
 
 /**
@@ -55,20 +54,12 @@ class InterestControllerTest {
                 Interest.builder().id(2).department(Department.SYSC).keyword("machine_learning").build(),
                 Interest.builder().id(3).department(Department.MAAE).keyword("gears").build(),
                 Interest.builder().id(4).department(Department.SREE).keyword("grilled_cheese").build());
-
-        when(repo.findAll()).thenReturn(interests);
-        when(repo.findByDepartment(Department.SYSC)).thenReturn(interests.subList(0, 3));
-        when(repo.findByDepartment(Department.MAAE)).thenReturn(Collections.singletonList(interests.get(3)));
-        when(repo.findByDepartment(Department.SREE)).thenReturn(Collections.singletonList(interests.get(4)));
-        for(int i = 0; i <= 4; i++) {
-            when(repo.findById((long) i)).thenReturn(Optional.of(interests.get(i)));
-            doNothing().when(repo).deleteById((long) i);
-        }
     }
 
     /**Test the retrieval of all interests*/
     @Test
     public void testGetAllInterests() throws Exception {
+        when(repo.findAll()).thenReturn(interests);
         this.mockMvc.perform(get("/interest/"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(toJson(interests)));
@@ -77,7 +68,8 @@ class InterestControllerTest {
     /**Test the retrieval of specific interests by id*/
     @Test
     public void testGetInterestById() throws Exception {
-        for(Interest interest : interests){
+        for(Interest interest : interests) {
+            when(repo.findById(interest.getId())).thenReturn(Optional.of(interest));
             this.mockMvc.perform(get("/interest/?id="+interest.getId()))
                     .andExpect(status().isOk())
                     .andExpect(content().json(toJson(interest)));
@@ -87,6 +79,7 @@ class InterestControllerTest {
     /**Test the retrieval of all interests listed under a particular department*/
     @Test
     public void testGetInterestByDepartment() throws Exception {
+        when(repo.findByDepartment(Department.SYSC)).thenReturn(interests.subList(0, 3));
         this.mockMvc.perform(get("/interest/department?department=SYSC"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(toJson(interests.subList(0, 3))));
@@ -95,17 +88,20 @@ class InterestControllerTest {
     /**Test the creation of a new Interest object via post*/
     @Test
     public void testPostNewInterest() throws Exception {
-        val result = mockMvc.perform(post("/interest/create").contentType(APPLICATION_JSON_UTF8)
-                .content(toJson(
-                        Interest.builder().department(Department.MAAE).keyword("wheels").build())))
-                .andExpect(status().isOk())
-                .andReturn();
-        assertTrue(result.getResponse().getContentAsString().contains("interest successfully added"));
+        Interest newInterest = Interest.builder().department(Department.MAAE).keyword("wheels").build();
+        when(repo.save(newInterest)).thenReturn(newInterest);
+        mockMvc.perform(post("/interest/create").contentType(APPLICATION_JSON_UTF8)
+            .content(toJson(newInterest)))
+            .andExpect(status().isCreated())
+            .andExpect(jsonPath("$.department").value("MAAE"))
+            .andExpect(jsonPath("$.keyword").value("wheels"));
     }
 
     /**Test the deletion of an Interest object via delete*/
     @Test
     public void testDeleteInterest() throws Exception {
+        when(repo.findById(3L)).thenReturn(Optional.of(interests.get(3)));
+        doNothing().when(repo).deleteById(3L);
         val result = mockMvc.perform(delete("/interest/{id}", "3"))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -115,6 +111,7 @@ class InterestControllerTest {
     /**Test Interest deletion failing due to the Interest not existing*/
     @Test
     public void testDeleteInterestDoesNotExist() throws Exception {
+        doNothing().when(repo).deleteById(42L);
         mockMvc.perform(delete("/interest/{id}", "42"))
                 .andExpect(status().isNotFound());
     }
@@ -122,6 +119,7 @@ class InterestControllerTest {
     /**Test Interest update*/
     @Test
     public void testUpdateInterest() throws Exception {
+        when(repo.findByDepartment(Department.MAAE)).thenReturn(Collections.singletonList(interests.get(3)));
         mockMvc.perform(post("/interest/update").contentType(APPLICATION_JSON_UTF8)
                 .content(toJson(
                         Interest.builder().department(Department.MAAE).keyword("wheels").build())))

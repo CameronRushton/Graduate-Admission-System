@@ -22,7 +22,6 @@ class ApplicationTest {
 
     private Application application;
     private long ID;
-    private UserAccount applicant;
     private Term term;
     private Department department;
     private String degree;
@@ -35,7 +34,6 @@ class ApplicationTest {
     public void setUp() throws ParseException {
         application = new Application();
         ID = 5;
-        applicant = new UserAccount();
         term = new Term(new SimpleDateFormat("yyyy-MM-dd").parse("2020-01-01"), Season.FALL, 2020, true);
         department = Department.SYSC;
         degree = "test case";
@@ -49,7 +47,6 @@ class ApplicationTest {
     @Test
     public void testNoArgsConstructor(){
         assertNotNull(application);
-        assertNull(application.getApplicant());
         assertNull(application.getTerm());
         assertNull(application.getDepartment());
         assertNull(application.getDegree());
@@ -61,9 +58,8 @@ class ApplicationTest {
     /**Test to ensure that the all args constructor correctly sets fields*/
     @Test
     public void testArgsConstructor(){
-        application = new Application(ID, applicant, term, department, degree,  professors, status, gpa, resumeFileName);
+        application = new Application(ID, term, department, degree,  professors, status, gpa, resumeFileName);
         assertEquals(ID, application.getId());
-        assertEquals(applicant, application.getApplicant());
         assertEquals(term, application.getTerm());
         assertEquals(department, application.getDepartment());
         assertEquals(degree, application.getDegree());
@@ -76,9 +72,8 @@ class ApplicationTest {
     /**Test to ensure that the builder correctly sets fields*/
     @Test
     public void testBuilder(){
-        application = Application.builder().id(ID).applicant(applicant).build();
+        application = Application.builder().id(ID).build();
         assertEquals(ID, application.getId());
-        assertEquals(applicant, application.getApplicant());
     }
 
     /**Test that the setID method correctly sets the id field*/
@@ -86,13 +81,6 @@ class ApplicationTest {
     public void setId(){
         application.setId(ID);
         assertEquals(ID, application.getId());
-    }
-
-    /**Test that the set applicant method correctly sets the applicant field*/
-    @Test
-    public void setApplicant(){
-        application.setApplicant(applicant);
-        assertEquals(applicant, application.getApplicant());
     }
 
     /**Test that the setTerm method correctly sets the term field*/
@@ -112,23 +100,23 @@ class ApplicationTest {
     /**Test that the generated toString behaves as expected*/
     @Test
     public void testToString(){
-        application = new Application(ID, applicant, term, department, degree, professors, status, gpa, resumeFileName);
+        application = new Application(ID, term, department, degree, professors, status, gpa, resumeFileName);
         assertFalse(application.toString().isEmpty());
     }
 
     /**Test that two Application objects with identical fields are considered equal*/
     @Test
     public void testEquals(){
-        Application applicationA = new Application(ID, applicant, term, department, degree, professors, status, gpa, resumeFileName);
-        Application applicationB = new Application(ID, applicant, term, department, degree, professors, status, gpa, resumeFileName);
+        Application applicationA = new Application(ID, term, department, degree, professors, status, gpa, resumeFileName);
+        Application applicationB = new Application(ID, term, department, degree, professors, status, gpa, resumeFileName);
         assertEquals(applicationA, applicationB);
     }
 
     /**Test that two Application objects with all fields equal except their ids are still considered equal*/
     @Test
     public void testEqualsDifferentID(){
-        Application applicationA = new Application(ID, applicant, term, department, degree, professors, status, gpa, resumeFileName);
-        Application applicationB = new Application(ID+1, applicant, term, department, degree, professors, status, gpa, resumeFileName);
+        Application applicationA = new Application(ID, term, department, degree, professors, status, gpa, resumeFileName);
+        Application applicationB = new Application(ID+1, term, department, degree, professors, status, gpa, resumeFileName);
         assertEquals(applicationA, applicationB);
     }
 

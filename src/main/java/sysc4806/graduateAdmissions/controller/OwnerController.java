@@ -19,7 +19,7 @@ public class OwnerController {
      *
      * @return JSON of every owner
      */
-    @GetMapping("/owner")
+    @GetMapping("/owners")
     public ResponseEntity getOwners() {
         return ResponseEntity.status(HttpStatus.OK).body(Owner.values());
     }
