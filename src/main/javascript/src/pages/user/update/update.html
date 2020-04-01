@@ -7,10 +7,13 @@
 				<label>First Name: <input type="text" value.two-way="user.firstName"/></label><br>
 				<label>Last Name: <input type="text" value.two-way="user.lastName"/></label><br>
 				<label>Email: <input type="email" value.two-way="user.email"/></label><br>
-				<label>Role:</label>
-				<select value.two-way="user.role">
+				<button class="updateButton" click.delegate="updateUser(user)">Update Name and Email</button><br>
+				<label>Current Role: ${user.role.roleName}</label><br>
+				<label>Change Role to: </label>
+				<select value.bind="newRole">
 					<option repeat.for="role of roles" model.bind="role">${role.roleName}</option>
 				</select>
+				<button class="updateButton" click.delegate="updateUserRole(user.id, newRole)">Change Role</button>
 				<br>
 				<label>Interests: </label><br>
 				<ul>
@@ -26,7 +29,6 @@
 				</ul>
 				<p>
 					<button class="deleteButton" click.delegate="deleteUser(user.id)">Delete</button>
-					<button class="updateButton" click.delegate="updateUser(user)">Update</button>
 				</p>
 			</div>
 			<br/>

@@ -43,4 +43,12 @@ export class updateUser {
 			});
 		});
 	}
+
+	updateUserRole(userId, role){
+		this.userManager.updateUserRole(userId, role).then(()=>{
+			this.userManager.getAllUsers().then(response => {
+				this.users = response;
+			});
+		});
+	}
 }
