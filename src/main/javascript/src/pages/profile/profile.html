@@ -50,17 +50,17 @@
                                         <span if.bind="isDisabled">Edit</span>
                                         <span else class="glyphicon glyphicon-lock"></span>
                                     </button>
-                                    <span if.bind="saving">
+                                    <!-- <span if.bind="saving">
                                         <spinner></spinner>
-                                    </span>
-                                    <button else class="btn btn-red ml-1" click.delegate="saveUser()">
+                                    </span> -->
+                                    <button class="btn btn-red ml-1" click.delegate="saveUser(handleUserResult)">
                                         Save
                                     </button>
                                     <span show.bind="showSaveSuccess" class="glyphicon glyphicon-ok green">Saved</span>
                                     <span show.bind="showSaveError" class="glyphicon glyphicon-remove red">${errorMessage}</span>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div if.bind="userRole !== 'ADMIN'" class="col-md-6">
                                 <div class="panel">
                                     <div class="panel-heading">
                                         AREAS OF INTEREST
@@ -75,26 +75,78 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr repeat.for="interest of currentUser.interests">
-                                                    <td scope="row">
+                                                <tr if.bind="currentUser.interests.length > 0" repeat.for="interest of currentUser.interests">
+                                                    <td>
                                                         ${interest.keyword}
+                                                    </td>
+                                                    <td>
+                                                        <span class="glyphicon glyphicon-trash clickable" click.delegate="removeInterest(interest)"></span>
+                                                    </td>
+                                                </tr>
+                                                <tr else>
+                                                    <td>
+                                                        No interests; add one below.
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-                                <button class="btn btn-red" route-href="route: home"> <!-- TODO: Go to interest editing page -->
-                                    Edit
-                                </button>
                             </div>
                         </div>
 
                     </div>
-                    <div class="panel-footer">
+                </div>
+                <div if.bind="userRole !== 'ADMIN'" class="panel">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        ${userRole === 'STUDENT'? 'ADD':'CREATE'} AN INTEREST
+                                    </div>
+                                    <div class="panel-body">
 
+                                        <form>
+
+                                            <div class="form-group">
+                                                <label>
+                                                    Department
+                                                </label>
+                                                <select class="form-control" value.bind="selectedDepartment">
+                                                    <option repeat.for="department of departments">${department}</option>
+                                                </select>
+                                            </div>
+    
+                                            <div class="form-group">
+                                                <label>
+                                                    Keyword
+                                                </label>
+                                                <div if.bind="userRole === 'STUDENT'">
+                                                    <select class="form-control" value.bind="selectedKeyword">
+                                                        <option repeat.for="interest of filteredInterests">${interest.keyword}</option>
+                                                    </select>
+                                                    <span if.bind="filteredInterests.length == 0" class="glyphicon glyphicon-exclamation-sign red"></span>
+                                                    <span if.bind="filteredInterests.length == 0">None Found</span>
+                                                </div>
+                                                <div else>
+                                                    <input class="form-control" value.bind="selectedKeyword" size="32"/>
+                                                </div>
+                                            </div>
+                                            
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <span if.bind="saving">
+                            <spinner></spinner>
+                        </span> -->
+                        <button class="btn btn-red" click.delegate="addInterest()">
+                            Add
+                        </button>  
                     </div>
-
                 </div>
 
             </div>
