@@ -43,8 +43,8 @@ public class UserManager {
             if (userAccount.getFirstName() != null && !userAccount.getFirstName().isEmpty()) existingUser.get().setFirstName(userAccount.getFirstName());
             if (userAccount.getLastName() != null && !userAccount.getLastName().isEmpty()) existingUser.get().setLastName(userAccount.getLastName());
             if (userAccount.getRole() != null) existingUser.get().setRole(userAccount.getRole());
-            if (userAccount.getRole() != null) existingUser.get().setInterests(userAccount.getInterests());
-            if (userAccount.getRole() != null) existingUser.get().setApplications(userAccount.getApplications());
+            if (userAccount.getInterests() != null) existingUser.get().setInterests(userAccount.getInterests());
+            if (userAccount.getApplications() != null) existingUser.get().setApplications(userAccount.getApplications());
             if (userAccount.getEmail() != null && !userAccount.getEmail().isEmpty()) existingUser.get().setEmail(userAccount.getEmail());
             return Optional.of(userRepository.save(existingUser.get()));
         }
