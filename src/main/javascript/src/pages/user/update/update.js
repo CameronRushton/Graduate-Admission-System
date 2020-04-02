@@ -16,7 +16,7 @@ export class updateUser {
 
     }
 
-    attached() {
+    activate() {
     	this.userManager.getAllUsers().then(response => {
 				this.users = response;
 			});

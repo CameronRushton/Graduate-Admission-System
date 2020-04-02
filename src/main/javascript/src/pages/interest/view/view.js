@@ -28,7 +28,7 @@ export class InterestView {
 		}
 	}
 
-    attached() {
+    activate() {
     	this.getInterestsByDepartment();
 
         this.departmentManager.getDepartments().then(response => {

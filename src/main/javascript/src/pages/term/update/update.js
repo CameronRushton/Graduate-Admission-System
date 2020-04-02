@@ -14,7 +14,7 @@ export class updateTerm {
         this.termManager = termManager;
     }
 
-    attached() {
+    activate() {
     	this.termManager.getTerms().then(response => {
 			this.terms = response;
 		});

@@ -41,34 +41,6 @@ export class App {
 				title: "Update Interest",
 			},
 			{
-				show: false,
-				route: '/role/view',
-				name: 'view roles',
-				moduleId: PLATFORM.moduleName('pages/role/view/view'),
-				title: "Roles",
-			},
-			{
-				show: false,
-				route: '/role/create',
-				name: 'add role',
-				moduleId: PLATFORM.moduleName('pages/role/create/create'),
-				title: "Add Role",
-			},
-			{
-				show: false,
-				route: '/role/update',
-				name: 'update role',
-				moduleId: PLATFORM.moduleName('pages/role/update/update'),
-				title: "Update Role",
-			},
-			{
-				show: false,
-				route: '/privilege/create',
-				name: 'add privilege',
-				moduleId: PLATFORM.moduleName('pages/privilege/create/create'),
-				title: "Add Privilege",
-			},
-			{
 				show: true,
 				route: '/',
 				name: 'home',
@@ -98,34 +70,6 @@ export class App {
 				name: 'login',
 				moduleId: PLATFORM.moduleName('pages/login/login'),
 				title: "Login",
-			},
-			{
-				show: false,
-				route: '/term/update',
-				name: 'update term',
-				moduleId: PLATFORM.moduleName('pages/term/update/update'),
-				title: "Update Term"
-			},
-			{
-				show: false,
-				route: '/term/create',
-				name: 'create term',
-				moduleId: PLATFORM.moduleName('pages/term/create/create'),
-				title: "Create Term"
-			},
-			{
-				show: false,
-				route: '/user/create',
-				name: 'create user',
-				moduleId: PLATFORM.moduleName('pages/user/create/create'),
-				title: "Create User"
-			},
-			{
-				show: false,
-				route: '/user/update',
-				name: 'update user',
-				moduleId: PLATFORM.moduleName('pages/user/update/update'),
-				title: "Update User"
 			}
 		]);
 	}

@@ -16,7 +16,7 @@ export class createUser {
 
     }
 
-    attached() {
+    activate() {
     	this.roleManager.getRoles().then(response => {
     			this.roles = response;
     		});
@@ -34,6 +34,6 @@ export class createUser {
 			interest: userInterests,
 			applications: []
 		}
-		this.userManager.addUser(this.myUser).then(()=>{this.router.navigateToRoute("update user")});
+		this.userManager.addUser(this.myUser);
 	}
 }

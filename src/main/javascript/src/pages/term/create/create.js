@@ -14,7 +14,7 @@ export class createTerm {
 
     }
 
-    attached() {
+    activate() {
     	this.seasonManager.getSeasons().then(response => {
     			this.seasons = response;
     		});
@@ -28,6 +28,6 @@ export class createTerm {
 			season: termSeason,
 			year: termYear
 		}
-		this.termManager.createTerm(this.myTermDTO).then(()=>{this.router.navigateToRoute("update term")});
+		this.termManager.createTerm(this.myTermDTO);
 	}
 }

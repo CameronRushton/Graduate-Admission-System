@@ -9,7 +9,6 @@
 			<label>Email: <input type="email" value.bind="$email"/></label><br>
 			<label>Role:</label>
 			<select value.bind="$role">
-				<option model.bind="null">Select...</option>
 				<option repeat.for="role of roles" model.bind="role">${role.roleName}</option>
 			</select>
 			<br>
