@@ -140,4 +140,24 @@ public class UserController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
+
+    /**
+     * update a specified User's applications
+     *
+     * @param userAccount the User to be updated
+     * @return ResponseEntity describing the outcome of the operation
+     */
+    @PutMapping("/applications")
+    @CrossOrigin
+    public ResponseEntity updateUserApplications(@RequestBody UserAccount userAccount) {
+        Optional<UserAccount> user = repository.findById(userAccount.getId());
+        if (user.isPresent()) {
+            UserAccount u = user.get();
+            u.setApplications(userAccount.getApplications());
+            repository.save(u);
+            return ResponseEntity.ok("Changed applications of user " + u.getFirstName() + " " + u.getLastName() + " to " + userAccount.getApplications());
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
 }

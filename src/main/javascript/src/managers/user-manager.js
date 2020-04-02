@@ -107,7 +107,7 @@ export class UserManager extends AbstractManager {
             .then(this.json);
     }
 
-    getUserByApplication(application_id) {
+    getStudentByApplication(application_id) {
 		var options = {
 		method: "GET",
 			headers: {
@@ -119,4 +119,29 @@ export class UserManager extends AbstractManager {
 			.then(this.handleError)
 			.then(this.json);
 	}
+
+	getApplicationsOfStudent(user_id) {
+		var options = {
+		method: "GET",
+			headers: {
+			"Content-Type": "application/json"
+			},
+		};
+
+		return this.httpClient.fetch(`/application/applicant?id=${user_id}`, options)
+			.then(this.handleError)
+			.then(this.json);
+	}
+
+	 updateUserApplications(user) {
+            var options = {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(user)
+            };
+            return this.httpClient.fetch(`/users/applications`, options)
+                .then(this.handleError)
+        }
 }

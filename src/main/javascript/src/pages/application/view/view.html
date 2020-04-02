@@ -3,14 +3,32 @@
 	<section>
 		<div class="container">
 			<h1>Applications</h1>
-			<p>Filter by:
+			<p if.bind="isProf">Filter by:
 				<select value.bind="statusFilter" change.trigger="getApplicationsByFilter()">
 					<option value="all">ALL</option>
 					<option repeat.for="status of statuses" value="${status}">${status}</option>
 				</select>
 			</p>
 			<div if.bind="isStudent">
-				<p>Put your student application display here!</p>
+				<a route-href="route: add application">Add new Application</a>
+				<br/><br/>
+				<p if.bind="applications.length === 0">No applications at this time</p>
+				<div  if.bind="applications.length > 0">
+					<div repeat.for="application of applications">
+						<h4>${application.degree} in ${application.department}: ${application.term.season} ${application.term.year}</h4>
+						<p>Status: ${application.status}</p>
+						<p>GPA: ${application.gpa}</p>
+						<p>Resume: ${application.resumeFileName}</p>
+						<p>Requested Supervisors: <b if.bind="application.professors.length === 0">None</b></p>
+						<ul if.bind="application.professors.length > 0">
+							<li repeat.for="prof of application.professors">${prof.firstName} ${prof.lastName}
+						</ul>
+						<p>
+							<button click.delegate="removeApplication(application.id)">Cancel Application</button>
+						</p>
+						<br/>
+					</div>
+				</div>
 			</div>
 			<div if.bind="isProf">
 				<h4>Applications Requesting you as Supervisor</h4>

@@ -24,7 +24,7 @@ export class ApplicationView {
 		this.isAdmin = this.userRoleName === "ADMIN"
 
 		if (this.isStudent) {
-			this.studentAttached();
+			this.getStudentApplications();
 		} else if(this.isProf) {
 			this.professorAttached();
 		} else if (this.isAdmin){
@@ -32,8 +32,20 @@ export class ApplicationView {
 		}
     }
 
-    studentAttached(){
-		console.log("put your student attached function here!");
+    getStudentApplications(){
+		this.userManager.getApplicationsOfStudent(this.currentUser.id).then(response => {
+			this.applications = response;
+		});
+	}
+
+	removeApplication(applicationId){
+		this.currentUser.applications =
+			this.currentUser.applications.filter((application) => { return application.id !== applicationId});
+		this.userManager.updateUserApplications(this.currentUser).then(response => {
+			this.applicationManager.removeApplication(applicationId).then(response => {
+				this.getStudentApplications();
+			});
+		});
 	}
 
 	professorAttached(){
@@ -71,7 +83,7 @@ export class ApplicationView {
 			response.forEach((application, index) => {
 				application.showDetails = false;
 				application.detailToggleId = application.id + "requested"
-				this.userManager.getUserByApplication(this.currentUser.id).then(response => {
+				this.userManager.getStudentByApplication(this.currentUser.id).then(response => {
 					application.applicant = response[0];
 					if(filter === "all" || application.status === filter){
 						this.requested.push(application);
@@ -84,7 +96,7 @@ export class ApplicationView {
 			response.forEach((application, index) => {
 				application.showDetails = false;
 				application.detailToggleId = application.id + "similar-interest"
-				this.userManager.getUserByApplication(this.currentUser.id).then(response => {
+				this.userManager.getStudentByApplication(this.currentUser.id).then(response => {
 					application.applicant = response[0];
 					if(filter === "all" || application.status === filter){
 						this.matchingInterests.push(application);

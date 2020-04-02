@@ -15,7 +15,6 @@ import java.util.Optional;
 
 @Service
 public class UserManager {
-
     private RoleRepository roleRepository;
     private UserRepository userRepository;
     private InterestRepository interestRepository;
