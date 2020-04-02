@@ -2,11 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\pages\\application\\view",
-    "\\src\\resources",
+    "\\src\\pages",
+    "\\src\\pages\\profile",
+    "\\src\\pages\\role",
+    "\\src\\pages\\role\\view",
     "\\src\\resources\\components",
     "\\src\\resources\\components\\header"
   ],
-  "SelectedNode": "\\src\\resources\\components\\header\\header.html",
+  "SelectedNode": "\\src\\pages\\role\\view\\view.html",
   "PreviewInSolutionExplorer": false
 }
