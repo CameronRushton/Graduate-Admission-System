@@ -55,5 +55,31 @@ export class ApplicationManager extends AbstractManager{
 		};
 		return this.httpClient.fetch(`/application/${id}`, options)
 			.then(this.handleError);
+  }
+
+	getApplicationsWithMatchingStatus(status){
+		var options = {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json"
+			}
+		};
+
+		return this.httpClient.fetch(`/application/status?status=${status}`, options)
+			.then(this.handleError)
+			.then(this.json);
 	}
+
+	getApplications(){
+		var options = {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json"
+			}
+		};
+
+		return this.httpClient.fetch(`/application/`, options)
+			.then(this.handleError)
+			.then(this.json);
+  }
 }

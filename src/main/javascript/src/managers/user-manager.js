@@ -104,7 +104,18 @@ export class UserManager extends AbstractManager {
         };
         return this.httpClient.fetch(`/users`, options)
             .then(this.handleError)
-            .then(this.json);
+    }
+
+    updateUserRole(userId, newRole) {
+		var options = {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(newRole)
+		};
+		return this.httpClient.fetch(`/users/role?id=${userId}`, options)
+			.then(this.handleError)
     }
 
     getStudentByApplication(application_id) {
@@ -114,7 +125,6 @@ export class UserManager extends AbstractManager {
 			"Content-Type": "application/json"
 			},
 		};
-
 		return this.httpClient.fetch(`/users/applicant?id=${application_id}`, options)
 			.then(this.handleError)
 			.then(this.json);

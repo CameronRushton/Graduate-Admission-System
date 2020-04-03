@@ -66,6 +66,7 @@ public class TermController {
      * DELETE /terms/{id}
      */
     @DeleteMapping(path="/{id}")
+    @CrossOrigin
     public ResponseEntity deleteTerm(@PathVariable("id") Long termId) {
         if (!termRepository.existsById(termId)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -78,6 +79,7 @@ public class TermController {
      * PUT /terms
      */
     @PutMapping
+    @CrossOrigin
     public ResponseEntity updateTerm(@RequestBody TermDTO termDTO) {
         Optional<TermDTO> response = termManager.updateTerm(termDTO);
         if (response.isPresent()) {

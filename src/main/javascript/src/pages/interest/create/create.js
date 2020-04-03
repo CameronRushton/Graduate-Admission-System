@@ -14,7 +14,7 @@ export class setInterestFormFields {
 
     }
 
-    attached() {
+    activate() {
     	this.departmentManager.getDepartments().then(response => {
     			this.departments = response;
     		});
@@ -25,6 +25,10 @@ export class setInterestFormFields {
 			department: departmentChoice,
 			keyword: interestKeyword
 		}
-		this.interestManager.addInterest(this.myInterest).then(()=>{this.router.navigateToRoute("view interests")});
+		this.interestManager.addInterest(this.myInterest).then(()=>{
+			this.departmentManager.getDepartments().then(response => {
+				this.departments = response;
+			});
+		});
 	}
 }
