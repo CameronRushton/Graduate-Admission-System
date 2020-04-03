@@ -14,6 +14,7 @@ export class ApplicationView {
         this.applicationManager = applicationManager;
         this.userManager = userManager;
         this.statusManager = statusManager;
+        this.statusFilter = "all";
 	}
 
     attached() {
@@ -37,7 +38,6 @@ export class ApplicationView {
 	}
 
 	professorAttached(){
-		this.statusFilter = "all";
 		this.getApplicationsByFilter();
 		this.statusManager.getStatuses().then(response => {
 			this.statuses = response;
@@ -54,48 +54,79 @@ export class ApplicationView {
 	}
 
 	setApplicationStatus(id, status){
-		let allApplications = this.requested.concat(this.matchingInterests);
-		allApplications.forEach((application, index) => {
-			if(application.id === id){
-				application.status = status;
-			}
-			this.applicationManager.updateApplication(application);
-		});
+		if(this.isProf){
+			let allApplications = this.requested.concat(this.matchingInterests);
+			allApplications.forEach((application, index) => {
+				if(application.id === id){
+					application.status = status;
+				}
+				this.applicationManager.updateApplication(application);
+			});
+		} else if(this.isAdmin){
+			let allApplications = this.requested;
+			allApplications.forEach((application, index) => {
+				if(application.id === id){
+					let pos = this.requested.indexOf(application);
+					application.status = status;
+					if(!(this.statusFilter === "all")){
+						this.requested.splice(pos, 1);
+					}
+				}
+				this.applicationManager.updateApplication(application);
+			});
+		}
 	}
 
 	getApplicationsByFilter(){
 		let filter = this.statusFilter
-
-		this.applicationManager.getApplicationsForProf(this.currentUser.id).then(response => {
-			this.requested = [];
-			response.forEach((application, index) => {
-				application.showDetails = false;
-				application.detailToggleId = application.id + "requested"
-				this.userManager.getUserByApplication(this.currentUser.id).then(response => {
-					application.applicant = response[0];
-					if(filter === "all" || application.status === filter){
-						this.requested.push(application);
-					}
+		this.requested = [];
+		if(this.isProf){
+			this.applicationManager.getApplicationsForProf(this.currentUser.id).then(response => {
+				response.forEach((application, index) => {
+					application.showDetails = false;
+					application.detailToggleId = application.id + "requested"
+					this.userManager.getUserByApplication(this.currentUser.id).then(response => {
+						application.applicant = response[0];
+						if(filter === "all" || application.status === filter){
+							this.requested.push(application);
+						}
+					});
 				});
 			});
-		});
-		this.applicationManager.getApplicationsWithMatchingInterests(this.currentUser.id).then(response => {
-			this.matchingInterests = [];
-			response.forEach((application, index) => {
-				application.showDetails = false;
-				application.detailToggleId = application.id + "similar-interest"
-				this.userManager.getUserByApplication(this.currentUser.id).then(response => {
-					application.applicant = response[0];
-					if(filter === "all" || application.status === filter){
-						this.matchingInterests.push(application);
-					}
+			this.applicationManager.getApplicationsWithMatchingInterests(this.currentUser.id).then(response => {
+				this.matchingInterests = [];
+				response.forEach((application, index) => {
+					application.showDetails = false;
+					application.detailToggleId = application.id + "similar-interest"
+					this.userManager.getUserByApplication(this.currentUser.id).then(response => {
+						application.applicant = response[0];
+						if(filter === "all" || application.status === filter){
+							this.matchingInterests.push(application);
+						}
+					});
 				});
 			});
-		});
+		} else if(this.isAdmin){
+			this.applicationManager.getApplications().then(response => {
+				response.forEach((application, index) => {
+					application.showDetails = false;
+					application.detailToggleId = application.id + "requested"
+					this.userManager.getUserByApplication(application.id).then(response => {
+						application.applicant = response[0];
+						if(filter === "all" || application.status === filter){
+							this.requested.push(application);
+						}
+					});
+				});
+			});
+		}
 	}
 
 	adminAttached(){
-		console.log("put your admin attached function here!");
+    	this.getApplicationsByFilter();
+    	this.statusManager.getStatuses().then(response => {
+			this.statuses = response;
+		});
 	}
 
 

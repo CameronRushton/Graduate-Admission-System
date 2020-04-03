@@ -2,6 +2,7 @@ package sysc4806.graduateAdmissions.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import sysc4806.graduateAdmissions.model.Application;
+import sysc4806.graduateAdmissions.model.Status;
 
 import java.util.List;
 
@@ -13,4 +14,5 @@ import java.util.List;
  */
 public interface ApplicationRepository extends CrudRepository<Application, Long> {
     List<Application> findByProfessors_id(long id);
+    List<Application> findByStatus(Status status);
 }

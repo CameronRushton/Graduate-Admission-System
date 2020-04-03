@@ -153,5 +153,24 @@ public class ApplicationControllerTest {
                         Application.builder().department(Department.MAAE).build())))
                 .andExpect(status().isOk());
     }
+
+    /**Test get application by status*/
+    @Test
+    public void testGetApplicationByStatus() throws Exception {
+        when(applicationRepository.findByStatus(Status.INCOMPLETE)).thenReturn(applications);
+
+        this.mockMvc.perform(get("/application/status?status=INCOMPLETE"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(toJson(applications)));
+    }
+
+    /**Test get application by status with an invalid status*/
+    @Test
+    public void testGetApplicationByInvalidStatus() throws Exception {
+        when(applicationRepository.findByStatus(Status.INCOMPLETE)).thenReturn(applications);
+
+        this.mockMvc.perform(get("/application/status?status=APPLE"))
+                .andExpect(status().isBadRequest());
+    }
 }
 

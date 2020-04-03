@@ -68,7 +68,32 @@
 				</div>
 			</div>
 			<div if.bind="isAdmin">
-				<p>Put your admin application display here!</p>
+				<div repeat.for="application of requested">
+					<p>
+						${application.applicant.firstName} ${application.applicant.lastName}: ${application.degree} in ${application.department}
+						<button click.delegate="toggleDetails(application.detailToggleId)">details</button>
+					</p>
+					<p>Status: ${application.status}</p>
+					<div show.bind="application.showDetails">
+						<p>Term: ${application.term.season} ${application.term.year}</p>
+						<p>GPA: ${application.gpa}</p>
+						<p>Resume: ${application.resumeFileName}</p>
+						<p>Interests:</p>
+						<ul>
+							<li repeat.for="interest of application.applicant.interests">${interest.keyword}
+						</ul>
+					</div>
+					<p>
+						<button click.delegate="setApplicationStatus(application.id, 'APPROVEDFUNDING')">approved with funding</button>
+						<button click.delegate="setApplicationStatus(application.id, 'APPROVEDNOFUNDING')">approved no funding</button>
+						<button click.delegate="setApplicationStatus(application.id, 'DENIED')">deny</button>
+						<button click.delegate="setApplicationStatus(application.id, 'INCOMPLETE')">incomplete</button>
+						<button click.delegate="setApplicationStatus(application.id, 'SUBMITTED')">submitted</button>
+						<button click.delegate="setApplicationStatus(application.id, 'PENDINGAPROVAL')">pending approval</button>
+						<button click.delegate="setApplicationStatus(application.id, 'PENDINGREVIEW')">pending review</button>
+						<button click.delegate="setApplicationStatus(application.id, 'PENDINGAPROVAL')">pending approval</button>
+					</p>
+				</div>
 			</div>
 		</div>
 	</section>
