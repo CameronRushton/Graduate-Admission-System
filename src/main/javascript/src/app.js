@@ -57,6 +57,14 @@ export class App {
 				icon: "glyphicon-file"
 			},
 			{
+				show: false,
+				route: '/application/create',
+				name: 'add application',
+				moduleId: PLATFORM.moduleName('pages/application/create/create'),
+				title: "Create Application",
+				icon: "glyphicon-file"
+			},
+			{
 				show: true,
 				route: '/profile',
 				name: 'profile',

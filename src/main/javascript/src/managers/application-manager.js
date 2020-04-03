@@ -49,6 +49,14 @@ export class ApplicationManager extends AbstractManager{
 			.then(this.json);
 	}
 
+	removeApplication(id){
+		var options = {
+			method: "DELETE"
+		};
+		return this.httpClient.fetch(`/application/${id}`, options)
+			.then(this.handleError);
+  }
+
 	getApplicationsWithMatchingStatus(status){
 		var options = {
 			method: "GET",
@@ -73,5 +81,5 @@ export class ApplicationManager extends AbstractManager{
 		return this.httpClient.fetch(`/application/`, options)
 			.then(this.handleError)
 			.then(this.json);
-	}
+  }
 }

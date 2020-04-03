@@ -64,5 +64,5 @@ export class TermManager extends AbstractManager{
 		};
 		return this.httpClient.fetch(`/terms`, options)
 			.then(this.handleError);
-	}
+  }
 }

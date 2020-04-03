@@ -25,7 +25,7 @@ export class ApplicationView {
 		this.isAdmin = this.userRoleName === "ADMIN"
 
 		if (this.isStudent) {
-			this.studentAttached();
+			this.getStudentApplications();
 		} else if(this.isProf) {
 			this.professorAttached();
 		} else if (this.isAdmin){
@@ -33,8 +33,20 @@ export class ApplicationView {
 		}
     }
 
-    studentAttached(){
-		console.log("put your student attached function here!");
+    getStudentApplications(){
+		this.userManager.getApplicationsOfStudent(this.currentUser.id).then(response => {
+			this.applications = response;
+		});
+	}
+
+	removeApplication(applicationId){
+		this.currentUser.applications =
+			this.currentUser.applications.filter((application) => { return application.id !== applicationId});
+		this.userManager.updateUserApplications(this.currentUser).then(response => {
+			this.applicationManager.removeApplication(applicationId).then(response => {
+				this.getStudentApplications();
+			});
+		});
 	}
 
 	professorAttached(){

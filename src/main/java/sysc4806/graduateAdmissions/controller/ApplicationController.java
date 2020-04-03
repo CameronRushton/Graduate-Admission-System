@@ -79,7 +79,7 @@ public class ApplicationController {
     public ResponseEntity deleteApplication(@PathVariable("id") Long id) {
         val application = applicationRepository.findById(id);
         if(application.isPresent()){
-            applicationRepository.delete(application.get());
+            applicationRepository.deleteById(id);
             return ResponseEntity.ok("application to " + application.get().getDegree() +
                     " in " + application.get().getDepartment() +
                     " for " + application.get().getTerm().getSeason() +
