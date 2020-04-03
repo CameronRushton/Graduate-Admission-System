@@ -1,0 +1,36 @@
+<template>
+	<header scroll_position.bind="scrollTop" scroll_fn.bind="scrollFn"></header>
+	<section>
+		<div class="container">
+			<h1>Users</h1>
+			<div repeat.for="user of users">
+				<label>First Name: <input type="text" value.two-way="user.firstName"/></label><br>
+				<label>Last Name: <input type="text" value.two-way="user.lastName"/></label><br>
+				<label>Email: <input type="email" value.two-way="user.email"/></label><br>
+				<button class="updateButton" click.delegate="updateUser(user)">Update Name and Email</button><br>
+				<label>Current Role: ${user.role.roleName}</label><br>
+				<label>Change Role to: </label>
+				<select value.bind="newRole">
+					<option repeat.for="role of roles" model.bind="role">${role.roleName}</option>
+				</select>
+				<button class="updateButton" click.delegate="updateUserRole(user.id, newRole)">Change Role</button>
+				<br>
+				<label>Interests: </label><br>
+				<ul>
+					<li repeat.for="interest of user.interests">
+						${interest.keyword}
+					</li>
+				</ul>
+				<label>Applications: </label>
+				<ul>
+					<li repeat.for="application of user.applications">
+						Department: ${user.department}, Degree: ${application.degree}, Status: ${application.status}
+					</li>
+				</ul>
+				<p>
+					<button class="deleteButton" click.delegate="deleteUser(user.id)">Delete</button>
+				</p>
+			</div>
+		</div>
+	</section>
+</template>

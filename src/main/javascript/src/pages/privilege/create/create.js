@@ -17,7 +17,7 @@ export class setPrivilegeFormFields {
         this.scrollTop = 0;
     }
 
-    attached() {
+    activate() {
     	this.ownerManager.getOwners().then(response => {
 				this.owners = response;
 			});
@@ -35,6 +35,6 @@ export class setPrivilegeFormFields {
 			owner: ownerChoice,
 			operation: operationChoice
 		}
-		this.privilegeManager.addPrivilege(this.myPrivilege).then(()=>{this.router.navigateToRoute("view roles")});
+		this.privilegeManager.addPrivilege(this.myPrivilege);
 	}
 }

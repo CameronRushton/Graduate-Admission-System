@@ -42,34 +42,6 @@ export class App {
 			},
 			{
 				show: true,
-				route: '/role/view',
-				name: 'view roles',
-				moduleId: PLATFORM.moduleName('pages/role/view/view'),
-				title: "Roles",
-			},
-			{
-				show: false,
-				route: '/role/create',
-				name: 'add role',
-				moduleId: PLATFORM.moduleName('pages/role/create/create'),
-				title: "Add Role",
-			},
-			{
-				show: false,
-				route: '/role/update',
-				name: 'update role',
-				moduleId: PLATFORM.moduleName('pages/role/update/update'),
-				title: "Update Role",
-			},
-			{
-				show: false,
-				route: '/privilege/create',
-				name: 'add privilege',
-				moduleId: PLATFORM.moduleName('pages/privilege/create/create'),
-				title: "Add Privilege",
-			},
-			{
-				show: true,
 				route: '/',
 				name: 'home',
 				moduleId: PLATFORM.moduleName('pages/home/home'),
@@ -98,7 +70,7 @@ export class App {
 				name: 'login',
 				moduleId: PLATFORM.moduleName('pages/login/login'),
 				title: "Login",
-			},
+			}
 		]);
 	}
 

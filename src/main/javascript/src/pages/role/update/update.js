@@ -14,7 +14,7 @@ export class updateRoleFormFields {
         this.selectedPrivileges = [];
     }
 
-    attached() {
+    activate() {
     	this.privilegeManager.getPrivileges().then(response => {
     			this.privileges = response;
     		});
@@ -28,6 +28,10 @@ export class updateRoleFormFields {
 			roleName: name,
 			privileges: selectedPrivileges
 		}
-		this.roleManager.updateRole(this.myRole).then(()=>{this.router.navigateToRoute("view roles")});
+		this.roleManager.updateRole(this.myRole).then(()=>{
+			this.roleManager.getRoles().then(response => {
+				this.roles = response;
+			});
+		});
 	}
 }

@@ -57,8 +57,7 @@ public class InterestController {
      */
     @PostMapping("create")
     public ResponseEntity createInterest(@RequestBody Interest interest) {
-        repo.save(interest);
-        return ResponseEntity.ok("interest successfully added");
+        return ResponseEntity.status(HttpStatus.CREATED).body(repo.save(interest));
     }
 
     /**

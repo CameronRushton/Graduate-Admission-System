@@ -13,7 +13,7 @@ export class RoleView {
         this.scrollTop = 0;
     }
 
-    attached() {
+    activate() {
 		this.roleManager.getRoles().then(response => {
 			this.roles = response;
 		});
@@ -36,9 +36,5 @@ export class RoleView {
 				this.roles = response;
 			});
 		});
-	}
-
-	updateRole(){
-		this.router.navigateToRoute("view roles")
 	}
 }
