@@ -1,24 +1,8 @@
-footer {
-	position: absolute;
-	bottom: 0;
-	height: 100px;
-	background-color: #ebebeb;
-	width: 100%;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	margin-right: auto;
-
-	.logo {
-		width: 300px;
-	}
-}
 
 .footer {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin-right:auto;
 }
 
 .copyright {
