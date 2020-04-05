@@ -200,4 +200,18 @@ public class UserAccountControllerTest {
                 .andExpect(status().isNotFound());
 
     }
+
+    /** Test update User Role */
+    @Test
+    public void testUpdateUserRole() throws Exception {
+        UserAccount testUserAccount = UserAccount.builder().id(1L).firstName("Will").lastName(lastName).email(email).role(role).interests(interests).applications(applications).build();
+        Role newRole = Role.builder().roleName("New").build();
+        when(repository.findById(1L)).thenReturn(Optional.of(testUserAccount));
+
+        mockMvc.perform(put("/users/role?id=1").contentType(APPLICATION_JSON_UTF8)
+                .content(toJson(
+                        newRole)))
+                .andExpect(status().isOk());
+
+    }
 }

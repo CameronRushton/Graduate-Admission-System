@@ -114,7 +114,7 @@
             </div>
             <div if.bind="!isProf" class="panel">
               <div class="tiled-container">
-                <a class="how-to-apply" route-href="route: home" target="_blank">
+                <a class="how-to-apply" route-href="route: view applications" target="_blank">
                   <span class="glyphicon glyphicon-list-alt send-icon"></span>
                   <div class="apply-text">APPLY NOW</div>
                 </a>
@@ -127,28 +127,37 @@
 
     <div else>
       <div class="row">
-        
-        <div class="col-md-6">
-          <div class="panel">
-            <div class="tiled-container">
-              <a class="how-to-apply" route-href="route: home"> <!-- TODO: This goes to the edit users panel -->
-                <span class="glyphicon glyphicon-user send-icon"></span>
-                <div class="apply-text">EDIT USERS</div>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="panel">
-            <div class="tiled-container">
-              <a class="how-to-apply" route-href="route: home"> <!-- TODO: This goes to the admin panel -->
-                <span class="glyphicon glyphicon-calendar send-icon"></span>
-                <div class="apply-text">EDIT TERMS</div>
-              </a>
-            </div>
-          </div>
-        </div>
 
+		  <div class="col-md-6">
+			  <compose view-model="../role/view/view" model.bind="{reset: resetMethod, profile: myprofileJSON}"></compose>
+		  </div>
+		  <div class="col-md-6">
+			  <compose view-model="../role/update/update" model.bind="{reset: resetMethod, profile: myprofileJSON}"></compose>
+		  </div>
+		  <div class="col-md-6">
+			  <compose view-model="../role/create/create" model.bind="{reset: resetMethod, profile: myprofileJSON}"></compose>
+		  </div>
+		  <div class="col-md-6">
+			  <compose view-model="../privilege/create/create" model.bind="{reset: resetMethod, profile: myprofileJSON}"></compose>
+		  </div>
+		  <div class="col-md-6">
+			  <compose view-model="../interest/view/view" model.bind="{reset: resetMethod, profile: myprofileJSON}"></compose>
+		  </div>
+		  <div class="col-md-6">
+			  <compose view-model="../interest/create/create" model.bind="{reset: resetMethod, profile: myprofileJSON}"></compose>
+		  </div>
+		  <div class="col-md-6">
+			  <compose view-model="../term/update/update" model.bind="{reset: resetMethod, profile: myprofileJSON}"></compose>
+		  </div>
+		  <div class="col-md-6">
+			  <compose view-model="../term/create/create" model.bind="{reset: resetMethod, profile: myprofileJSON}"></compose>
+		  </div>
+		  <div class="col-md-6">
+			  <compose view-model="../user/update/update" model.bind="{reset: resetMethod, profile: myprofileJSON}"></compose>
+		  </div>
+		  <div class="col-md-6">
+			  <compose view-model="../user/create/create" model.bind="{reset: resetMethod, profile: myprofileJSON}"></compose>
+		  </div>
       </div>
     </div>
 

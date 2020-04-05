@@ -5,10 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sysc4806.graduateAdmissions.model.Role;
 import sysc4806.graduateAdmissions.model.UserAccount;
 import sysc4806.graduateAdmissions.repositories.UserRepository;
 import sysc4806.graduateAdmissions.service.UserManager;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 /**
@@ -115,6 +117,7 @@ public class UserController {
      * @return ResponseEntity describing the outcome of the operation
      */
     @DeleteMapping("{id}")
+    @CrossOrigin
     public ResponseEntity deleteUser(@PathVariable("id") Long id){
         Optional<UserAccount> user = repository.findById(id);
         if(user.isPresent()){
@@ -139,5 +142,46 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).body(updatedUser);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    /**
+     * update a specified User's applications
+     *
+     * @param userAccount the User to be updated
+     * @return ResponseEntity describing the outcome of the operation
+     */
+    @PutMapping("/applications")
+    @CrossOrigin
+    public ResponseEntity updateUserApplications(@RequestBody UserAccount userAccount) {
+        Optional<UserAccount> user = repository.findById(userAccount.getId());
+        if (user.isPresent()) {
+            UserAccount u = user.get();
+            u.setApplications(userAccount.getApplications());
+            repository.save(u);
+            return ResponseEntity.ok("Changed applications of user " + u.getFirstName() + " " + u.getLastName() + " to " + userAccount.getApplications());
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
+          
+    /**
+     * update a specified User's role
+     *
+     * @param id Long id of user to update
+     * @param role Role to add to the user
+     * @return ResponseEntity describing the outcome of the operation
+     */
+    @PutMapping("/role")
+    @CrossOrigin
+    public ResponseEntity updateUserRole(@RequestParam Long id, @Valid @RequestBody Role role) {
+        Optional<UserAccount> user = repository.findById(id);
+        if (user.isPresent()) {
+            UserAccount u = user.get();
+            u.setRole(role);
+            repository.save(u);
+            return ResponseEntity.ok("Changed role of user " + u.getFirstName() + " " + u.getLastName() + " to " + role.getRoleName());
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 }

@@ -1,0 +1,51 @@
+<template>
+	<header scroll_position.bind="scrollTop" scroll_fn.bind="scrollFn"></header>
+	<section>
+		<div class="container">
+			<h1>New Application</h1>
+			<div class="term">
+				<p>Select the term to apply for:</p>
+				<select value.bind="selectedTerm">
+					<option value ="select">select</option>
+					<option repeat.for="term of activeTerms" value="${term}">${term.season} ${term.year}</option>
+				</select>
+			</div>
+			<br/>
+			<div class="degree">
+				<p>Select the degree to apply for:</p>
+				<select value.bind="selectedDegree">
+					<option value ="select">select</option>
+					<option repeat.for="degree of degrees" value="${degree}">${degree}</option>
+				</select>
+			</div>
+			<br/>
+			<div class="department">
+				<p>Select the department to apply to:</p>
+				<select value.bind="selectedDepartment">
+					<option value ="select">select</option>
+					<option repeat.for="department of departments" value="${department}">${department}</option>
+				</select>
+			</div>
+			<br/>
+			<div class="gpa">
+				<p>Enter GPA:</p>
+				<input type="text" value.bind="gpa"/>
+			</div>
+			<br/>
+			<div class="resume">
+				<p>Upload Resume:</p>
+				<input type="file" id="myfile" name="myfile" value.bind="resumeFileName">
+			</div>
+			<br/>
+			<div class="supervisors">
+				<p>Select Desired Supervisors:</p>
+				<div repeat.for="prof of professors">
+					<input type="checkbox" id="${prof.firstName} ${prof.lastName}" name="${prof.firstName} ${prof.lastName}" value="${prof}">
+					<label for="${prof.firstName} ${prof.lastName}">${prof.firstName} ${prof.lastName}</label><br>
+				</div>
+			</div>
+			<br/>
+			<button click.delegate="submitApplication()">Submit Application</button>
+		</div>
+	</section>
+</template>

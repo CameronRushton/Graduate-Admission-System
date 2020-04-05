@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sysc4806.graduateAdmissions.model.Application;
 import sysc4806.graduateAdmissions.model.Interest;
+import sysc4806.graduateAdmissions.model.Status;
 import sysc4806.graduateAdmissions.model.UserAccount;
 import sysc4806.graduateAdmissions.repositories.ApplicationRepository;
 import sysc4806.graduateAdmissions.repositories.UserRepository;
@@ -78,7 +79,7 @@ public class ApplicationController {
     public ResponseEntity deleteApplication(@PathVariable("id") Long id) {
         val application = applicationRepository.findById(id);
         if(application.isPresent()){
-            applicationRepository.delete(application.get());
+            applicationRepository.deleteById(id);
             return ResponseEntity.ok("application to " + application.get().getDegree() +
                     " in " + application.get().getDepartment() +
                     " for " + application.get().getTerm().getSeason() +
@@ -144,5 +145,16 @@ public class ApplicationController {
             applications.addAll(student.getApplications());
 
         return ResponseEntity.status(HttpStatus.OK).body(applications);
+    }
+
+    /**
+     * get all Applications with the specified Status
+     *
+     * @param status the requested Status
+     * @return JSON containing the application(s)
+     */
+    @GetMapping("status")
+    public ResponseEntity getApplicationsByStatus(@RequestParam() Status status) {
+        return ResponseEntity.status(HttpStatus.OK).body(applicationRepository.findByStatus(status));
     }
 }

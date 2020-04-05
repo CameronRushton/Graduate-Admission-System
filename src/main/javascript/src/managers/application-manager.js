@@ -48,4 +48,38 @@ export class ApplicationManager extends AbstractManager{
 			.then(this.handleError)
 			.then(this.json);
 	}
+
+	removeApplication(id){
+		var options = {
+			method: "DELETE"
+		};
+		return this.httpClient.fetch(`/application/${id}`, options)
+			.then(this.handleError);
+  }
+
+	getApplicationsWithMatchingStatus(status){
+		var options = {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json"
+			}
+		};
+
+		return this.httpClient.fetch(`/application/status?status=${status}`, options)
+			.then(this.handleError)
+			.then(this.json);
+	}
+
+	getApplications(){
+		var options = {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json"
+			}
+		};
+
+		return this.httpClient.fetch(`/application/`, options)
+			.then(this.handleError)
+			.then(this.json);
+  }
 }

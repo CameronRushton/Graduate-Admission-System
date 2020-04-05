@@ -14,7 +14,7 @@ export class setRoleFormFields {
         this.selectedPrivileges = [];
     }
 
-    attached() {
+    activate() {
     	this.privilegeManager.getPrivileges().then(response => {
     			this.privileges = response;
     		});
@@ -25,6 +25,6 @@ export class setRoleFormFields {
 			roleName: name,
 			privileges: selectedPrivileges
 		}
-		this.roleManager.addRole(this.myRole).then(()=>{this.router.navigateToRoute("view roles")});
+		this.roleManager.addRole(this.myRole);
 	}
 }
