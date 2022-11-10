@@ -47,7 +47,7 @@
     "istanbul-instrumenter-loader": "^3.0.1",
     "json-loader": "^0.5.7",
     "mini-css-extract-plugin": "^0.4.3",
-    "minimatch": "^3.0.4",
+    "minimatch": "^3.0.5",
     "node-sass": "^4.13.1",
     "nps": "^5.9.12",
     "nps-utils": "^1.7.0",
